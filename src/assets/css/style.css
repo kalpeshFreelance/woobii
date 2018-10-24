@@ -1,0 +1,24 @@
+@font-face {
+    font-family: "LinotypeUnivers-BasicRegular";
+    font-style: normal;
+    font-weight: 400;
+    src: url('../fonts/LinotypeUnivers-BasicRegular.otf');
+}
+body {
+    width: 1098px;
+    margin: auto;
+    background: transparent;
+    overflow: hidden;
+    font-family: LinotypeUnivers-BasicRegular;
+    font-weight: normal;
+}
+.application {
+    font-family: LinotypeUnivers-BasicRegular;
+    font-weight: normal;
+}    
+
+@media screen and (max-width: 992px) {
+    body {
+        width: 100%;
+    }
+  }
