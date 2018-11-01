@@ -17,7 +17,7 @@
       </v-layout>
     </v-toolbar>
 
-    <main >
+    <main>
       <v-toolbar prominent color="#0B324F" dark height="40" >
        <v-img  class="" :max-width="120" contain :src="require(`@/assets/logo-woobii.jpg`)" />
         <v-tooltip bottom>
@@ -42,33 +42,9 @@
         </v-tooltip>
         <v-spacer></v-spacer>
         <span class="hidden-md-and-up"> <v-toolbar-side-icon left  @click.stop="drawer = !drawer"> </v-toolbar-side-icon> </span>
-        <!--<v-toolbar-side-icon ></v-toolbar-side-icon>-->
       </v-toolbar>
     </main>
-   <!-- <v-toolbar
-    color="#0B324F"
-    dark
-    scroll-off-screen
-  >
-    <v-img :max-width="170" contain :src="require(`@/assets/logo-woobii.jpg`)" />
-    <v-spacer></v-spacer>
-    <v-btn flat>KOSTENLOS ANMELDEN</v-btn>
-    <v-btn flat>Einloggen</v-btn>
-  </v-toolbar>
-  <v-toolbar
-    color="#0B324F"
-    dark
-    fixed
-  >
-    
-    <v-img :max-width="120" contain :src="require(`@/assets/logo-woobii.jpg`)" />
-    <v-btn flat>Home</v-btn>
-    <v-btn flat>Lösungen</v-btn>
-    <v-btn flat>Newsroom</v-btn>
-    <v-btn flat>Kirchenfinder</v-btn>
-    <v-btn flat>Mediapartner</v-btn>
-    <v-toolbar-side-icon left  @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-  </v-toolbar> -->
+   
 
 <v-navigation-drawer
       v-model="drawer"
@@ -146,163 +122,276 @@
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
-  <v-content>
-      <section>
-            <v-img
-                  :src="require(`@/assets/WooBii-hbanner.jpg`)"
-                  :lazy-src="require(`@/assets/WooBii-hbanner.jpg`)"
-                  class="grey lighten-2"
-                  contain
-                >
-                  <v-layout
-                    slot="placeholder"
-                    fill-height
-                    align-center
-                    justify-center
-                    ma-0
-                  >
-                    <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
-                  </v-layout>
-                   <v-layout
-                   fill-height
-            column
-            align-center
-            justify-center
-            class="white--text"
-          >
-            <h1 class="white--text mb-2 display-1 text-xs-center">Der Digitale Newsroom <br> für christliche Gemeinden</h1>
-            <div class="subheading mb-3 text-xs-center">Verbreiten Sie sekundenschnell Ihre wichtigsten Botschaften, News, Jobangebote und Eventankündigungen in deutschsprachigen christlichen Qualitätsmedien und im beliebten Kirchenfinder.</div>
-            <v-tooltip top>
-              <v-btn slot="activator" color="#FC732D" class="mt-5" dark large href="/pre-made-themes">Jetzt kostenlos testen</v-btn>
-              <span>Jetzt kostenlos testen</span>
-            </v-tooltip>
-          </v-layout>
-            </v-img>
-        <!--<v-parallax :src="require(`@/assets/WooBii-hbanner.jpg`)" height="550">
-          <v-layout
-            column
-            align-center
-            justify-center
-            class="white--text"
-          >
-            <h1 class="white--text mb-2 display-1 text-xs-center">Der Digitale Newsroom <br> für christliche Gemeinden</h1>
-            <div class="subheading mb-3 text-xs-center">Verbreiten Sie sekundenschnell Ihre wichtigsten Botschaften, News, Jobangebote und Eventankündigungen in deutschsprachigen christlichen Qualitätsmedien und im beliebten Kirchenfinder.</div>
-            <v-btn
-              class="blue lighten-2 mt-5"
-              dark
-              large
-              href="/pre-made-themes"
-            >
-             Jetzt kostenlos testen
-            </v-btn>
-          </v-layout>
-        </v-parallax>-->
+    <v-content>
+      <section class="hbanner">
+        <v-img :src="require(`@/assets/WooBii-hbanner.jpg`)" :lazy-src="require(`@/assets/WooBii-hbanner.jpg`)" gradient="to top right, rgba(0,0,0,.4), rgba(0,0,0,.4)" class="grey lighten-2" contain>
+              <v-layout  slot="placeholder" fill-height align-center justify-center ma-0>
+                <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+              </v-layout>
+              <v-layout fill-height column align-center justify-center class="text-xs-center white--text px-4">
+                <h1 class="display-1 text-uppercase">Der Digitale Newsroom<br> für christliche Gemeinden</h1>
+                <div class="subheading my-4">Verbreiten Sie sekundenschnell Ihre wichtigsten Botschaften, News, Jobangebote und Eventankündigungen in deutschsprachigen christlichen Qualitätsmedien und im beliebten Kirchenfinder.</div>
+                <v-tooltip top>
+                  <v-btn depressed dark large href="/pre-made-themes" slot="activator" color="#FC732D">Jetzt kostenlos testen</v-btn>
+                  <span>Jetzt kostenlos testen</span>
+                </v-tooltip>
+            </v-layout>
+        </v-img>
       </section>
-       <section>
-        <v-layout
-          column
-          wrap
-          class="my-5"
-          align-center
-        >
-          <v-flex xs12 sm4 class="my-3">
-            <div class="text-xs-center">
-              <h2 class="headline">WooBii - die crossmediale Lösung für lhre christliche Medienarbeit.</h2>
-            </div>
+      <section class="hpackages">
+        <v-layout column wrap class="py-4">
+          <v-flex xs12 text-xs-center>
+            <h2 class="headline mb-4">WooBii - die crossmediale Lösung für lhre christliche Medienarbeit.</h2>
           </v-flex>
           <v-flex xs12>
-            <v-container grid-list-xl>
+            <v-container grid-list-xl class="py-0">
               <v-layout row wrap>
-                <v-flex xs12 md4>
-                  <v-card>
-                    <v-card-title primary-title class="justify-center" style="background-color: #0B324F; color: #fff;">
+                <v-flex d-flex xs12 md4>
+                  <v-card flat color="grey lighten-4">
+                    <v-card-title class="justify-center py-4" style="color: #fff;">
                       <div class="text-xs-center">
                         <h3 class="headline mb-3">woobii Free</h3>
                         <h3 class="headline mb-3">0,00  <v-icon color="#fff">euro_symbol</v-icon> pro Mouat</h3>
                         <v-tooltip top>
-                          <v-btn slot="activator" color="#FC732D" dark>Kostenlos nutzen</v-btn>
+                          <v-btn depressed dark slot="activator" color="#FC732D">Kostenlos nutzen</v-btn>
                           <span>Kostenlos nutzen</span>
                         </v-tooltip>
                       </div>
                     </v-card-title>
-                    <v-card-title >
-                      <div>
-                        <ul class="list list--two-line">
-                          <li class="subheader">Today</li>
-                          <li>...</li>
-                          <hr class="divider">
-                          <li class="subheader">Today</li>
-                        </ul>
-                        Gemeindeprofil im Kirchenfinder<br>
-                        <div class="pl-3">woobii.com<br>
-                        Kirchenfinder.eu<br>
-                        Partnerportale</div>
-                        Logo<br>
-                        Header Bild<br>
-                        Gemeindeangebote<br>
-                        Besucheranzahl<br>
-                        Telefonnummer<br>
-                        Email- und Webadresse<br>
-                        Anreiseplaner mit Google Maps<br>
-                        Empfehlungsbutton
-                      </div>
+                    <v-list class="transparent">
+                      <v-list-tile>
+                        <v-list-tile-action>
+                          <v-icon size="20" color="#FC732D">done</v-icon>
+                        </v-list-tile-action>
+                        <v-list-tile-content>
+                          <v-list-tile-title>Gemeindeprofil im Kirchenfinder</v-list-tile-title>
+                        </v-list-tile-content>
+                      </v-list-tile>
+                      <v-list-tile class="ml-4 in_list">
+                        <v-list-tile-content>
+                          <v-list-tile-title>woobii.com</v-list-tile-title>
+                        </v-list-tile-content>
+                      </v-list-tile>
+                      <v-list-tile class="ml-4 in_list">
+                        <v-list-tile-content>
+                          <v-list-tile-title>Kirchenfinder.eu</v-list-tile-title>
+                        </v-list-tile-content>
+                      </v-list-tile>
+                      <v-list-tile class="ml-4 in_list">
+                        <v-list-tile-content>
+                          <v-list-tile-title>Partnerportale</v-list-tile-title>
+                        </v-list-tile-content>
+                      </v-list-tile>
+                      <v-list-tile>
+                        <v-list-tile-action>
+                          <v-icon size="20" color="#FC732D">check</v-icon>
+                        </v-list-tile-action>
+                        <v-list-tile-content>
+                          <v-list-tile-title>Logo</v-list-tile-title>
+                        </v-list-tile-content>
+                      </v-list-tile>
+                      <v-list-tile>
+                        <v-list-tile-action>
+                          <v-icon size="20" color="#FC732D">check</v-icon>
+                        </v-list-tile-action>
+                        <v-list-tile-content>
+                          <v-list-tile-title>Header Bild</v-list-tile-title>
+                        </v-list-tile-content>
+                      </v-list-tile>
+                      <v-list-tile>
+                        <v-list-tile-action>
+                          <v-icon size="20" color="#FC732D">check</v-icon>
+                        </v-list-tile-action>
+                        <v-list-tile-content>
+                          <v-list-tile-title>Gemeindeangebote</v-list-tile-title>
+                        </v-list-tile-content>
+                      </v-list-tile>
+                      <v-list-tile>
+                        <v-list-tile-action>
+                          <v-icon size="20" color="#FC732D">check</v-icon>
+                        </v-list-tile-action>
+                        <v-list-tile-content>
+                          <v-list-tile-title>Besucheranzahl</v-list-tile-title>
+                        </v-list-tile-content>
+                      </v-list-tile>
+                      <v-list-tile>
+                        <v-list-tile-action>
+                          <v-icon size="20" color="#FC732D">check</v-icon>
+                        </v-list-tile-action>
+                        <v-list-tile-content>
+                          <v-list-tile-title>Telefonnummer</v-list-tile-title>
+                        </v-list-tile-content>
+                      </v-list-tile>
+                      <v-list-tile>
+                        <v-list-tile-action>
+                          <v-icon size="20" color="#FC732D">check</v-icon>
+                        </v-list-tile-action>
+                        <v-list-tile-content>
+                          <v-list-tile-title>Email- und Webadresse</v-list-tile-title>
+                        </v-list-tile-content>
+                      </v-list-tile>
+                      <v-list-tile>
+                        <v-list-tile-action>
+                          <v-icon size="20" color="#FC732D">check</v-icon>
+                        </v-list-tile-action>
+                        <v-list-tile-content>
+                          <v-list-tile-title>Anreiseplaner mit Google Maps</v-list-tile-title>
+                        </v-list-tile-content>
+                      </v-list-tile>
+                      <v-list-tile>
+                        <v-list-tile-action>
+                          <v-icon size="20" color="#FC732D">check</v-icon>
+                        </v-list-tile-action>
+                        <v-list-tile-content>
+                          <v-list-tile-title>Empfehlungsbutton</v-list-tile-title>
+                        </v-list-tile-content>
+                      </v-list-tile>
                     </v-list>
-                    </v-card-title>
                   </v-card>
                 </v-flex>
-                <v-flex xs12 md4>
-                  <v-card>
-                    <v-card-title primary-title class="justify-center" style="background-color: #0B324F; color: #fff;">
+                <v-flex d-flex xs12 md4>
+                  <v-card flat color="grey lighten-4">
+                    <v-card-title class="justify-center py-4" style="color: #fff;">
                       <div class="text-xs-center">
                         <h3 class="headline mb-2">woobii Plus</h3>
-                        <h3 class="headline">19,99 <v-icon color="#fff">euro_symbol</v-icon> pro Mouat</h3>
-                        199,99 <v-icon color="#fff">euro_symbol</v-icon> pro Jahr
+                        <h3 class="headline mb-1">19,99 <v-icon color="#fff">euro_symbol</v-icon> pro Mouat</h3>
+                        199,99 <v-icon small color="#fff">euro_symbol</v-icon> pro Jahr
                         <v-tooltip top>
-                          <v-btn slot="activator" color="#FC732D" dark>30 Tage gratis testen</v-btn>
+                          <v-btn depressed dark slot="activator" color="#FC732D" bac>30 Tage gratis testen</v-btn>
                           <span>30 Tage gratis testen</span>
                         </v-tooltip>
                       </div>
                     </v-card-title>
-                    <v-card-title >
-                      <div>
-                        Package ,,woobii Free"<br>
-                        Werbefreies Gemeindeprofil<br>
-                        Upload von Profil-Bilder/Videos (6)<br>
-                        Gemeindenews mit Pressefoto<br>
-                        <div class="pl-3">Veröffentlichung im Pressroom<br>
-                        Veröffentlichung auf Kirchenfinder.eu<br>
-                        Veröffentlichung auf Partnerportale</div>
-                        Social Media Wall<br>
-                        Eventticker<br>
-                        Jobbörse<br>
-                        Profilbewerbung auf WooBii auf kostenlosen Gemeindeprofil
-                      </div>
+                    <v-list class="transparent">
+                      <v-list-tile>
+                        <v-list-tile-action>
+                          <v-icon size="20" color="#FC732D">done</v-icon>
+                        </v-list-tile-action>
+                        <v-list-tile-content>
+                          <v-list-tile-title>Package ,,woobii Free"</v-list-tile-title>
+                        </v-list-tile-content>
+                      </v-list-tile>
+                      <v-list-tile>
+                        <v-list-tile-action>
+                          <v-icon size="20" color="#FC732D">done</v-icon>
+                        </v-list-tile-action>
+                        <v-list-tile-content>
+                          <v-list-tile-title>Werbefreies Gemeindeprofil</v-list-tile-title>
+                        </v-list-tile-content>
+                      </v-list-tile>
+                      <v-list-tile>
+                        <v-list-tile-action>
+                          <v-icon size="20" color="#FC732D">done</v-icon>
+                        </v-list-tile-action>
+                        <v-list-tile-content>
+                          <v-list-tile-title>Upload von Profil-Bilder/Videos (6)</v-list-tile-title>
+                        </v-list-tile-content>
+                      </v-list-tile>
+                      <v-list-tile>
+                        <v-list-tile-action>
+                          <v-icon size="20" color="#FC732D">done</v-icon>
+                        </v-list-tile-action>
+                        <v-list-tile-content>
+                          <v-list-tile-title>Gemeindenews mit Pressefoto</v-list-tile-title>
+                        </v-list-tile-content>
+                      </v-list-tile>
+                      <v-list-tile class="ml-4 in_list">
+                        <v-list-tile-content>
+                          <v-list-tile-title>Veröffentlichung im Pressroom</v-list-tile-title>
+                        </v-list-tile-content>
+                      </v-list-tile>
+                      <v-list-tile class="ml-4 in_list">
+                        <v-list-tile-content>
+                          <v-list-tile-title>Veröffentlichung auf Kirchenfinder.eu</v-list-tile-title>
+                        </v-list-tile-content>
+                      </v-list-tile>
+                      <v-list-tile class="ml-4 in_list">
+                        <v-list-tile-content>
+                          <v-list-tile-title>Veröffentlichung auf Partnerportale</v-list-tile-title>
+                        </v-list-tile-content>
+                      </v-list-tile>
+                      <v-list-tile>
+                        <v-list-tile-action>
+                          <v-icon size="20" color="#FC732D">done</v-icon>
+                        </v-list-tile-action>
+                        <v-list-tile-content>
+                          <v-list-tile-title>Social Media Wall</v-list-tile-title>
+                        </v-list-tile-content>
+                      </v-list-tile>
+                      <v-list-tile>
+                        <v-list-tile-action>
+                          <v-icon size="20" color="#FC732D">done</v-icon>
+                        </v-list-tile-action>
+                        <v-list-tile-content>
+                          <v-list-tile-title>Eventticker</v-list-tile-title>
+                        </v-list-tile-content>
+                      </v-list-tile>
+                      <v-list-tile>
+                        <v-list-tile-action>
+                          <v-icon size="20" color="#FC732D">done</v-icon>
+                        </v-list-tile-action>
+                        <v-list-tile-content>
+                          <v-list-tile-title>Profilbewerbung auf WooBii auf kostenlosen Gemeindeprofil</v-list-tile-title>
+                        </v-list-tile-content>
+                      </v-list-tile>
                     </v-list>
-                    </v-card-title>
                   </v-card>
                 </v-flex>
-                <v-flex xs12 md4>
-                  <v-card>
-                    <v-card-title primary-title class="justify-center" style="background-color: #0B324F; color: #fff;">
+                <v-flex d-flex xs12 md4>
+                  <v-card flat color="grey lighten-4">
+                    <v-card-title class="justify-center py-4" style="color: #fff;">
                       <div class="text-xs-center">
                         <h3 class="headline mb-2">woobii Pro</h3>
-                        <h3 class="headline">49,99 <v-icon color="#fff">euro_symbol</v-icon> pro Mouat</h3>
-                        499,99 <v-icon color="#fff">euro_symbol</v-icon> pro Jahr
+                        <h3 class="headline mb-1">49,99 <v-icon color="#fff">euro_symbol</v-icon> pro Mouat</h3>
+                        499,99 <v-icon small color="#fff">euro_symbol</v-icon> pro Jahr
                         <v-tooltip top>
-                          <v-btn slot="activator" color="#FC732D" dark>30 Dage gratis testen</v-btn>
+                          <v-btn depressed dark slot="activator" color="#FC732D">30 Dage gratis testen</v-btn>
                           <span>30 Dage gratis testen</span>
                         </v-tooltip>
                       </div>
                     </v-card-title>
-                    <v-card-title >
-                      <div>
-                        Package ,,woobii Plus"<br>
-                        Upload von Profil-Bilder/Videos (12)<br>
-                        Hochwertige Veröffentlichung lhrer News auf Qualitätsmedienportal*<br>
-                        *1 pro Monat
-                      </div>
+                    <v-list class="transparent">
+                      <v-list-tile>
+                        <v-list-tile-action>
+                          <v-icon size="20" color="#FC732D">done</v-icon>
+                        </v-list-tile-action>
+                        <v-list-tile-content>
+                          <v-list-tile-title>Package ,,woobii plus"</v-list-tile-title>
+                        </v-list-tile-content>
+                      </v-list-tile>
+                      <v-list-tile>
+                        <v-list-tile-action>
+                          <v-icon size="20" color="#FC732D">done</v-icon>
+                        </v-list-tile-action>
+                        <v-list-tile-content>
+                          <v-list-tile-title>Upload von Profil-Bilder/Videos (12)</v-list-tile-title>
+                        </v-list-tile-content>
+                      </v-list-tile>
+                      <v-list-tile>
+                        <v-list-tile-action>
+                          <v-icon size="20" color="#FC732D">done</v-icon>
+                        </v-list-tile-action>
+                        <v-list-tile-content>
+                          <v-list-tile-title>Jobbörse</v-list-tile-title>
+                        </v-list-tile-content>
+                      </v-list-tile>
+                      <v-list-tile>
+                        <v-list-tile-action>
+                          <v-icon size="20" color="#FC732D">done</v-icon>
+                        </v-list-tile-action>
+                        <v-list-tile-content>
+                          <v-list-tile-title>Hochwertige Veröffentlichung lhrer News auf Qualitätsmedienportal*</v-list-tile-title>
+                        </v-list-tile-content>
+                      </v-list-tile>
+                      <v-list-tile>
+                        <v-list-tile-action>
+                          <v-icon size="20" color="#FC732D">done</v-icon>
+                        </v-list-tile-action>
+                        <v-list-tile-content>
+                          <v-list-tile-title>*1 pro Monat</v-list-tile-title>
+                        </v-list-tile-content>
+                      </v-list-tile>
                     </v-list>
-                    </v-card-title>
                   </v-card>
                 </v-flex>
               </v-layout>
@@ -310,46 +399,45 @@
           </v-flex>
         </v-layout>
       </section>
-       
-  <v-footer height="auto" style="background:#0B324F" >
-    <v-layout justify-center row wrap xs-12 >
-      <v-flex py-3 text-xs-center white--text xs12 >
-        <v-tooltip top>
-          <v-btn slot="activator" flat small><span class="white--text">Kontakt</span></v-btn>
-          <span>Kontakt</span>
-        </v-tooltip>
-        <v-tooltip top>
-          <v-btn slot="activator" flat small><span class="white--text">Über uns</span></v-btn>
-          <span>Über uns</span>
-        </v-tooltip>
-        <v-tooltip top>
-          <v-btn slot="activator" flat small><span class="white--text">Presse</span></v-btn>
-          <span>Presse</span>
-        </v-tooltip>
-        <v-tooltip top>
-          <v-btn slot="activator" flat small><span class="white--text">Jobs</span></v-btn>
-          <span>Jobs</span>
-        </v-tooltip>
-        <v-tooltip top>
-          <v-btn slot="activator" flat small><span class="white--text">Datenschutz</span></v-btn>
-          <span>Datenschutz</span>
-        </v-tooltip>
-        <v-tooltip top>
-          <v-btn slot="activator" flat small><span class="white--text">AGB</span></v-btn>
-          <span>AGB</span>
-        </v-tooltip>
-        <v-tooltip top>
-          <v-btn slot="activator" flat small><span class="white--text">Impressum</span></v-btn>
-          <span>Impressum</span>
-        </v-tooltip>
-      </v-flex>
-      <v-divider inset dark style="margin-left:1px;max-width:100%;background:#606c7d"></v-divider>
-      <v-flex py-3 text-xs-center white--text xs12 >
-        Ein Angebot von SALZUNDLICHT e.U.
-      </v-flex>
-    </v-layout>
-  </v-footer>
-    </v-content>    
+    </v-content>
+    <v-footer height="auto" color="#0B324F" >
+      <v-layout justify-center row wrap xs-12 >
+        <v-flex py-2 text-xs-center white--text xs12 >
+          <v-tooltip top>
+            <v-btn slot="activator" flat small><span class="white--text">Kontakt</span></v-btn>
+            <span>Kontakt</span>
+          </v-tooltip>
+          <v-tooltip top>
+            <v-btn slot="activator" flat small><span class="white--text">Über uns</span></v-btn>
+            <span>Über uns</span>
+          </v-tooltip>
+          <v-tooltip top>
+            <v-btn slot="activator" flat small><span class="white--text">Presse</span></v-btn>
+            <span>Presse</span>
+          </v-tooltip>
+          <v-tooltip top>
+            <v-btn slot="activator" flat small><span class="white--text">Jobs</span></v-btn>
+            <span>Jobs</span>
+          </v-tooltip>
+          <v-tooltip top>
+            <v-btn slot="activator" flat small><span class="white--text">Datenschutz</span></v-btn>
+            <span>Datenschutz</span>
+          </v-tooltip>
+          <v-tooltip top>
+            <v-btn slot="activator" flat small><span class="white--text">AGB</span></v-btn>
+            <span>AGB</span>
+          </v-tooltip>
+          <v-tooltip top>
+            <v-btn slot="activator" flat small><span class="white--text">Impressum</span></v-btn>
+            <span>Impressum</span>
+          </v-tooltip>
+        </v-flex>
+        <v-divider inset dark color="#606c7d" style="margin-left:1px;max-width:100%;"></v-divider>
+        <v-flex py-3 text-xs-center white--text xs12 >
+          Ein Angebot von SALZUNDLICHT e.U.
+        </v-flex>
+      </v-layout>
+    </v-footer>
   </v-app>
 </template>
 

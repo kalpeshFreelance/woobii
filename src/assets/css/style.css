@@ -7,15 +7,48 @@
 body {
     width: 1098px;
     margin: auto;
-    background: transparent;
+    background: #F5F5F5;
     overflow: hidden;
     font-family: LinotypeUnivers-BasicRegular;
     font-weight: normal;
+    letter-spacing: 0.7px;
 }
 .application {
     font-family: LinotypeUnivers-BasicRegular;
     font-weight: normal;
-}    
+}
+
+/* =========== Home Banner =========== */
+.hbanner .display-1 {
+    line-height: 50px !important;
+}
+.hbanner .subheading {
+    line-height: 30px !important;
+}
+
+/* =========== Home Packages =========== */
+.hpackages .v-card__title {
+    background-image: -webkit-linear-gradient(to right, #005885 , #003b5b);
+    background-image: -moz-linear-gradient(to right, #005885 , #003b5b);
+    background-image: linear-gradient(to right, #005885 , #003b5b);
+}
+.hpackages .v-list__tile {
+    height: 34px;
+    font-size: 14px;
+}
+.hpackages .v-list__tile__action {
+    min-width: 28px;
+}
+.hpackages .in_list .v-list__tile {
+    height: 24px;
+    font-size: 14px;
+    color: #757575;
+}
+
+/* =========== Footer =========== */
+.v-footer, .v-footer .v-btn--small {
+    font-size: 12px;
+}
 
 @media screen and (max-width: 992px) {
     body {
