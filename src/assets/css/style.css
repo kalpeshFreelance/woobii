@@ -17,6 +17,11 @@ body {
     font-family: LinotypeUnivers-BasicRegular;
     font-weight: normal;
 }
+@media screen and (max-width: 992px) {
+    body {
+        width: 100%;
+    }
+}
 
 /* =========== Home Banner =========== */
 .hbanner .display-1 {
@@ -45,13 +50,126 @@ body {
     color: #757575;
 }
 
+
+/* =========== News Room =========== */
+
+/* ----- News Room Top ----- */
+.newsRoomSectionTop {
+    border-bottom: 1px solid #EAEAEA;
+}
+.newsRoomSectionTop button {
+    border-radius: 0px;
+}
+.newsRoomSectionTop button.btnTab {
+    border-bottom: 4px solid #CCC;
+    border-color: #333 !important;
+}
+
+/* .newsRoomSection .v-tabs__wrapper {
+    padding: 0 20px;
+}
+.newsRoomSection .v-tabs__wrapper .v-tabs__slider {
+    height: 3px;
+} */
+
+/* ----- News Room Filter ----- */
+.newsRoomSection .newsRoomFilter {
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,.25);
+    -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,.25);
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,.25);
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+}
+
+/* ----- News Room News ----- */
+.newsRoomSection .newsRoomWrap .v-card__title {
+    line-height: 22px;
+}
+
+/* ----- News Room Details ----- */
+.newsRoomSection .newsDetail button {
+    min-width: auto;
+    padding-left: 7px !important;
+    padding-right: 7px !important;
+    border-radius: 0px;
+    border: 1px solid #ADADAD;
+    text-transform: inherit;
+}
+.newsRoomSection .newsDetail .v-tabs__wrapper {
+    border-bottom: 1px solid #ddd;
+}
+.newsRoomSection .newsDetail .topBottonBorder {
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}
+.newsRoomSection .newsDetail .orangeText {
+    color: #fa6e2f;
+}
+
+/* ----- News Room Right ----- */
+.newsRoomSection .newsRight button {
+    min-width: auto;
+    padding-left: 7px !important;
+    padding-right: 7px !important;
+    border-radius: 0px;
+    border: 1px solid #ADADAD;
+    text-transform: inherit;
+}
+
+
+/* =========== Kitchen Finder =========== */
+/* ----- Kitchen Finder Top ----- */
+.kitchenFinderSectionTop {
+    
+}
+/* ----- Kitchen Finder Filter ----- */
+.kitchenFinderSection .kitchenFinderFilter {
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,.25);
+    -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,.25);
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,.25);
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+}
+.kitchenFinderSection .kFinderMapWrap {
+    -webkit-box-shadow: 0px 0px 3px 0px rgba(0,0,0,.20);
+    -moz-box-shadow: 0px 0px 3px 0px rgba(0,0,0,.20);
+    box-shadow: 0px 0px 3px 0px rgba(0,0,0,.20);
+}
+.kitchenFinderSection .kFinderMapWrap span.display-1 {
+    font-size: 30px !important;
+    line-height: 35px !important;
+}
+.kitchenFinderSection .kFinderWrap {
+    padding: 12px;
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,.25);
+    -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,.25);
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,.25);
+    border-top: 4px solid #0b324f;
+    border-color: #0b324f !important;
+    border-radius: 0;
+}
+.kitchenFinderSection .v-chip {
+    font-size: 11px;
+    background: #0b324f;
+}
+.kitchenFinderSection .v-tabs__wrapper {
+    border-top: 1px solid #CCC;
+    border-bottom: 1px solid #CCC;
+}
+.kitchenFinderSection .v-tabs__slider {
+    
+}
+.kitchenFinderSection .v-tabs__container {
+    height: 35px;
+}
+.kitchenFinderSection .v-tabs__item {
+    text-transform: initial;
+}
+
+
 /* =========== Footer =========== */
 .v-footer, .v-footer .v-btn--small {
     font-size: 12px;
 }
-
-@media screen and (max-width: 992px) {
-    body {
-        width: 100%;
-    }
-  }
