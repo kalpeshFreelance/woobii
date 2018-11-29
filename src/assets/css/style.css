@@ -158,17 +158,47 @@ body {
     border-top: 1px solid #CCC;
     border-bottom: 1px solid #CCC;
 }
-.kitchenFinderSection .v-tabs__slider {
-    
-}
 .kitchenFinderSection .v-tabs__container {
     height: 35px;
 }
 .kitchenFinderSection .v-tabs__item {
     text-transform: initial;
 }
+.kitchenFinderSection .v-tabs__content .v-btn {
+    height: auto;
+    text-transform: initial;
+}
+.kitchenFinderSection .tabRight button.v-btn {
+    height: auto;
+    text-transform: initial;
+}
+.kitchenFinderSection .tabRight button.colorGreen {
+    background: #a3d301;
+}
+.kitchenFinderSection .tabRight button.grey .v-icon {
+    font-size: 20px;
+}
+.kitchenFinderSection .tabRight a {
+    color: #212121;
+    text-decoration: initial;
+}
 
 
+/* =========== Dialog =========== */
+.v-overlay--active:before {
+    opacity: .90;
+}
+.v-overlay:before {
+    background-color: rgb(11,50,79);
+}
+.v-dialog {
+    box-shadow: none;
+}
+.v-dialog__content .v-card {
+    background-color: rgba(0,0,0,0.35);
+    box-shadow: none;
+    position: relative;
+}
 /* =========== Footer =========== */
 .v-footer, .v-footer .v-btn--small {
     font-size: 12px;
