@@ -1,27 +1,23 @@
 <template>
-  <v-container fluid>
-    <v-slide-y-transition mode="out-in">
-      <v-layout column align-center>
-       Coming Soon
-      </v-layout>
-    </v-slide-y-transition>
-  </v-container>
+  <v-content>
+    <v-container class="white text-xs-center">
+      <h2 class="headline align-center">Coming Soon</h2>
+    </v-container>
+  </v-content>
 </template>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
+<script>
+export default {
+  name: "App",
+  data() {
+    return {
+      // baseUrl: process.env.BASE_URL
+    };
+  }
+};
+</script>
 <style scoped>
-h1, h2 {
-  font-weight: normal;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
+.progess-custom {
+  margin: 0px;
 }
 </style>

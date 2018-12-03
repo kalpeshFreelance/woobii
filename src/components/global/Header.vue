@@ -1,57 +1,124 @@
 <template>
-  <div>
+  <div class="main-header">
     <!-- class="progess-custom hidden-sm-and-up" -->
-    <v-toolbar
-      color="#0B324F"
-      class="hidden-md-and-down"
-      dark
-      :scroll-off-screen="true"
-      :scroll-target="'#scrolling-techniques'"
-      style="background:#0B324F; border-bottom: 1px solid #606c7d;"
-      v-show="fixedHeader == true"
-    >
+    <v-toolbar color="#0B324F" class="hidden-md-and-down" dark :scroll-off-screen="true" :scroll-target="'#scrolling-techniques'" style="background:#0B324F; border-bottom: 1px solid #606c7d;" v-show="fixedHeader == true">
       <v-layout>
         <v-img :max-width="150" contain :src="require(`@/assets/logo-woobii.jpg`)"/>
         <v-spacer></v-spacer>
-        <v-tooltip bottom>
-          <v-btn slot="activator" flat>KOSTENLOS ANMELDEN</v-btn>
+        <!-- <v-tooltip bottom>
+          <v-btn slot="activator" flat class="hover-orange">KOSTENLOS ANMELDEN</v-btn>
           <span>KOSTENLOS ANMELDEN</span>
         </v-tooltip>
         <v-tooltip bottom>
-          <v-btn slot="activator" flat>Einloggen</v-btn>
+          <v-btn slot="activator" flat class="hover-orange">Einloggen</v-btn>
           <span>Einloggen</span>
-        </v-tooltip>
+        </v-tooltip> -->
+        <v-dialog v-model="dialog" max-width="600px">
+          <v-btn slot="activator" flat class="hover-orange">KOSTENLOS ANMELDEN</v-btn>
+          <v-card dark>
+            <v-card-text>
+              <v-container grid-list-md>
+                <h1 class="display-2 text-md-center mb-2">Registrierung</h1>
+                <h2 class="display-1 text-md-center mb-2" style="color:#fa6e2f">woobii Plus</h2>
+                <p class="body-2 text-md-center mb-4">30 Tage gratis testen<br />
+                dann 19,99  pro Monat (oder 199,99  pro Jahr)</p>
+                <v-layout wrap>
+                  <v-flex xs12 md10 offset-md1>
+                    <v-autocomplete light placeholder="Gemeindetyp" solo></v-autocomplete>
+                  </v-flex>
+                  <v-flex xs12 md10 offset-md1>
+                    <v-autocomplete light placeholder="Land" solo></v-autocomplete>
+                  </v-flex>
+                  <v-flex xs12 md10 offset-md1>
+                    <v-text-field light placeholder="Ort..." solo></v-text-field>
+                  </v-flex>
+                  <v-flex xs12 md10 offset-md1>
+                    <v-text-field light placeholder="Gemeindename..." solo></v-text-field>
+                  </v-flex>
+                  <v-flex xs12 md10 offset-md1>
+                    <v-text-field light placeholder="Emailadresse (Ihr Benutzername)..." solo></v-text-field>
+                  </v-flex>
+                  <v-flex xs12 md10 offset-md1>
+                    <v-text-field light placeholder="Passwort..." solo></v-text-field>
+                  </v-flex>
+                  <v-flex xs12 md10 offset-md1>
+                    <v-text-field light placeholder="Re-Enter Passwort..." solo></v-text-field>
+                  </v-flex>
+                  <v-flex xs12 md10 offset-md1>
+                    <v-btn block flat class="btn-SignIn">Registrieren</v-btn>
+                  </v-flex>
+                  <v-flex xs12 md6>
+                    <v-btn outline color="white" class="right"><v-icon small class="mr-2">fab fa-facebook-f</v-icon> Facebook</v-btn>
+                  </v-flex>
+                  <v-flex xs12 md6>
+                    <v-btn outline color="white"><v-icon small class="mr-2">fab fa-twitter</v-icon> Twitter</v-btn>
+                  </v-flex>
+                </v-layout>
+              </v-container>
+            </v-card-text>
+          </v-card>
+        </v-dialog>
+        <v-dialog v-model="dialog" max-width="600px">
+          <v-btn slot="activator" flat class="hover-orange">Einloggen</v-btn>
+          <v-card dark>
+            <v-card-text>
+              <v-container grid-list-md>
+                <h1 class="display-2 text-md-center mb-4">WooBii Login</h1>
+                <v-layout wrap>
+                  <v-flex xs12 md10 offset-md1>
+                    <v-text-field light placeholder="Username..." solo></v-text-field>
+                  </v-flex>
+                  <v-flex xs12 md10 offset-md1>
+                    <v-text-field light type="password" placeholder="Password..." solo></v-text-field>
+                  </v-flex>
+                  <v-flex xs12 md10 offset-md1>
+                    <v-btn block flat class="btn-SignIn">Sign in!</v-btn>
+                  </v-flex>
+                  <v-flex xs12 class="text-xs-center">
+                    <router-link to="/" class="body-1 white--text">Passwort vergessen</router-link>
+                  </v-flex>
+                  <v-flex xs12 md6>
+                    <v-btn outline color="white" class="right"><v-icon small class="mr-2">fab fa-facebook-f</v-icon> Facebook</v-btn>
+                  </v-flex>
+                  <v-flex xs12 md6>
+                    <v-btn outline color="white"><v-icon small class="mr-2">fab fa-twitter</v-icon> Twitter</v-btn>
+                  </v-flex>
+                </v-layout>
+              </v-container>
+            </v-card-text>
+          </v-card>
+        </v-dialog>
       </v-layout>
     </v-toolbar>
-    <main v-scroll="onScroll">
+    <main v-scroll="onScroll" class="smallHeader">
       <v-toolbar prominent color="#0B324F" dark height="40" v-show="fixedHeader == true">
         <router-link to="/">
           <v-tooltip bottom>
-            <v-btn slot="activator" class="hidden-md-and-down" flat>Home</v-btn>
+            <v-btn slot="activator" class="ma-0 mx-3 px-0 hidden-md-and-down" flat>Home</v-btn>
             <span>Home</span>
           </v-tooltip>
         </router-link>
         <router-link to="/solution">
           <v-tooltip bottom>
-            <v-btn slot="activator" class="hidden-md-and-down" flat>Lösungen</v-btn>
+            <v-btn slot="activator" class="ma-0 mx-3 px-0 hidden-md-and-down" flat>Lösungen</v-btn>
             <span>Lösungen</span>
           </v-tooltip>
         </router-link>
         <router-link to="/newsroom">
           <v-tooltip bottom>
-            <v-btn slot="activator" class="hidden-md-and-down" flat>Newsroom</v-btn>
+            <v-btn slot="activator" class="ma-0 mx-3 px-0 hidden-md-and-down" flat>Newsroom</v-btn>
             <span>Newsroom</span>
           </v-tooltip>
         </router-link>
         <router-link to="/kitrchenfinderLocation">
           <v-tooltip bottom>
-            <v-btn slot="activator" class="hidden-md-and-down" flat>Kirchenfinder</v-btn>
+            <v-btn slot="activator" class="ma-0 mx-3 px-0 hidden-md-and-down" flat>Kirchenfinder</v-btn>
             <span>Kirchenfinder</span>
           </v-tooltip>
         </router-link>
         <router-link to="/mediapartner">
           <v-tooltip bottom>
-            <v-btn slot="activator" class="hidden-md-and-down" flat>Mediapartner</v-btn>
+            <v-btn slot="activator" class="ma-0 mx-3 px-0 hidden-md-and-down" flat>Mediapartner</v-btn>
             <span>Mediapartner</span>
           </v-tooltip>
         </router-link>
@@ -64,31 +131,31 @@
         <v-img class :max-width="120" contain :src="require(`@/assets/logo-woobii.jpg`)"/>
         <router-link to="/">
           <v-tooltip bottom>
-            <v-btn slot="activator" class="hidden-md-and-down" flat>Home</v-btn>
+            <v-btn slot="activator" class="ma-0 mx-3 px-0 hidden-md-and-down" flat>Home</v-btn>
             <span>Home</span>
           </v-tooltip>
         </router-link>
         <router-link to="/solution">
           <v-tooltip bottom>
-            <v-btn slot="activator" class="hidden-md-and-down" flat>Lösungen</v-btn>
+            <v-btn slot="activator" class="ma-0 mx-3 px-0 hidden-md-and-down" flat>Lösungen</v-btn>
             <span>Lösungen</span>
           </v-tooltip>
         </router-link>
         <router-link to="/newsroom">
           <v-tooltip bottom>
-            <v-btn slot="activator" class="hidden-md-and-down" flat>Newsroom</v-btn>
+            <v-btn slot="activator" class="ma-0 mx-3 px-0 hidden-md-and-down" flat>Newsroom</v-btn>
             <span>Newsroom</span>
           </v-tooltip>
         </router-link>
         <router-link to="/kitrchenfinderLocation">
           <v-tooltip bottom>
-            <v-btn slot="activator" class="hidden-md-and-down" flat>Kirchenfinder</v-btn>
+            <v-btn slot="activator" class="ma-0 mx-3 px-0 hidden-md-and-down" flat>Kirchenfinder</v-btn>
             <span>Kirchenfinder</span>
           </v-tooltip>
         </router-link>
         <router-link to="/mediapartner">
           <v-tooltip bottom>
-            <v-btn slot="activator" class="hidden-md-and-down" flat>Mediapartner</v-btn>
+            <v-btn slot="activator" class="ma-0 mx-3 px-0 hidden-md-and-down" flat>Mediapartner</v-btn>
             <span>Mediapartner</span>
           </v-tooltip>
         </router-link>

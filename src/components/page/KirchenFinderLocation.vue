@@ -1,27 +1,25 @@
 <template>
   <v-content class="white">
     <section class="kitchenFinderSectionTop">
-      <v-container class="grey lighten-3 py-0">
+      <v-container class="grey lighten-3 py-2">
         <v-layout>
-          <v-flex xs6>
+          <v-flex xs12 md5>
             <v-form>
-              <v-text-field
-                flat
-                solo
-                class
-                placeholder="Gemeindename oder Stichwort einfugen"
-                append-icon="search"
-              ></v-text-field>
+              <v-text-field flat solo class placeholder="Gemeindename oder Stichwort einfugen" append-icon="search"></v-text-field>
             </v-form>
           </v-flex>
-          <v-flex xs6>Text</v-flex>
+          <v-flex xs12 md2>
+            <v-btn small flat class="grey lighten-3 right ma-0 black--text btnSuche">
+              Erweiterte Suche <v-icon class="ml-1">expand_more</v-icon>
+            </v-btn>
+          </v-flex>
         </v-layout>
       </v-container>
       <section class="newsRoomSectionTop">
         <v-container class="white py-0">
           <v-layout>
             <v-flex xs12>
-              <v-btn flat class="white black--text ma-0 text-lowercase btnTab">Kirchen</v-btn>
+              <v-btn flat class="white black--text ma-0 px-0 btnTab">Kirchen</v-btn>
             </v-flex>
           </v-layout>
         </v-container>
@@ -187,7 +185,7 @@
                         <v-btn flat block class="colorGreen ma-0 mb-3 py-2">
                           <v-icon class="mr-2">share</v-icon>Kirchengemeinde empfehlen
                         </v-btn>
-                        <v-btn flat block class="grey lighten-2 ma-0 mb-4 py-2">
+                        <v-btn flat block class="grey lighten-4 ma-0 mb-4 py-2">
                           <v-icon class>stars</v-icon>
                           <v-icon class>stars</v-icon>
                           <v-icon class>stars</v-icon>
@@ -232,12 +230,37 @@
                     <v-layout row wrap>
                       <v-flex xs12 md8>
                         <p class="headline">Gemeindenews</p>
+                        <v-layout row wrap>
+                          <v-flex d-flex md12>
+                            <v-card flat color="white" class="grey lighten-4">
+                              <v-img src="https://cdn.vuetifyjs.com/images/cards/desert.jpg"></v-img>
+                            </v-card>
+                          </v-flex>
+                          <v-flex d-flex xs12 md6>
+                            <v-card flat color="white" class="grey lighten-4">
+                              <v-img src="https://cdn.vuetifyjs.com/images/cards/desert.jpg"></v-img>
+                              <v-card-text>
+                                <h4 class="body-1 my-2"><span class="font-weight-bold">Ausland</span><span class="ml-2" style="color:#fa6e2f;">|</span> Israel</h4>
+                                <h4 class="body-1 my-2">70 Jahre Staat Israel: Evangelischer Oberkichenrat gratuliert</h4>
+                              </v-card-text>
+                            </v-card>
+                          </v-flex>
+                          <v-flex d-flex xs12 md6>
+                            <v-card flat color="white" class="grey lighten-4">
+                              <v-img src="https://cdn.vuetifyjs.com/images/cards/desert.jpg"></v-img>
+                              <v-card-text>
+                                <h4 class="body-1 my-2"><span class="font-weight-bold">Ausland</span><span class="ml-2" style="color:#fa6e2f;">|</span> Israel</h4>
+                                <h4 class="body-1 my-2">70 Jahre Staat Israel: Evangelischer Oberkichenrat gratuliert</h4>
+                              </v-card-text>
+                            </v-card>
+                          </v-flex>
+                        </v-layout>
                       </v-flex>
                       <v-flex xs12 md4 class="tabRight">
                         <v-btn flat block class="colorGreen ma-0 mb-3 py-2">
                           <v-icon class="mr-2">share</v-icon>Kirchengemeinde empfehlen
                         </v-btn>
-                        <v-btn flat block class="grey lighten-2 ma-0 mb-4 py-2">
+                        <v-btn flat block class="grey lighten-4 ma-0 mb-4 py-2">
                           <v-icon class>stars</v-icon>
                           <v-icon class>stars</v-icon>
                           <v-icon class>stars</v-icon>
@@ -287,7 +310,7 @@
                         <v-btn flat block class="colorGreen ma-0 mb-3 py-2">
                           <v-icon class="mr-2">share</v-icon>Kirchengemeinde empfehlen
                         </v-btn>
-                        <v-btn flat block class="grey lighten-2 ma-0 mb-4 py-2">
+                        <v-btn flat block class="grey lighten-4 ma-0 mb-4 py-2">
                           <v-icon class>stars</v-icon>
                           <v-icon class>stars</v-icon>
                           <v-icon class>stars</v-icon>
@@ -332,12 +355,50 @@
                     <v-layout row wrap>
                       <v-flex xs12 md8>
                         <p class="headline">Events</p>
+                        <v-layout row class="mb-3">
+                          <v-flex d-flex md3 class="pa-0">
+                            <v-card dark tile flat color="dark">
+                              <v-card-text>
+                                <p class="body-2 text-xs-center">Sonntag<br/><span class="display-2">10</span><br />JUN 2018<br />10:00 Uhr</p>
+                              </v-card-text>
+                            </v-card>
+                          </v-flex>
+                          <v-flex d-flex md9 class="pa-0">
+                            <v-card light tile flat color="grey lighten-4">
+                              <v-card-text>
+                                <h3 class="headline font-weight-medium mb-1">Gottesdienst</h3>
+                                <h3 class="body-3 mb-2">10:00 - 11:30 Uhr</h3>
+                                <p class="body-1">TschamlerstraBe 7<br/>
+                                6020 Innsbruck</p>
+                              </v-card-text>
+                            </v-card>
+                          </v-flex>
+                        </v-layout>
+                        <v-layout row class="mb-3">
+                          <v-flex d-flex md3 class="pa-0">
+                            <v-card dark tile flat color="dark">
+                              <v-card-text>
+                                <p class="body-2 text-xs-center">Sonntag<br/><span class="display-2">10</span><br />JUN 2018<br />10:00 Uhr</p>
+                              </v-card-text>
+                            </v-card>
+                          </v-flex>
+                          <v-flex d-flex md9 class="pa-0">
+                            <v-card light tile flat color="grey lighten-4">
+                              <v-card-text>
+                                <h3 class="headline font-weight-medium mb-1">Gottesdienst</h3>
+                                <h3 class="body-3 mb-2">10:00 - 11:30 Uhr</h3>
+                                <p class="body-1">TschamlerstraBe 7<br/>
+                                6020 Innsbruck</p>
+                              </v-card-text>
+                            </v-card>
+                          </v-flex>
+                        </v-layout>
                       </v-flex>
                       <v-flex xs12 md4 class="tabRight">
                         <v-btn flat block class="colorGreen ma-0 mb-3 py-2">
                           <v-icon class="mr-2">share</v-icon>Kirchengemeinde empfehlen
                         </v-btn>
-                        <v-btn flat block class="grey lighten-2 ma-0 mb-4 py-2">
+                        <v-btn flat block class="grey lighten-4 ma-0 mb-4 py-2">
                           <v-icon class>stars</v-icon>
                           <v-icon class>stars</v-icon>
                           <v-icon class>stars</v-icon>
@@ -382,12 +443,49 @@
                     <v-layout row wrap>
                       <v-flex xs12 md8>
                         <p class="headline">Jobs</p>
+                        <v-layout row class="mb-3">
+                          <v-flex d-flex md3 class="pa-0">
+                            <v-card dark tile flat color="dark">
+                              <v-card-text>
+                                <h1 class="display-3 text-xs-center">KIK</h1>
+                              </v-card-text>
+                            </v-card>
+                          </v-flex>
+                          <v-flex d-flex md9 class="pa-0">
+                            <v-card light tile flat color="grey lighten-4">
+                              <v-card-text>
+                                <h3 class="headline font-weight-medium mb-2">Poster<span class="right body-1">10.06.2018</span></h3>
+                                <p class="body-1">Vollzeit<br/>
+                                Kirche im Kino, Innsbruck (A)</p>
+                              </v-card-text>
+                            </v-card>
+                          </v-flex>
+                        </v-layout>
+                        <v-layout row>
+                          <v-flex d-flex md3 class="pa-0">
+                            <v-card dark tile flat color="dark">
+                              <v-card-text>
+                                <h1 class="display-3 text-xs-center">KIK</h1>
+                              </v-card-text>
+                            </v-card>
+                          </v-flex>
+                          <v-flex d-flex md9 class="pa-0">
+                            <v-card light tile flat color="grey lighten-4">
+                              <v-card-text>
+                                <h3 class="headline font-weight-medium mb-2">Jugend mitarbeiter<span class="right body-1">04.05.2018</span></h3>
+                                <p class="body-1">Ehrenamtlich<br/>
+                                Kirche im Kino, Innsbruck (A)</p>
+                                <p class="body-1">Die Kirche im Kino sucht zum nachstmoglichen zeitpunkt Uterstutzung in unserer Jugendgruppe.</p>
+                              </v-card-text>
+                            </v-card>
+                          </v-flex>
+                        </v-layout>
                       </v-flex>
                       <v-flex xs12 md4 class="tabRight">
                         <v-btn flat block class="colorGreen ma-0 mb-3 py-2">
                           <v-icon class="mr-2">share</v-icon>Kirchengemeinde empfehlen
                         </v-btn>
-                        <v-btn flat block class="grey lighten-2 ma-0 mb-4 py-2">
+                        <v-btn flat block class="grey lighten-4 ma-0 mb-4 py-2">
                           <v-icon class>stars</v-icon>
                           <v-icon class>stars</v-icon>
                           <v-icon class>stars</v-icon>
@@ -526,7 +624,7 @@
                         <v-btn flat block class="colorGreen ma-0 mb-3 py-2">
                           <v-icon class="mr-2">share</v-icon>Kirchengemeinde empfehlen
                         </v-btn>
-                        <v-btn flat block class="grey lighten-2 ma-0 mb-4 py-2">
+                        <v-btn flat block class="grey lighten-4 ma-0 mb-4 py-2">
                           <v-icon class>stars</v-icon>
                           <v-icon class>stars</v-icon>
                           <v-icon class>stars</v-icon>
