@@ -13,6 +13,9 @@ body {
     font-weight: normal;
     letter-spacing: 0.7px;
 }
+a, a:hover {
+    text-decoration: none;
+}
 .application {
     font-family: LinotypeUnivers-BasicRegular;
     font-weight: normal;
@@ -22,6 +25,39 @@ body {
         width: 100%;
     }
 }
+
+
+/* =========== Header =========== */
+.main-header button.hover-orange {
+    font-size: 12px;
+}
+.main-header button.hover-orange:hover {
+    background-color: #fa6e2f;
+}
+.main-header .smallHeader .v-btn {
+    height: 40px;
+    min-width: auto !important;
+    font-size: 12px;
+    border-bottom: 2px solid transparent;
+    border-radius: 0px;
+}
+.main-header .smallHeader button:hover {
+    background-color: #0b324f;
+    border-color: #fa6e2f;
+}
+.main-header .smallHeader .v-btn--active:before,
+.main-header .smallHeader .v-btn:focus:before,
+.main-header .smallHeader .v-btn:hover:before {
+    background-color: transparent
+}
+
+
+/* =========== Fixed NavBar =========== */
+.v-toolbar--fixed {
+    max-width: 1098px;
+    left: inherit;
+}
+
 
 /* =========== Home Banner =========== */
 .hbanner .display-1 {
@@ -58,9 +94,16 @@ body {
     border-bottom: 1px solid #EAEAEA;
 }
 .newsRoomSectionTop button {
+    text-transform: initial;
     border-radius: 0px;
 }
+.newsRoomSectionTop .v-btn--active:before,
+.newsRoomSectionTop .v-btn:focus:before,
+.newsRoomSectionTop .v-btn:hover:before {
+    background-color: transparent;
+}
 .newsRoomSectionTop button.btnTab {
+    min-width: auto;
     border-bottom: 4px solid #CCC;
     border-color: #333 !important;
 }
@@ -120,8 +163,21 @@ body {
 
 /* =========== Kitchen Finder =========== */
 /* ----- Kitchen Finder Top ----- */
-.kitchenFinderSectionTop {
-    
+.kitchenFinderSectionTop button.btnSuche {
+    height: 32px;
+    text-transform: initial;
+}
+.kitchenFinderSectionTop .v-text-field.v-text-field--solo .v-input__control {
+    font-size: 13px;
+}
+.kitchenFinderSectionTop .v-text-field.v-text-field--solo .v-input__control {
+    min-height: auto;
+}
+.kitchenFinderSectionTop .v-input__slot {
+    margin-bottom: 0px;
+}
+.kitchenFinderSectionTop .v-text-field.v-text-field--enclosed .v-text-field__details {
+    display: none;
 }
 /* ----- Kitchen Finder Filter ----- */
 .kitchenFinderSection .kitchenFinderFilter {
@@ -162,6 +218,7 @@ body {
     height: 35px;
 }
 .kitchenFinderSection .v-tabs__item {
+    font-size: 13px;
     text-transform: initial;
 }
 .kitchenFinderSection .v-tabs__content .v-btn {
@@ -199,6 +256,35 @@ body {
     box-shadow: none;
     position: relative;
 }
+/* .v-dialog__content .v-card::after {
+    content: '\f023';
+    font-family: FontAwesome;
+    font-size: 100px;
+    color: #FFF;
+    opacity: 1;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+} */
+.v-text-field.v-text-field--solo .v-input__control {
+    min-height: 40px;
+    font-size: 14px;
+}
+.v-input__slot {
+    margin-bottom: 4px;
+}
+.v-text-field.v-text-field--enclosed .v-text-field__details {
+    margin-bottom: 0px;
+}
+.v-dialog__content .btn-SignIn {
+    height: 40px;
+    font-size: 15px;
+    text-transform: initial;
+    background: #fa6e2f;
+}
+
+
+
 /* =========== Footer =========== */
 .v-footer, .v-footer .v-btn--small {
     font-size: 12px;

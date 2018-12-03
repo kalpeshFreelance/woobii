@@ -1,27 +1,25 @@
 <template>
   <v-content class="white">
     <section class="kitchenFinderSectionTop">
-      <v-container class="grey lighten-3 py-0">
+      <v-container class="grey lighten-3 py-2">
         <v-layout>
-          <v-flex xs6>
+          <v-flex xs12 md5>
             <v-form>
-              <v-text-field
-                flat
-                solo
-                class
-                placeholder="Gemeindename oder Stichwort einfugen"
-                append-icon="search"
-              ></v-text-field>
+              <v-text-field flat solo class placeholder="Gemeindename oder Stichwort einfugen" append-icon="search"></v-text-field>
             </v-form>
           </v-flex>
-          <v-flex xs6>Text</v-flex>
+          <v-flex xs12 md2>
+            <v-btn small flat class="grey lighten-3 right ma-0 black--text btnSuche">
+              Erweiterte Suche <v-icon class="ml-1">expand_more</v-icon>
+            </v-btn>
+          </v-flex>
         </v-layout>
       </v-container>
       <section class="newsRoomSectionTop">
         <v-container class="white py-0">
           <v-layout>
             <v-flex xs12>
-              <v-btn flat class="white black--text ma-0 text-lowercase btnTab">Kirchen</v-btn>
+              <v-btn flat class="white black--text ma-0 px-0 btnTab">Kirchen</v-btn>
             </v-flex>
           </v-layout>
         </v-container>

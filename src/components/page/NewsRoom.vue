@@ -4,10 +4,10 @@
       <v-container class="white py-0">
         <v-layout>
           <v-flex xs6>
-            <v-btn flat class="white black--text ma-0 text-lowercase btnTab">Kirchen</v-btn>
+            <v-btn flat class="white black--text ma-0 px-0 btnTab">Kirchen</v-btn>
           </v-flex>
           <v-flex xs6>
-            <v-btn flat class="grey lighten-2 ma-0 right black--text text-lowercase">
+            <v-btn flat class="grey lighten-2 ma-0 right black--text">
               <v-icon class="mr-2">folder</v-icon>0 Lightbox
             </v-btn>
           </v-flex>
