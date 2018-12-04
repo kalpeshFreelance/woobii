@@ -1,5 +1,5 @@
 @font-face {
-    font-family: "LinotypeUnivers-BasicRegular";
+    font-family: 'LinotypeUnivers-BasicRegular';
     font-style: normal;
     font-weight: 400;
     src: url('../fonts/LinotypeUnivers-BasicRegular.otf');
@@ -9,15 +9,15 @@ body {
     margin: auto;
     background: #F5F5F5;
     overflow: hidden;
-    font-family: LinotypeUnivers-BasicRegular;
+    font-family: 'LinotypeUnivers-BasicRegular' !important;
     font-weight: normal;
-    letter-spacing: 0.7px;
+    letter-spacing: 0.7px !important;
 }
 a, a:hover {
     text-decoration: none;
 }
 .application {
-    font-family: LinotypeUnivers-BasicRegular;
+    font-family: 'LinotypeUnivers-BasicRegular' !important;
     font-weight: normal;
 }
 @media screen and (max-width: 992px) {
@@ -26,6 +26,9 @@ a, a:hover {
     }
 }
 
+button, .display-1, .display-2, .body-1, .body-2, .body-3, .title, .subheading, .headline, .v-list, .flex, .caption, .v-chip, .v-tabs {
+    font-family: 'LinotypeUnivers-BasicRegular' !important;
+}
 
 /* =========== Header =========== */
 .main-header button.hover-orange {
