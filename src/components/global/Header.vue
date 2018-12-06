@@ -127,7 +127,7 @@
             <span>Newsroom</span>
           </v-tooltip>
         </router-link>
-        <router-link to="/kitrchenfinderLocation">
+        <router-link to="/kitrchenfinder">
           <v-tooltip bottom>
             <v-btn slot="activator" class="ma-0 mx-3 px-0 hidden-md-and-down" flat>Kirchenfinder</v-btn>
             <span>Kirchenfinder</span>
@@ -164,7 +164,7 @@
             <span>Newsroom</span>
           </v-tooltip>
         </router-link>
-        <router-link to="/kitrchenfinderLocation">
+        <router-link to="/kitrchenfinder">
           <v-tooltip bottom>
             <v-btn slot="activator" class="ma-0 mx-3 px-0 hidden-md-and-down" flat>Kirchenfinder</v-btn>
             <span>Kirchenfinder</span>
@@ -226,7 +226,7 @@
           <v-list-tile-action>
             <v-icon>track_changes</v-icon>
           </v-list-tile-action>
-          <router-link to="/kitrchenfinderLocation">
+          <router-link to="/kitrchenfinder">
             <v-list-tile-content @click.stop="drawer = !drawer">
               <v-list-tile-title>Kirchenfinder</v-list-tile-title>
             </v-list-tile-content>
