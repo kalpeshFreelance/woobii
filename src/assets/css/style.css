@@ -47,6 +47,7 @@ button, .display-1, .display-2, .body-1, .body-2, .body-3, .title, .subheading, 
 .main-header .smallHeader button:hover {
     background-color: #0b324f;
     border-color: #fa6e2f;
+    color: #fa6e2f;
 }
 .main-header .smallHeader .v-btn--active:before,
 .main-header .smallHeader .v-btn:focus:before,
@@ -69,6 +70,22 @@ button, .display-1, .display-2, .body-1, .body-2, .body-3, .title, .subheading, 
 .hbanner .subheading {
     line-height: 30px !important;
 }
+@media screen and (max-width: 992px) {
+    .hbanner .display-1 {
+        margin-bottom: 5px;
+        font-size: 15px !important;
+        line-height: 20px !important;
+    }
+    .hbanner .subheading {
+        display: none;
+    }
+    .hbanner .v-btn {
+        height: auto;
+        padding: 8px 15px;
+        font-size: 15px;
+        text-transform: initial;
+    }
+}
 
 /* =========== Home Packages =========== */
 .hpackages .v-card__title {
@@ -88,7 +105,21 @@ button, .display-1, .display-2, .body-1, .body-2, .body-3, .title, .subheading, 
     font-size: 14px;
     color: #757575;
 }
-
+@media screen and (max-width: 992px) {
+    .hpackages h2.headline {
+        font-size: 15px !important;
+        line-height: 22px !important;
+    }
+    .hpackages .v-list .v-list__tile__action {
+        min-width: 22px;
+    }
+    .hpackages .v-list .material-icons {
+        font-size: 16px !important;
+    }
+    .hpackages .v-list .v-list__tile__title {
+        font-size: 13px !important;
+    }
+}
 
 /* =========== News Room =========== */
 
@@ -117,6 +148,17 @@ button, .display-1, .display-2, .body-1, .body-2, .body-3, .title, .subheading, 
 .newsRoomSection .v-tabs__wrapper .v-tabs__slider {
     height: 3px;
 } */
+@media screen and (max-width: 992px) {
+    .newsRoomSectionTop button {
+        height: 30px;
+        padding: 0px 10px;
+        font-size: 13px;
+        letter-spacing: 0.6px;
+    }
+    .newsRoomSectionTop button .v-icon {
+        font-size: 18px;
+    }
+}
 
 /* ----- News Room Filter ----- */
 .newsRoomSection .newsRoomFilter {
@@ -171,10 +213,8 @@ button, .display-1, .display-2, .body-1, .body-2, .body-3, .title, .subheading, 
     text-transform: initial;
 }
 .kitchenFinderSectionTop .v-text-field.v-text-field--solo .v-input__control {
-    font-size: 13px;
-}
-.kitchenFinderSectionTop .v-text-field.v-text-field--solo .v-input__control {
     min-height: auto;
+    font-size: 13px;
 }
 .kitchenFinderSectionTop .v-input__slot {
     margin-bottom: 0px;
@@ -182,6 +222,17 @@ button, .display-1, .display-2, .body-1, .body-2, .body-3, .title, .subheading, 
 .kitchenFinderSectionTop .v-text-field.v-text-field--enclosed .v-text-field__details {
     display: none;
 }
+@media screen and (max-width: 992px) {
+    .kitchenFinderSectionTop .v-text-field.v-text-field--solo .v-input__control {
+        min-height: auto;
+        font-size: 12px;
+    }
+    .kitchenFinderSectionTop button.btnSuche {
+        float: left !important;
+        margin-top: 5px !important;
+    }
+}
+
 /* ----- Kitchen Finder Filter ----- */
 .kitchenFinderSection .kitchenFinderFilter {
     -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,.25);
@@ -242,6 +293,21 @@ button, .display-1, .display-2, .body-1, .body-2, .body-3, .title, .subheading, 
     color: #212121;
     text-decoration: initial;
 }
+@media screen and (max-width: 992px) {
+    .kitchenFinderSection .v-tabs__item {
+        font-size: 12px;
+        padding: 6px 10px;
+    }
+    .kitchenFinderSection .v-tabs__content .headline {
+        font-size: 20px !important;
+        line-height: 29px !important;
+        margin-bottom: 10px;
+    }
+    .kitchenFinderSection .v-tabs__content .body-1 {
+        font-size: 13px !important;
+        margin-bottom: 10px;
+    }
+}
 
 
 /* =========== Dialog =========== */
@@ -291,4 +357,13 @@ button, .display-1, .display-2, .body-1, .body-2, .body-3, .title, .subheading, 
 /* =========== Footer =========== */
 .v-footer, .v-footer .v-btn--small {
     font-size: 12px;
+}
+@media screen and (max-width: 992px) {
+    .v-footer, .v-footer .v-btn--small {
+        height: 22px;
+        min-width: initial;
+        font-size: 11px;
+        letter-spacing: 1px;
+        padding: 0px;
+    }   
 }

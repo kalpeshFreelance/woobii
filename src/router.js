@@ -33,6 +33,11 @@ export default new Router({
       ]*/
     },
     {
+      path: '/newsroomDetail',
+      name: 'newsroomDetail',
+      component: NewsRoomDetail
+    },
+    {
       path: '/solution',
       name: 'solution',
       component: Solution

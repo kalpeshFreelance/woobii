@@ -2,7 +2,7 @@
   <v-content class="white">
     <section class="kitchenFinderSectionTop">
       <v-container class="grey lighten-3 py-2">
-        <v-layout>
+        <v-layout row wrap>
           <v-flex xs12 md5>
             <v-form>
               <v-text-field flat solo class placeholder="Gemeindename oder Stichwort einfugen" append-icon="search"></v-text-field>
