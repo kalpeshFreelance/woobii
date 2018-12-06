@@ -4,10 +4,10 @@
       <v-container class="white py-0">
         <v-layout>
           <v-flex xs6>
-            <v-btn flat class="white black--text ma-0 text-lowercase btnTab">Kirchen</v-btn>
+            <v-btn flat class="white black--text ma-0 px-0 btnTab">Kirchen</v-btn>
           </v-flex>
           <v-flex xs6>
-            <v-btn flat class="grey lighten-2 ma-0 right black--text text-lowercase">
+            <v-btn flat class="grey lighten-2 ma-0 right black--text">
               <v-icon class="mr-2">folder</v-icon>0 Lightbox
             </v-btn>
           </v-flex>
@@ -104,15 +104,44 @@
           </v-flex>
           <v-flex xs12 md3 class="newsRight">
             <v-card flat color="white">
+              <v-btn depressed dark block class="grey darken-4 mb-0">
+                <v-icon small dark class="mr-2">edit</v-icon>Presseaussondunegn
+              </v-btn>
+              <v-btn depressed outline block class="mt-0 mb-2">
+                ATP Stanorte
+              </v-btn>
+              <v-btn depressed outline block class="mb-2">
+                <v-icon small dark class="mr-2">edit</v-icon>Downloads
+              </v-btn>
+              <v-btn depressed outline block color="mb-2">
+                <v-icon small dark class="mr-2">edit</v-icon>Pressekontakt
+              </v-btn>
               <v-divider class="my-3"></v-divider>
               <p class="caption mb-2">Alie Inhalte dieser Meldung als .zip:</p>
               <v-btn depressed dark block color="grey darken-4 mb-2">
                 <v-icon small dark class="mr-2">file_download</v-icon>Sofort downloaden
               </v-btn>
               <v-btn depressed dark block color="grey darken-4">
-                <v-icon small dark class="mr-2">file_download</v-icon>Sofort downloaden
+                <v-icon small dark class="mr-2">folder</v-icon>Sofort downloaden
               </v-btn>
               <v-divider class="my-3"></v-divider>
+              <h2 class="subheading font-weight-bold mb-3">
+                <v-icon small class="black--text mr-2">camera_alt</v-icon>
+                Bilder
+                <v-icon class="right black--text ml-2">keyboard_arrow_right</v-icon>
+              </h2>
+              <v-img src="https://cdn.vuetifyjs.com/images/cards/desert.jpg" class="mb-2"></v-img>
+              <v-img src="https://cdn.vuetifyjs.com/images/cards/desert.jpg" class="mb-2"></v-img>
+              <v-divider class="my-3"></v-divider>
+              <h2 class="subheading font-weight-bold mb-3">
+                <v-icon small class="black--text mr-2">edit</v-icon>
+                Bilder
+                <v-icon class="right black--text ml-2">keyboard_arrow_right</v-icon>
+              </h2>
+              <p class="caption mb-2">demo- 152769333-1527673223</p>
+              <router-link to="/" class="caption mb-2">
+                <p>.docs | 1.25 MB<v-icon small class="right black--text ml-2">edit</v-icon></p>
+              </router-link>
               <v-divider class="my-3"></v-divider>
               <h2 class="subheading font-weight-bold mb-2">Pressekontakt</h2>
               <v-img src="https://cdn.vuetifyjs.com/images/cards/desert.jpg" class="mb-2"></v-img>
