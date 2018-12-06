@@ -5,12 +5,22 @@
         <v-layout row wrap>
           <v-flex xs12 md5>
             <v-form>
-              <v-text-field flat solo class placeholder="Gemeindename oder Stichwort einfugen" append-icon="search"></v-text-field>
+              <v-text-field
+                flat
+                solo
+                class
+                placeholder="Gemeindename oder Stichwort einfugen"
+                append-icon="search"
+              ></v-text-field>
             </v-form>
           </v-flex>
           <v-flex xs12 md2>
-            <v-btn small flat class="grey lighten-3 right ma-0 black--text btnSuche">
-              Erweiterte Suche <v-icon class="ml-1">expand_more</v-icon>
+            <v-btn
+              small
+              flat
+              class="grey lighten-3 right ma-0 black--text btnSuche"
+            >Erweiterte Suche
+              <v-icon class="ml-1">expand_more</v-icon>
             </v-btn>
           </v-flex>
         </v-layout>
@@ -69,12 +79,49 @@
                       </v-flex>
                     </v-layout>
                   </v-card-text>
-                  <v-img src="https://cdn.vuetifyjs.com/images/cards/desert.jpg"></v-img>
+                  <GmapMap
+                    :center="{lat:18.5596581, lng:73.7799374}"
+                    :zoom="7"
+                    map-type-id="roadmap"
+                    style="width: 100%; height: 450px"
+                  >
+                    <GmapMarker
+                      :key="index"
+                      v-for="(m, index) in markers"
+                      :position="m.position"
+                      :clickable="true"
+                      :draggable="true"
+                      @click="center=m.position"
+                    />
+                  </GmapMap>
+                  <!-- <v-img src="https://cdn.vuetifyjs.com/images/cards/desert.jpg"></v-img> -->
                 </v-card>
               </v-flex>
             </v-layout>
-            <v-layout row wrap>
-              <v-flex d-flex xs12 md4>
+            <v-layout row wrap v-if="churchesList">
+              <v-flex d-flex xs12 md4 v-for="churche in churchesList">
+                <v-card flat color="white" class="kFinderWrap">
+                  <v-img src="https://cdn.vuetifyjs.com/images/cards/desert.jpg"></v-img>
+                  <v-card-text class="pa-0">
+                    <h4 class="body-1 my-2">{{ churche.title }}</h4>
+                    <div>
+                      <v-chip small label dark class="white--text ma-0">Top Gemeinde</v-chip>
+                    </div>
+                    <div class="my-2">
+                      <v-icon small class="black--text">star</v-icon>
+                      <v-icon small class="black--text">star</v-icon>
+                      <v-icon small class="black--text">star</v-icon>
+                      <v-icon small class="black--text">star_half</v-icon>
+                      <v-icon small class="black--text">star_border</v-icon>
+                      <span class="body-1 font-weight-bold ml-2">4,49</span>
+                    </div>
+                    <a :href="'/kitrchenfinder/'+churche.slug" class="caption black--text">
+                      <v-icon small class="black--text">chevron_right</v-icon>Zur Gemeinde
+                    </a>
+                  </v-card-text>
+                </v-card>
+              </v-flex>
+              <!-- <v-flex d-flex xs12 md4>
                 <v-card flat color="white" class="kFinderWrap">
                   <v-img src="https://cdn.vuetifyjs.com/images/cards/desert.jpg"></v-img>
                   <v-card-text class="pa-0">
@@ -139,29 +186,7 @@
                     </a>
                   </v-card-text>
                 </v-card>
-              </v-flex>
-              <v-flex d-flex xs12 md4>
-                <v-card flat color="white" class="kFinderWrap">
-                  <v-img src="https://cdn.vuetifyjs.com/images/cards/desert.jpg"></v-img>
-                  <v-card-text class="pa-0">
-                    <h4 class="body-1 my-2">Every Nation Innsbruck</h4>
-                    <div>
-                      <v-chip small label dark class="white--text ma-0">Top Gemeinde</v-chip>
-                    </div>
-                    <div class="my-2">
-                      <v-icon small class="black--text">star</v-icon>
-                      <v-icon small class="black--text">star</v-icon>
-                      <v-icon small class="black--text">star</v-icon>
-                      <v-icon small class="black--text">star_half</v-icon>
-                      <v-icon small class="black--text">star_border</v-icon>
-                      <span class="body-1 font-weight-bold ml-2">4,49</span>
-                    </div>
-                    <a href class="caption black--text">
-                      <v-icon small class="black--text">chevron_right</v-icon>Zur Gemeinde
-                    </a>
-                  </v-card-text>
-                </v-card>
-              </v-flex>
+              </v-flex>-->
             </v-layout>
           </v-flex>
         </v-layout>
@@ -171,6 +196,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "App",
   data() {
@@ -181,12 +208,18 @@ export default {
       items: [
         { title: "Home", icon: "dashboard" },
         { title: "About", icon: "question_answer" }
-      ]
+      ],
+      markers: [
+        { lat: 18.5596581, lng: 73.7799374 },
+        { lat: 18.574692, lng: 73.76381700000002 }
+      ],
+      churchesList: []
     };
   },
   mounted() {
     this.onResize();
     window.addEventListener("resize", this.onResize, { passive: true });
+    this.churchlist();
   },
   beforeDestroy() {
     if (typeof window !== "undefined") {
@@ -196,6 +229,40 @@ export default {
   methods: {
     onResize() {
       this.isMobile = window.innerWidth < 750;
+    },
+    churchlist: function() {
+      var e = this;
+      axios
+        .get("/churcheview/churchelist")
+        .then(function(response) {
+          if (response.data.status == true) {
+            console.log(response.data.churches);
+            e.churchesList = response.data.churches;
+          }
+          // console.log(response.data);
+          // console.log(response.status);
+          // console.log(response.statusText);
+          // console.log(response.headers);
+          // console.log(response.config);
+        })
+        .catch(function(error) {
+          if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          } else if (error.request) {
+            // The request was made but no response was received
+            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+            // http.ClientRequest in node.js
+            console.log(error.request);
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            console.log("Error", error.message);
+          }
+          console.log(error.config);
+        });
     }
   }
 };

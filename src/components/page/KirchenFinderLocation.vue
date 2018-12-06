@@ -5,12 +5,22 @@
         <v-layout>
           <v-flex xs12 md5>
             <v-form>
-              <v-text-field flat solo class placeholder="Gemeindename oder Stichwort einfugen" append-icon="search"></v-text-field>
+              <v-text-field
+                flat
+                solo
+                class
+                placeholder="Gemeindename oder Stichwort einfugen"
+                append-icon="search"
+              ></v-text-field>
             </v-form>
           </v-flex>
           <v-flex xs12 md2>
-            <v-btn small flat class="grey lighten-3 right ma-0 black--text btnSuche">
-              Erweiterte Suche <v-icon class="ml-1">expand_more</v-icon>
+            <v-btn
+              small
+              flat
+              class="grey lighten-3 right ma-0 black--text btnSuche"
+            >Erweiterte Suche
+              <v-icon class="ml-1">expand_more</v-icon>
             </v-btn>
           </v-flex>
         </v-layout>
@@ -25,12 +35,12 @@
         </v-container>
       </section>
     </section>
-    <section class="kitchenFinderSection">
+    <section class="kitchenFinderSection" v-if="churchesData">
       <v-container fluid grid-list-xl>
         <v-layout row wrap justify-center class="kirchenTopDetails">
           <v-flex xs12 md4>
-            <v-img src="http://dev.woobii.com/html/images/kik.png" max-width="175" class="mb-3"></v-img>
-            <p class="headline mb-2">Kirche in Kino</p>
+            <v-img v-if= "churchesData[0].logo" :src="'/admin/'+churchesData[0].logo" max-width="175" class="mb-3"></v-img>
+            <p class="headline mb-2">{{ churchesData[0].title }}</p>
             <p class="subheading mb-2">FKÖ
               <br>
               <span class="caption">Freikirchen in Österreich</span>
@@ -39,7 +49,7 @@
               <br>
               <span class="caption">Österreich</span>
             </p>
-            <p class="subheading mb-2">100-200
+            <p class="subheading mb-2">{{ churchesData[0].visitor_range }}
               <br>
               <span class="caption">Besucher</span>
             </p>
@@ -70,16 +80,8 @@
                     <v-layout row wrap>
                       <v-flex xs12 md8>
                         <p class="headline">Über uns</p>
-                        <p
-                          class="body-1 font-weight-bold"
-                        >Gemeinsam in Bewegun. Mit Chrustus im Zentrum.</p>
-                        <p
-                          class="body-1"
-                        >Unsere Kirchengemeinde ist dazu, den dreienigen Gott in allem, was sie tut, zu verherrlichen und sich an ihm zu freuen, indem sie auf Gott hort ihn durch Wort und Tat lobt.</p>
-                        <p
-                          class="body-1"
-                        >Lorem ipsum dolor sit amet, cu eum alienum nominavi, qui sumo decore ei. Vis erat salutandi adipiscing eu, eam fabellas mnesarchum ei. Ad has omnes adolescens, summo nobis explicari duo in. Eum quis amet impedit eu, an duo brute indoctum. Mei fastidii consetetur et.</p>
-                        <p class="body-1">Wir wollen damit Gott die Ehre geben.</p>
+                        {{ churchesData[0].about_us }}
+
                         <p class="body-1 font-weight-bold">
                           <v-icon small class="black--text mr-1">expand_more</v-icon>Weiterlesen
                         </p>
@@ -240,8 +242,13 @@
                             <v-card flat color="white" class="grey lighten-4">
                               <v-img src="https://cdn.vuetifyjs.com/images/cards/desert.jpg"></v-img>
                               <v-card-text>
-                                <h4 class="body-1 my-2"><span class="font-weight-bold">Ausland</span><span class="ml-2" style="color:#fa6e2f;">|</span> Israel</h4>
-                                <h4 class="body-1 my-2">70 Jahre Staat Israel: Evangelischer Oberkichenrat gratuliert</h4>
+                                <h4 class="body-1 my-2">
+                                  <span class="font-weight-bold">Ausland</span>
+                                  <span class="ml-2" style="color:#fa6e2f;">|</span> Israel
+                                </h4>
+                                <h4
+                                  class="body-1 my-2"
+                                >70 Jahre Staat Israel: Evangelischer Oberkichenrat gratuliert</h4>
                               </v-card-text>
                             </v-card>
                           </v-flex>
@@ -249,8 +256,13 @@
                             <v-card flat color="white" class="grey lighten-4">
                               <v-img src="https://cdn.vuetifyjs.com/images/cards/desert.jpg"></v-img>
                               <v-card-text>
-                                <h4 class="body-1 my-2"><span class="font-weight-bold">Ausland</span><span class="ml-2" style="color:#fa6e2f;">|</span> Israel</h4>
-                                <h4 class="body-1 my-2">70 Jahre Staat Israel: Evangelischer Oberkichenrat gratuliert</h4>
+                                <h4 class="body-1 my-2">
+                                  <span class="font-weight-bold">Ausland</span>
+                                  <span class="ml-2" style="color:#fa6e2f;">|</span> Israel
+                                </h4>
+                                <h4
+                                  class="body-1 my-2"
+                                >70 Jahre Staat Israel: Evangelischer Oberkichenrat gratuliert</h4>
                               </v-card-text>
                             </v-card>
                           </v-flex>
@@ -359,7 +371,12 @@
                           <v-flex d-flex md3 class="pa-0">
                             <v-card dark tile flat color="dark">
                               <v-card-text>
-                                <p class="body-2 text-xs-center">Sonntag<br/><span class="display-2">10</span><br />JUN 2018<br />10:00 Uhr</p>
+                                <p class="body-2 text-xs-center">Sonntag
+                                  <br>
+                                  <span class="display-2">10</span>
+                                  <br>JUN 2018
+                                  <br>10:00 Uhr
+                                </p>
                               </v-card-text>
                             </v-card>
                           </v-flex>
@@ -368,8 +385,9 @@
                               <v-card-text>
                                 <h3 class="headline font-weight-medium mb-1">Gottesdienst</h3>
                                 <h3 class="body-3 mb-2">10:00 - 11:30 Uhr</h3>
-                                <p class="body-1">TschamlerstraBe 7<br/>
-                                6020 Innsbruck</p>
+                                <p class="body-1">TschamlerstraBe 7
+                                  <br>6020 Innsbruck
+                                </p>
                               </v-card-text>
                             </v-card>
                           </v-flex>
@@ -378,7 +396,12 @@
                           <v-flex d-flex md3 class="pa-0">
                             <v-card dark tile flat color="dark">
                               <v-card-text>
-                                <p class="body-2 text-xs-center">Sonntag<br/><span class="display-2">10</span><br />JUN 2018<br />10:00 Uhr</p>
+                                <p class="body-2 text-xs-center">Sonntag
+                                  <br>
+                                  <span class="display-2">10</span>
+                                  <br>JUN 2018
+                                  <br>10:00 Uhr
+                                </p>
                               </v-card-text>
                             </v-card>
                           </v-flex>
@@ -387,8 +410,9 @@
                               <v-card-text>
                                 <h3 class="headline font-weight-medium mb-1">Gottesdienst</h3>
                                 <h3 class="body-3 mb-2">10:00 - 11:30 Uhr</h3>
-                                <p class="body-1">TschamlerstraBe 7<br/>
-                                6020 Innsbruck</p>
+                                <p class="body-1">TschamlerstraBe 7
+                                  <br>6020 Innsbruck
+                                </p>
                               </v-card-text>
                             </v-card>
                           </v-flex>
@@ -454,9 +478,12 @@
                           <v-flex d-flex md9 class="pa-0">
                             <v-card light tile flat color="grey lighten-4">
                               <v-card-text>
-                                <h3 class="headline font-weight-medium mb-2">Poster<span class="right body-1">10.06.2018</span></h3>
-                                <p class="body-1">Vollzeit<br/>
-                                Kirche im Kino, Innsbruck (A)</p>
+                                <h3 class="headline font-weight-medium mb-2">Poster
+                                  <span class="right body-1">10.06.2018</span>
+                                </h3>
+                                <p class="body-1">Vollzeit
+                                  <br>Kirche im Kino, Innsbruck (A)
+                                </p>
                               </v-card-text>
                             </v-card>
                           </v-flex>
@@ -472,10 +499,15 @@
                           <v-flex d-flex md9 class="pa-0">
                             <v-card light tile flat color="grey lighten-4">
                               <v-card-text>
-                                <h3 class="headline font-weight-medium mb-2">Jugend mitarbeiter<span class="right body-1">04.05.2018</span></h3>
-                                <p class="body-1">Ehrenamtlich<br/>
-                                Kirche im Kino, Innsbruck (A)</p>
-                                <p class="body-1">Die Kirche im Kino sucht zum nachstmoglichen zeitpunkt Uterstutzung in unserer Jugendgruppe.</p>
+                                <h3 class="headline font-weight-medium mb-2">Jugend mitarbeiter
+                                  <span class="right body-1">04.05.2018</span>
+                                </h3>
+                                <p class="body-1">Ehrenamtlich
+                                  <br>Kirche im Kino, Innsbruck (A)
+                                </p>
+                                <p
+                                  class="body-1"
+                                >Die Kirche im Kino sucht zum nachstmoglichen zeitpunkt Uterstutzung in unserer Jugendgruppe.</p>
                               </v-card-text>
                             </v-card>
                           </v-flex>
@@ -672,6 +704,7 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "KitrchenFinderLocation",
   data() {
@@ -682,12 +715,14 @@ export default {
       items: [
         { title: "Home", icon: "dashboard" },
         { title: "About", icon: "question_answer" }
-      ]
+      ],
+      churchesData : []
     };
   },
   mounted() {
     this.onResize();
     window.addEventListener("resize", this.onResize, { passive: true });
+    this.churchdata(this.$route.params.slug);
   },
   beforeDestroy() {
     if (typeof window !== "undefined") {
@@ -697,6 +732,40 @@ export default {
   methods: {
     onResize() {
       this.isMobile = window.innerWidth < 750;
+    },
+    churchdata: function(slug) {
+      var e = this;
+      axios
+        .get("/churcheview/churche?s="+slug)
+        .then(function(response) {
+          if (response.data.status == true) {
+            console.log(response.data.churche);
+            e.churchesData = response.data.churche;
+          }
+          // console.log(response.data);
+          // console.log(response.status);
+          // console.log(response.statusText);
+          // console.log(response.headers);
+          // console.log(response.config);
+        })
+        .catch(function(error) {
+          if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          } else if (error.request) {
+            // The request was made but no response was received
+            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+            // http.ClientRequest in node.js
+            console.log(error.request);
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            console.log("Error", error.message);
+          }
+          console.log(error.config);
+        });
     }
   }
 };
