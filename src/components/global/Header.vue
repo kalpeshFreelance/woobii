@@ -13,16 +13,17 @@
           <v-btn slot="activator" flat class="hover-orange">Einloggen</v-btn>
           <span>Einloggen</span>
         </v-tooltip> -->
-        <v-dialog v-model="dialog" max-width="600px">
-          <v-btn slot="activator" flat class="hover-orange">KOSTENLOS ANMELDEN</v-btn>
+        <v-btn slot="activator" flat class="hover-orange" @click="register = true">Kostenlos Anmelden</v-btn>
+        <v-dialog v-model="register" max-width="600px">
           <v-card dark>
             <v-card-text>
               <v-container grid-list-md>
+                <v-icon small class="mr-2 lockIcon">lock</v-icon>
                 <h1 class="display-2 text-md-center mb-2">Registrierung</h1>
                 <h2 class="display-1 text-md-center mb-2" style="color:#fa6e2f">woobii Plus</h2>
                 <p class="body-2 text-md-center mb-4">30 Tage gratis testen<br />
                 dann 19,99  pro Monat (oder 199,99  pro Jahr)</p>
-                <v-layout wrap>
+                <v-layout row wrap>
                   <v-flex xs12 md10 offset-md1>
                     <v-autocomplete light placeholder="Gemeindetyp" solo></v-autocomplete>
                   </v-flex>
@@ -47,10 +48,10 @@
                   <v-flex xs12 md10 offset-md1>
                     <v-btn block flat class="btn-SignIn">Registrieren</v-btn>
                   </v-flex>
-                  <v-flex xs12 md6>
+                  <v-flex xs6>
                     <v-btn outline color="white" class="right"><v-icon small class="mr-2">fab fa-facebook-f</v-icon> Facebook</v-btn>
                   </v-flex>
-                  <v-flex xs12 md6>
+                  <v-flex xs6>
                     <v-btn outline color="white"><v-icon small class="mr-2">fab fa-twitter</v-icon> Twitter</v-btn>
                   </v-flex>
                 </v-layout>
@@ -58,13 +59,14 @@
             </v-card-text>
           </v-card>
         </v-dialog>
-        <v-dialog v-model="dialog" max-width="600px">
-          <v-btn slot="activator" flat class="hover-orange">Einloggen</v-btn>
+        <v-btn slot="activator" flat class="hover-orange" @click="login = true">Einloggen</v-btn>
+        <v-dialog v-model="login" max-width="600px">
           <v-card dark>
             <v-card-text>
               <v-container grid-list-md>
+                <v-icon small class="mr-2 lockIcon">lock</v-icon>
                 <h1 class="display-2 text-md-center mb-4">WooBii Login</h1>
-                <v-layout wrap>
+                <v-layout row wrap>
                   <v-flex xs12 md10 offset-md1>
                     <v-text-field light placeholder="Username..." solo></v-text-field>
                   </v-flex>
@@ -75,13 +77,31 @@
                     <v-btn block flat class="btn-SignIn">Sign in!</v-btn>
                   </v-flex>
                   <v-flex xs12 class="text-xs-center">
-                    <router-link to="/" class="body-1 white--text">Passwort vergessen</router-link>
+                    <span class="body-1 white--text"  @click="login = false,password = !password" >Passwort vergessen</span>
                   </v-flex>
-                  <v-flex xs12 md6>
+                  <v-flex xs6>
                     <v-btn outline color="white" class="right"><v-icon small class="mr-2">fab fa-facebook-f</v-icon> Facebook</v-btn>
                   </v-flex>
-                  <v-flex xs12 md6>
+                  <v-flex xs6>
                     <v-btn outline color="white"><v-icon small class="mr-2">fab fa-twitter</v-icon> Twitter</v-btn>
+                  </v-flex>
+                </v-layout>
+              </v-container>
+            </v-card-text>
+          </v-card>
+        </v-dialog>
+        <v-dialog v-model="password" max-width="600px">
+          <v-card dark>
+            <v-card-text>
+              <v-container grid-list-md>
+                <v-icon small class="mr-2 lockIcon">lock</v-icon>
+                <h1 class="display-2 text-md-center mb-4">Passwort Vergessen</h1>
+                <v-layout row wrap>
+                  <v-flex xs12 md10 offset-md1>
+                    <v-text-field light placeholder="Emailadresse..." solo></v-text-field>
+                  </v-flex>
+                  <v-flex xs12 md10 offset-md1>
+                    <v-btn block flat class="btn-SignIn">Einreichen</v-btn>
                   </v-flex>
                 </v-layout>
               </v-container>
@@ -251,6 +271,9 @@ export default {
   data() {
     return {
       // baseUrl: process.env.BASE_URL
+      register: false,
+      login: false,
+      password: false,
       isMobile: false,
       drawer: null,
       fixed: true,

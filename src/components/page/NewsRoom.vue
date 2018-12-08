@@ -21,7 +21,7 @@
             <v-card flat color="white" class="newsRoomFilter">
               <v-card-text>
                 <v-form>
-                  <v-text-field placeholder="Placeholder" append-icon="search"></v-text-field>
+                  <v-text-field placeholder="Placeholder" append-icon="search" class="searchInput"></v-text-field>
                   <v-select :items="items" label="Gemeindetyp:" placeholder="Bitte auswählen"></v-select>
                   <v-select :items="items" label="Ressort:" placeholder="Bitte auswählen"></v-select>
                   <v-select :items="items" label="Subressort:" placeholder="Stichwort einfügen"></v-select>

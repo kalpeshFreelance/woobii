@@ -36,7 +36,7 @@
             <v-card flat color="white">
               <v-tabs slider-color="deep-orange accent-3">
                 <v-tab>Text</v-tab>
-                <v-tab>Bilder</v-tab>
+                <v-tab  v-model="selectedTab">Bilder</v-tab>
                 <v-tab>Dokument</v-tab>
                 <v-tab-item>
                   <v-card flat>
@@ -91,12 +91,12 @@
                 </v-tab-item>
                 <v-tab-item>
                   <v-card flat>
-                    <v-card-text>Bilder Text</v-card-text>
+                    <v-card-text class="px-0">Bilder Text</v-card-text>
                   </v-card>
                 </v-tab-item>
                 <v-tab-item>
                   <v-card flat>
-                    <v-card-text>Dokument Text</v-card-text>
+                    <v-card-text class="px-0">Dokument Text</v-card-text>
                   </v-card>
                 </v-tab-item>
               </v-tabs>
@@ -104,24 +104,24 @@
           </v-flex>
           <v-flex xs12 md3 class="newsRight">
             <v-card flat color="white">
-              <v-btn depressed dark block class="grey darken-4 mb-0">
+              <v-btn depressed dark block class="grey darken-4 mb-0 textLeft">
                 <v-icon small dark class="mr-2">edit</v-icon>Presseaussondunegn
               </v-btn>
-              <v-btn depressed outline block class="mt-0 mb-2">
-                ATP Stanorte
+              <v-btn depressed outline block class="mt-0 mb-2 textLeft">
+                <span class="pl-4">ATP Stanorte</span>
               </v-btn>
-              <v-btn depressed outline block class="mb-2">
+              <v-btn depressed outline block class="mb-2 textLeft">
                 <v-icon small dark class="mr-2">edit</v-icon>Downloads
               </v-btn>
-              <v-btn depressed outline block color="mb-2">
+              <v-btn depressed outline block class="mb-2 textLeft">
                 <v-icon small dark class="mr-2">edit</v-icon>Pressekontakt
               </v-btn>
               <v-divider class="my-3"></v-divider>
               <p class="caption mb-2">Alie Inhalte dieser Meldung als .zip:</p>
-              <v-btn depressed dark block color="grey darken-4 mb-2">
+              <v-btn depressed dark block color="grey darken-4 mb-2 hoverCustom">
                 <v-icon small dark class="mr-2">file_download</v-icon>Sofort downloaden
               </v-btn>
-              <v-btn depressed dark block color="grey darken-4">
+              <v-btn depressed dark block color="grey darken-4 hoverCustom">
                 <v-icon small dark class="mr-2">folder</v-icon>Sofort downloaden
               </v-btn>
               <v-divider class="my-3"></v-divider>

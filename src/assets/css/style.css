@@ -169,6 +169,41 @@ button, .display-1, .display-2, .body-1, .body-2, .body-3, .title, .subheading, 
     -moz-border-radius: 2px;
     border-radius: 2px;
 }
+.newsRoomSection .newsRoomFilter .v-text-field>.v-input__control>.v-input__slot:before {
+    border-style: hidden;
+}
+.newsRoomSection .newsRoomFilter .theme--light.v-label {
+    top: -1px;
+    font-size: 18px;
+    color: #000;
+}
+.newsRoomSection .newsRoomFilter .searchInput .material-icons {
+    font-size: 20px;
+}
+.newsRoomSection .newsRoomFilter .v-input__slot {
+    font-size: 13px;
+    border: 1px solid #CCC;
+}
+.newsRoomSection .newsRoomFilter .v-select__selection--comma {
+    margin: 0px auto;
+    padding: 0  8px;
+}
+.newsRoomSection .newsRoomFilter .v-input input {
+    max-height: 26px;
+    padding: 0 8px;
+    line-height: 26px;
+}
+.newsRoomSection .newsRoomFilter .v-text-field .v-input__append-inner,
+.newsRoomSection .newsRoomFilter .v-text-field .v-input__prepend-inner {
+    margin-top: 0px;
+}
+.v-select-list .v-list {
+    padding: 4px 0;
+}
+.v-select-list .v-list__tile {
+    font-size: 13px;
+    height: 28px;
+}
 
 /* ----- News Room News ----- */
 .newsRoomSection .newsRoomWrap .v-card__title {
@@ -176,6 +211,32 @@ button, .display-1, .display-2, .body-1, .body-2, .body-3, .title, .subheading, 
 }
 
 /* ----- News Room Details ----- */
+.newsRoomSection .newsDetail .v-tabs__container {
+    height: 38px;
+}
+.newsRoomSection .newsDetail .v-tabs__slider-wrapper {
+    display: none;
+}
+.newsRoomSection .newsDetail .v-tabs__item {
+    color: #fa6e2f;
+    border: 1px solid transparent;
+    border-top: 3px solid transparent;
+    border-bottom-color: transparent;
+    text-transform: initial;
+    border-radius: 5px 5px 0 0;
+}
+.newsRoomSection .newsDetail .v-tabs__item:hover {
+    color: #fa6e2f;
+    border: 1px solid #ddd;
+    border-top: 3px solid #fa6e2f;
+    border-bottom-color: #FFF;
+}
+.newsRoomSection .newsDetail .v-tabs__item--active {
+    color: #212121;
+    border: 1px solid #ddd;
+    border-top: 3px solid #fa6e2f;
+    border-bottom-color: #FFF;
+}
 .newsRoomSection .newsDetail button {
     min-width: auto;
     padding-left: 7px !important;
@@ -196,6 +257,9 @@ button, .display-1, .display-2, .body-1, .body-2, .body-3, .title, .subheading, 
 }
 
 /* ----- News Room Right ----- */
+.newsRoomSection .newsRight a {
+    color: #212121;
+}
 .newsRoomSection .newsRight button {
     min-width: auto;
     padding-left: 7px !important;
@@ -203,6 +267,13 @@ button, .display-1, .display-2, .body-1, .body-2, .body-3, .title, .subheading, 
     border-radius: 0px;
     border: 1px solid #ADADAD;
     text-transform: inherit;
+}
+.newsRoomSection .newsRight button.hoverCustom:hover {
+    background-color: #fa6e2f !important;
+    border-color: #fa6e2f !important;
+}
+.newsRoomSection .newsRight button.textLeft .v-btn__content {
+    justify-content: left;
 }
 
 
@@ -242,6 +313,36 @@ button, .display-1, .display-2, .body-1, .body-2, .body-3, .title, .subheading, 
     -moz-border-radius: 2px;
     border-radius: 2px;
 }
+.kitchenFinderSection .kitchenFinderFilter .v-text-field>.v-input__control>.v-input__slot:before {
+    border-style: hidden;
+}
+.kitchenFinderSection .kitchenFinderFilter .theme--light.v-label {
+    top: -1px;
+    font-size: 18px;
+    color: #000;
+}
+.kitchenFinderSection .kitchenFinderFilter .searchInput .material-icons {
+    font-size: 20px;
+}
+.kitchenFinderSection .kitchenFinderFilter .v-input__slot {
+    font-size: 13px;
+    border: 1px solid #CCC;
+}
+.kitchenFinderSection .kitchenFinderFilter .v-select__selection--comma {
+    margin: 0px auto;
+    padding: 0  8px;
+}
+.kitchenFinderSection .kitchenFinderFilter .v-input input {
+    max-height: 26px;
+    padding: 0 8px;
+    line-height: 26px;
+}
+.kitchenFinderSection .kitchenFinderFilter .v-text-field .v-input__append-inner,
+.kitchenFinderSection .kitchenFinderFilter .v-text-field .v-input__prepend-inner {
+    margin-top: 0px;
+}
+
+/* ----- Kitchen Finder Map Details ----- */
 .kitchenFinderSection .kFinderMapWrap {
     -webkit-box-shadow: 0px 0px 3px 0px rgba(0,0,0,.20);
     -moz-box-shadow: 0px 0px 3px 0px rgba(0,0,0,.20);
@@ -320,6 +421,13 @@ button, .display-1, .display-2, .body-1, .body-2, .body-3, .title, .subheading, 
 .v-dialog {
     box-shadow: none;
 }
+.v-dialog .lockIcon {
+    position: absolute;
+    top: 7px;
+    right: -5px;
+    font-size: 65px !important;
+    opacity: 0.4;
+}
 .v-dialog__content .v-card {
     background-color: rgba(0,0,0,0.35);
     box-shadow: none;
@@ -351,6 +459,15 @@ button, .display-1, .display-2, .body-1, .body-2, .body-3, .title, .subheading, 
     text-transform: initial;
     background: #fa6e2f;
 }
+@media screen and (max-width: 992px) {
+    .v-dialog .lockIcon {
+        font-size: 40px !important;
+    }
+    .v-dialog h1.display-2 {
+        font-size: 35px !important;
+        text-align: center;
+    }
+}
 
 
 
@@ -360,10 +477,14 @@ button, .display-1, .display-2, .body-1, .body-2, .body-3, .title, .subheading, 
 }
 @media screen and (max-width: 992px) {
     .v-footer, .v-footer .v-btn--small {
-        height: 22px;
+        height: 14px;
         min-width: initial;
         font-size: 11px;
         letter-spacing: 1px;
         padding: 0px;
     }   
+    .v-footer .py-3 {
+        padding-bottom: 8px!important;
+        padding-top: 8px!important;
+    }
 }
