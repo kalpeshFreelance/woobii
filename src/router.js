@@ -48,7 +48,7 @@ export default new Router({
       component: MediaPartner
     },
     {
-      path: '/kitrchenfinder',
+      path: '/kitrchenfinder/:slug',
       name: 'kitrchenfinder',
       component: KitrchenFinderLocation
     /*  children: [
@@ -60,8 +60,8 @@ export default new Router({
       ] */
     },
     {
-      path: '/kitrchenfinderLocation',
-      name: 'kitrchenfinderlocation',
+      path: '/kitrchenfinder',
+      name: 'kitrchenfinder',
       component: KitrchenFinder
     /*  children: [
         {

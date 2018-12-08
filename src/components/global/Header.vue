@@ -1,7 +1,15 @@
 <template>
   <div class="main-header">
     <!-- class="progess-custom hidden-sm-and-up" -->
-    <v-toolbar color="#0B324F" class="hidden-md-and-down" dark :scroll-off-screen="true" :scroll-target="'#scrolling-techniques'" style="background:#0B324F; border-bottom: 1px solid #606c7d;" v-show="fixedHeader == true">
+    <v-toolbar
+      color="#0B324F"
+      class="hidden-md-and-down"
+      dark
+      :scroll-off-screen="true"
+      :scroll-target="'#scrolling-techniques'"
+      style="background:#0B324F; border-bottom: 1px solid #606c7d;"
+      v-show="fixedHeader == true"
+    >
       <v-layout>
         <v-img :max-width="150" contain :src="require(`@/assets/logo-woobii.jpg`)"/>
         <v-spacer></v-spacer>
@@ -12,9 +20,9 @@
         <v-tooltip bottom>
           <v-btn slot="activator" flat class="hover-orange">Einloggen</v-btn>
           <span>Einloggen</span>
-        </v-tooltip> -->
-        <v-btn slot="activator" flat class="hover-orange" @click="register = true">Kostenlos Anmelden</v-btn>
-        <v-dialog v-model="register" max-width="600px">
+        </v-tooltip>-->
+        <v-dialog v-model="dialogreg" max-width="600px">
+          <v-btn slot="activator" flat class="hover-orange">KOSTENLOS ANMELDEN</v-btn>
           <v-card dark>
             <v-card-text>
               <v-container grid-list-md>
@@ -59,8 +67,8 @@
             </v-card-text>
           </v-card>
         </v-dialog>
-        <v-btn slot="activator" flat class="hover-orange" @click="login = true">Einloggen</v-btn>
-        <v-dialog v-model="login" max-width="600px">
+        <v-dialog v-model="dialoglog" max-width="600px">
+          <v-btn slot="activator" flat class="hover-orange">Einloggen</v-btn>
           <v-card dark>
             <v-card-text>
               <v-container grid-list-md>
@@ -130,7 +138,7 @@
             <span>Newsroom</span>
           </v-tooltip>
         </router-link>
-        <router-link to="/kitrchenfinderLocation">
+        <router-link to="/kitrchenfinder">
           <v-tooltip bottom>
             <v-btn slot="activator" class="ma-0 mx-3 px-0 hidden-md-and-down" flat>Kirchenfinder</v-btn>
             <span>Kirchenfinder</span>
@@ -167,7 +175,7 @@
             <span>Newsroom</span>
           </v-tooltip>
         </router-link>
-        <router-link to="/kitrchenfinderLocation">
+        <router-link to="/kitrchenfinder">
           <v-tooltip bottom>
             <v-btn slot="activator" class="ma-0 mx-3 px-0 hidden-md-and-down" flat>Kirchenfinder</v-btn>
             <span>Kirchenfinder</span>
@@ -188,8 +196,8 @@
 
     <v-navigation-drawer
       v-model="drawer"
-      absolute
       temporary
+      fixed
       right
       disable-resize-watcher
       disable-route-watcher
@@ -199,64 +207,66 @@
           <v-list-tile-action>
             <v-icon>home</v-icon>
           </v-list-tile-action>
-
-          <v-list-tile-content>
-            <v-list-tile-title>Home</v-list-tile-title>
-          </v-list-tile-content>
+          <router-link to="/">
+            <v-list-tile-content @click.stop="drawer = !drawer">
+              <v-list-tile-title>Home</v-list-tile-title>
+            </v-list-tile-content>
+          </router-link>
         </v-list-tile>
         <v-list-tile>
           <v-list-tile-action>
             <v-icon>group_work</v-icon>
           </v-list-tile-action>
-
-          <v-list-tile-content>
-            <v-list-tile-title>Lösungen</v-list-tile-title>
-          </v-list-tile-content>
+          <router-link to="/solution" >
+            <v-list-tile-content @click.stop="drawer = !drawer">
+              <v-list-tile-title>Lösungen</v-list-tile-title>
+            </v-list-tile-content>
+          </router-link>
         </v-list-tile>
         <v-list-tile>
           <v-list-tile-action>
             <v-icon>dashboard</v-icon>
           </v-list-tile-action>
-
-          <v-list-tile-content>
-            <v-list-tile-title>Newsroom</v-list-tile-title>
-          </v-list-tile-content>
+          <router-link to="/newsroom" @click.stop="drawer = !drawer">
+            <v-list-tile-content>
+              <v-list-tile-title>Newsroom</v-list-tile-title>
+            </v-list-tile-content>
+          </router-link>
         </v-list-tile>
         <v-list-tile>
           <v-list-tile-action>
             <v-icon>track_changes</v-icon>
           </v-list-tile-action>
-
-          <v-list-tile-content>
-            <v-list-tile-title>Kirchenfinder</v-list-tile-title>
-          </v-list-tile-content>
+          <router-link to="/kitrchenfinder">
+            <v-list-tile-content @click.stop="drawer = !drawer">
+              <v-list-tile-title>Kirchenfinder</v-list-tile-title>
+            </v-list-tile-content>
+          </router-link>
         </v-list-tile>
         <v-list-tile>
           <v-list-tile-action>
             <v-icon>view_list</v-icon>
           </v-list-tile-action>
-
-          <v-list-tile-content>
-            <v-list-tile-title>Mediapartner</v-list-tile-title>
-          </v-list-tile-content>
+          <router-link to="/mediapartner">
+            <v-list-tile-content @click.stop="drawer = !drawer">
+              <v-list-tile-title>Mediapartner</v-list-tile-title>
+            </v-list-tile-content>
+          </router-link>
         </v-list-tile>
         <v-divider></v-divider>
         <v-list-tile>
           <v-list-tile-action>
             <v-icon>account_box</v-icon>
           </v-list-tile-action>
-
-          <v-list-tile-content>
+          <v-list-tile-content @click.stop="drawer = !drawer" @click="dialogreg = !dialogreg">
             <v-list-tile-title>KOSTENLOS ANMELDEN</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
-
         <v-list-tile>
           <v-list-tile-action>
             <v-icon>assignment</v-icon>
           </v-list-tile-action>
-
-          <v-list-tile-content>
+          <v-list-tile-content @click.stop="drawer = !drawer" @click="dialoglog = !dialoglog">
             <v-list-tile-title>Einloggen</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
@@ -278,7 +288,9 @@ export default {
       drawer: null,
       fixed: true,
       fixedHeader: true,
-      offsetTop: 0
+      offsetTop: 0,
+      dialogreg: false,
+      dialoglog: false,
     };
   },
   mounted() {
@@ -293,19 +305,25 @@ export default {
   methods: {
     onResize() {
       this.isMobile = window.innerWidth < 750;
+      if (this.isMobile == true) {
+        this.fixedHeader = false;
+        this.fixed = false;
+      }
     },
     onScroll(e) {
       this.offsetTop = window.pageYOffset || document.documentElement.scrollTop;
-      if (this.offsetTop >= 110) {
+      if (this.offsetTop >= 60) {
         this.fixedHeader = false;
         this.fixed = false;
-      } else {
-        console.log(this.isMobile);
         if (this.isMobile == true) {
-          this.fixedHeader = true;
-          this.fixed = true;
-        } else {
-          this.fixedHeader = true;
+          this.fixedHeader = false;
+          this.fixed = false;
+        }
+      } else {
+        this.fixedHeader = true;
+        this.fixed = true;
+        if (this.isMobile == true) {
+          this.fixedHeader = false;
           this.fixed = false;
         }
       }
