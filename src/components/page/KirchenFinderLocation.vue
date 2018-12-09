@@ -39,7 +39,12 @@
       <v-container fluid grid-list-xl>
         <v-layout row wrap justify-center class="kirchenTopDetails">
           <v-flex xs12 md4>
-            <v-img v-if= "churchesData[0].logo" :src="'/admin/'+churchesData[0].logo" max-width="175" class="mb-3"></v-img>
+            <v-img
+              v-if="churchesData[0].logo"
+              :src="'/admin/'+churchesData[0].logo"
+              max-width="175"
+              class="mb-3"
+            ></v-img>
             <p class="headline mb-2">{{ churchesData[0].title }}</p>
             <p class="subheading mb-2">FKÖ
               <br>
@@ -49,7 +54,8 @@
               <br>
               <span class="caption">Österreich</span>
             </p>
-            <p class="subheading mb-2">{{ churchesData[0].visitor_range }}
+            <p class="subheading mb-2">
+              {{ churchesData[0].visitor_range }}
               <br>
               <span class="caption">Besucher</span>
             </p>
@@ -63,7 +69,16 @@
             </p>
           </v-flex>
           <v-flex xs12 md8>
-            <v-img src="https://cdn.vuetifyjs.com/images/cards/desert.jpg"></v-img>
+            <v-img
+              v-if="churchesData[0].bannerimage"
+              :src="require(`@/assets/woobii-banner.jpg`)"
+              :lazy-src="'/admin/'+churchesData[0].bannerimage"
+            />
+            <v-img
+              v-else
+              :src="require(`@/assets/woobii-banner.jpg`)"
+              :lazy-src="require(`@/assets/woobii-banner.jpg`)"
+            />
           </v-flex>
           <v-flex xs12 class>
             <v-tabs slider-color="grey darken-3">
@@ -80,8 +95,7 @@
                     <v-layout row wrap>
                       <v-flex xs12 md8>
                         <p class="headline">Über uns</p>
-                        {{ churchesData[0].about_us }}
-
+                        <div v-html="churchesData[0].about_us"></div>
                         <p class="body-1 font-weight-bold">
                           <v-icon small class="black--text mr-1">expand_more</v-icon>Weiterlesen
                         </p>
@@ -478,7 +492,8 @@
                           <v-flex d-flex md9 class="pa-0">
                             <v-card light tile flat color="grey lighten-4">
                               <v-card-text>
-                                <h3 class="headline font-weight-medium mb-2">Poster
+                                <h3 class="headline font-weight-medium mb-2">
+                                  Poster
                                   <span class="right body-1">10.06.2018</span>
                                 </h3>
                                 <p class="body-1">Vollzeit
@@ -499,7 +514,8 @@
                           <v-flex d-flex md9 class="pa-0">
                             <v-card light tile flat color="grey lighten-4">
                               <v-card-text>
-                                <h3 class="headline font-weight-medium mb-2">Jugend mitarbeiter
+                                <h3 class="headline font-weight-medium mb-2">
+                                  Jugend mitarbeiter
                                   <span class="right body-1">04.05.2018</span>
                                 </h3>
                                 <p class="body-1">Ehrenamtlich
@@ -716,27 +732,18 @@ export default {
         { title: "Home", icon: "dashboard" },
         { title: "About", icon: "question_answer" }
       ],
-      churchesData : []
+      churchesData: []
     };
   },
   mounted() {
-    this.onResize();
-    window.addEventListener("resize", this.onResize, { passive: true });
     this.churchdata(this.$route.params.slug);
   },
-  beforeDestroy() {
-    if (typeof window !== "undefined") {
-      window.removeEventListener("resize", this.onResize, { passive: true });
-    }
-  },
+  beforeDestroy() {},
   methods: {
-    onResize() {
-      this.isMobile = window.innerWidth < 750;
-    },
     churchdata: function(slug) {
       var e = this;
       axios
-        .get("/churcheview/churche?s="+slug)
+        .get("/churcheview/churche?s=" + slug)
         .then(function(response) {
           if (response.data.status == true) {
             console.log(response.data.churche);

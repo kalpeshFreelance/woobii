@@ -49,7 +49,7 @@ export default new Router({
     },
     {
       path: '/kitrchenfinder/:slug',
-      name: 'kitrchenfinder',
+      name: 'KitrchenFinderLocation',
       component: KitrchenFinderLocation
     /*  children: [
         {

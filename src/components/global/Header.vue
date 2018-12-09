@@ -29,38 +29,124 @@
                 <v-icon small class="mr-2 lockIcon">lock</v-icon>
                 <h1 class="display-2 text-md-center mb-2">Registrierung</h1>
                 <h2 class="display-1 text-md-center mb-2" style="color:#fa6e2f">woobii Plus</h2>
-                <p class="body-2 text-md-center mb-4">30 Tage gratis testen<br />
-                dann 19,99  pro Monat (oder 199,99  pro Jahr)</p>
+                <p class="body-2 text-md-center mb-4">30 Tage gratis testen
+                  <br>dann 19,99 pro Monat (oder 199,99 pro Jahr)
+                </p>
                 <v-layout row wrap>
-                  <v-flex xs12 md10 offset-md1>
-                    <v-autocomplete light placeholder="Gemeindetyp" solo></v-autocomplete>
-                  </v-flex>
-                  <v-flex xs12 md10 offset-md1>
-                    <v-autocomplete light placeholder="Land" solo></v-autocomplete>
-                  </v-flex>
-                  <v-flex xs12 md10 offset-md1>
-                    <v-text-field light placeholder="Ort..." solo></v-text-field>
-                  </v-flex>
-                  <v-flex xs12 md10 offset-md1>
-                    <v-text-field light placeholder="Gemeindename..." solo></v-text-field>
-                  </v-flex>
-                  <v-flex xs12 md10 offset-md1>
-                    <v-text-field light placeholder="Emailadresse (Ihr Benutzername)..." solo></v-text-field>
-                  </v-flex>
-                  <v-flex xs12 md10 offset-md1>
-                    <v-text-field light placeholder="Passwort..." solo></v-text-field>
-                  </v-flex>
-                  <v-flex xs12 md10 offset-md1>
-                    <v-text-field light placeholder="Re-Enter Passwort..." solo></v-text-field>
-                  </v-flex>
-                  <v-flex xs12 md10 offset-md1>
-                    <v-btn block flat class="btn-SignIn">Registrieren</v-btn>
+                  <form @submit.prevent="submit('form-1')" data-vv-scope="form-1">
+                    <v-flex xs12 md10 offset-md1>
+                      <v-autocomplete
+                        light
+                        placeholder="Gemeindetyp"
+                        solo
+                        v-model="gemeindetype"
+                        :items="GemeindetypeList"
+                        v-validate="'required'"
+                        :error-messages="errors.collect('form-1.gemeindetype')"
+                        label="Gemeindetyp"
+                        item-text="type"
+                        item-value="id"
+                        data-vv-name="gemeindetype"
+                      ></v-autocomplete>
+                    </v-flex>
+                    <v-flex xs12 md10 offset-md1>
+                      <v-autocomplete
+                        light
+                        placeholder="Land"
+                        solo
+                        v-model="land"
+                        @change="listofcity"
+                        :items="LandList"
+                        v-validate="'required'"
+                        :error-messages="errors.collect('form-1.land')"
+                        label="Land"
+                        item-text="name"
+                        item-value="id"
+                        data-vv-name="land"
+                      ></v-autocomplete>
+                    </v-flex>
+                    <v-flex xs12 md10 offset-md1>
+                      <v-autocomplete
+                        light
+                        placeholder="Ort"
+                        solo
+                        v-model="ort"
+                        :items="OrtList"
+                        v-validate="'required'"
+                        :error-messages="errors.collect('form-1.ort')"
+                        label="Ort"
+                        item-text="place"
+                        item-value="id"
+                        data-vv-name="ort"
+                      ></v-autocomplete>
+                    </v-flex>
+                    <v-flex xs12 md10 offset-md1>
+                      <v-text-field
+                        light
+                        placeholder="Gemeindename..."
+                        solo
+                        type="text"
+                        v-validate="'required'"
+                        v-model="gemeindename"
+                        :error-messages="errors.collect('form-1.gemeindename')"
+                        label="Gemeindename"
+                        data-vv-name="gemeindename"
+                      ></v-text-field>
+                    </v-flex>
+                    <v-flex xs12 md10 offset-md1>
+                      <v-text-field
+                        light
+                        placeholder="Emailadresse (Ihr Benutzername)..."
+                        solo
+                        type="email"
+                        v-validate="'required|email'"
+                        v-model="Emailadresse"
+                        :error-messages="errors.collect('form-1.Emailadresse')"
+                        label="Emailadresse"
+                        data-vv-name="Emailadresse"
+                      ></v-text-field>
+                    </v-flex>
+                    <v-flex xs12 md10 offset-md1>
+                      <v-text-field
+                        light
+                        placeholder="Passwort..."
+                        solo
+                        type="password"
+                        v-validate="'required'"
+                        v-model="enterpassword"
+                        :error-messages="errors.collect('form-1.enterpassword')"
+                        label="Password"
+                        data-vv-name="enterpassword"
+                        autocomplete="enterpassword"
+                      ></v-text-field>
+                    </v-flex>
+                    <v-flex xs12 md10 offset-md1>
+                      <v-text-field
+                        light
+                        placeholder="Re-Enter Passwort..."
+                        solo
+                        type="password"
+                        v-validate="'required|confirmed:enterpassword'"
+                        v-model="reenterpassword"
+                        :error-messages="errors.collect('form-1.reenterpassword')"
+                        label="Re-Enter Password"
+                        data-vv-name="reenterpassword"
+                        autocomplete="reenterpassword"
+                      ></v-text-field>
+                    </v-flex>
+                    <v-flex xs12 md10 offset-md1>
+                      <v-btn block flat class="btn-SignIn" type="submit">Registrieren</v-btn>
+                    </v-flex>
+                  </form>
+                  <v-flex xs6>
+                    <v-btn outline color="white" class="right" @click="facebookLogin">
+                      <v-icon small class="mr-2">fab fa-facebook-f</v-icon>Facebook
+                    </v-btn>
                   </v-flex>
                   <v-flex xs6>
-                    <v-btn outline color="white" class="right"><v-icon small class="mr-2">fab fa-facebook-f</v-icon> Facebook</v-btn>
-                  </v-flex>
-                  <v-flex xs6>
-                    <v-btn outline color="white"><v-icon small class="mr-2">fab fa-twitter</v-icon> Twitter</v-btn>
+                    <v-btn outline color="white" @click="twitterLogin">
+                      <v-icon small class="mr-2">fab fa-twitter</v-icon>Twitter
+                    </v-btn>
                   </v-flex>
                 </v-layout>
               </v-container>
@@ -75,23 +161,53 @@
                 <v-icon small class="mr-2 lockIcon">lock</v-icon>
                 <h1 class="display-2 text-md-center mb-4">WooBii Login</h1>
                 <v-layout row wrap>
-                  <v-flex xs12 md10 offset-md1>
-                    <v-text-field light placeholder="Username..." solo></v-text-field>
-                  </v-flex>
-                  <v-flex xs12 md10 offset-md1>
-                    <v-text-field light type="password" placeholder="Password..." solo></v-text-field>
-                  </v-flex>
-                  <v-flex xs12 md10 offset-md1>
-                    <v-btn block flat class="btn-SignIn">Sign in!</v-btn>
-                  </v-flex>
+                  <v-form @submit.prevent="submit('form-2')" data-vv-scope="form-2">
+                    <v-flex xs12 md10 offset-md1>
+                      <v-text-field
+                        light
+                        type="text"
+                        placeholder="Email/Username..."
+                        solo
+                        v-validate="'required'"
+                        v-model="emailusername"
+                        :error-messages="errors.collect('form-2.emailusername')"
+                        label="Email/Username"
+                        data-vv-name="emailusername"
+                      ></v-text-field>
+                    </v-flex>
+                    <v-flex xs12 md10 offset-md1>
+                      <v-text-field
+                        light
+                        solo
+                        type="password"
+                        placeholder="Passwort..."
+                        v-validate="'required'"
+                        v-model="loginpassword"
+                        :error-messages="errors.collect('form-2.loginpassword')"
+                        label="Password"
+                        data-vv-name="loginpassword"
+                        autocomplete="loginpassword"
+                      ></v-text-field>
+                    </v-flex>
+                    <v-flex xs12 md10 offset-md1>
+                      <v-btn type="submit" block flat class="btn-SignIn">Sign in!</v-btn>
+                    </v-flex>
+                  </v-form>
                   <v-flex xs12 class="text-xs-center">
-                    <span class="body-1 white--text"  @click="login = false,password = !password" >Passwort vergessen</span>
+                    <span
+                      class="body-1 white--text"
+                      @click="login = false, password = !password"
+                    >Passwort vergessen</span>
                   </v-flex>
                   <v-flex xs6>
-                    <v-btn outline color="white" class="right"><v-icon small class="mr-2">fab fa-facebook-f</v-icon> Facebook</v-btn>
+                    <v-btn outline color="white" class="right" @click="facebookLogin">
+                      <v-icon small class="mr-2">fab fa-facebook-f</v-icon>Facebook
+                    </v-btn>
                   </v-flex>
                   <v-flex xs6>
-                    <v-btn outline color="white"><v-icon small class="mr-2">fab fa-twitter</v-icon> Twitter</v-btn>
+                    <v-btn outline color="white" @click="twitterLogin">
+                      <v-icon small class="mr-2">fab fa-twitter</v-icon>Twitter
+                    </v-btn>
                   </v-flex>
                 </v-layout>
               </v-container>
@@ -103,15 +219,26 @@
             <v-card-text>
               <v-container grid-list-md>
                 <v-icon small class="mr-2 lockIcon">lock</v-icon>
-                <h1 class="display-2 text-md-center mb-4">Passwort Vergessen</h1>
-                <v-layout row wrap>
-                  <v-flex xs12 md10 offset-md1>
-                    <v-text-field light placeholder="Emailadresse..." solo></v-text-field>
-                  </v-flex>
-                  <v-flex xs12 md10 offset-md1>
-                    <v-btn block flat class="btn-SignIn">Einreichen</v-btn>
-                  </v-flex>
-                </v-layout>
+                <form @submit.prevent="submit('form-3')" data-vv-scope="form-3">
+                  <h1 class="display-2 text-md-center mb-4">Passwort Vergessen</h1>
+                  <v-layout row wrap>
+                    <v-flex xs12 md10 offset-md1>
+                      <v-text-field
+                        light
+                        placeholder="Emailadresse..."
+                        solo
+                        v-model="forgotemail"
+                        :error-messages="errors.collect('form-3.forgotemail')"
+                        label="Emailadresse"
+                        v-validate="'required|email'"
+                        data-vv-name="forgotemail"
+                      ></v-text-field>
+                    </v-flex>
+                    <v-flex xs12 md10 offset-md1>
+                      <v-btn type="submit" block flat class="btn-SignIn">Einreichen</v-btn>
+                    </v-flex>
+                  </v-layout>
+                </form>
               </v-container>
             </v-card-text>
           </v-card>
@@ -217,7 +344,7 @@
           <v-list-tile-action>
             <v-icon>group_work</v-icon>
           </v-list-tile-action>
-          <router-link to="/solution" >
+          <router-link to="/solution">
             <v-list-tile-content @click.stop="drawer = !drawer">
               <v-list-tile-title>Lösungen</v-list-tile-title>
             </v-list-tile-content>
@@ -276,26 +403,63 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+import axios from "axios";
 export default {
   name: "Header",
-  data() {
-    return {
-      // baseUrl: process.env.BASE_URL
-      register: false,
-      login: false,
-      password: false,
-      isMobile: false,
-      drawer: null,
-      fixed: true,
-      fixedHeader: true,
-      offsetTop: 0,
-      dialogreg: false,
-      dialoglog: false,
-    };
+  data: () => ({
+    // baseUrl: process.env.BASE_URL
+    register: false,
+    login: false,
+    password: false,
+    isMobile: false,
+    drawer: null,
+    fixed: true,
+    fixedHeader: true,
+    offsetTop: 0,
+    dialogreg: false,
+    dialoglog: false,
+
+    GemeindetypeList: [],
+    LandList: [],
+    OrtList: [],
+    gemeindetype: "",
+    land: "",
+    ort: "",
+    gemeindename: "",
+    Emailadresse: "",
+    enterpassword: "",
+    reenterpassword: "",
+    emailusername: "",
+    forgotemail: "",
+    loginpassword: "",
+    dictionary: {
+      attributes: {
+        forgotemail: "Emailadresse",
+        forgotemail: "Emailadresse",
+        emailusername: "Email/Username",
+        reenterpassword: "Re-Enter Password",
+        enterpassword: "Passwort",
+        loginpassword: "Passwort"
+        // custom attributes
+      },
+      custom: {}
+    }
+  }),
+  filters: {
+    capitalize: function(value) {
+      if (!value) return "";
+      value = value.toString();
+      return value.charAt(0).toUpperCase() + value.slice(1);
+    }
   },
   mounted() {
     this.onResize();
     window.addEventListener("resize", this.onResize, { passive: true });
+    this.$validator.localize("en", this.dictionary);
+    this.listofcountry();
+    this.listofcity();
+    this.listofmuncipalty();
   },
   beforeDestroy() {
     if (typeof window !== "undefined") {
@@ -303,6 +467,119 @@ export default {
     }
   },
   methods: {
+    facebookLogin() {
+      this.$store.dispatch("signinUserWithFacebook");
+    },
+    twitterLogin() {
+      this.$store.dispatch("signinUserWithTwitter");
+    },
+    loginsubmit() {},
+    forgotsubmit() {},
+    submit(scope) {
+      this.$validator.validateAll(scope).then(result => {
+        console.log(scope);
+        console.log(result);
+        if (result) {
+          // eslint-disable-next-line
+          alert("Form Submitted!");
+        }
+      });
+    },
+    listofmuncipalty: function() {
+      var e = this;
+      axios
+        .get("/adminglobal/getallmuncipalitytype")
+        .then(function(response) {
+          console.log(response.data);
+          if (response.data.status == true) {
+            console.log(response.data.allmuncipalitytype);
+            e.GemeindetypeList = response.data.allmuncipalitytype;
+          }
+        })
+        .catch(function(error) {
+          if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          } else if (error.request) {
+            // The request was made but no response was received
+            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+            // http.ClientRequest in node.js
+            console.log(error.request);
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            console.log("Error", error.message);
+          }
+        });
+    },
+    listofcity: function(id) {
+      var e = this;
+      if (e.land == "") {
+        var city = "DE";
+      } else {
+        var cityData = e.LandList.filter(col => {
+          return col.id.match(id);
+        });
+        var city = cityData[0].country_code;
+      }
+      axios
+        .get("/adminglobal/getallcity/?id=" + city)
+        .then(function(response) {
+          console.log(response.data);
+          if (response.data.status == true) {
+            console.log(response.data.cities);
+            e.OrtList = response.data.cities.city;
+          }
+        })
+        .catch(function(error) {
+          if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          } else if (error.request) {
+            // The request was made but no response was received
+            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+            // http.ClientRequest in node.js
+            console.log(error.request);
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            console.log("Error", error.message);
+          }
+        });
+    },
+    listofcountry: function() {
+      var e = this;
+      axios
+        .get("/adminglobal/getallcountry")
+        .then(function(response) {
+          console.log(response.data);
+          if (response.data.status == true) {
+            console.log(response.data.countries);
+            e.LandList = response.data.countries.country;
+          }
+        })
+        .catch(function(error) {
+          if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          } else if (error.request) {
+            // The request was made but no response was received
+            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+            // http.ClientRequest in node.js
+            console.log(error.request);
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            console.log("Error", error.message);
+          }
+        });
+    },
     onResize() {
       this.isMobile = window.innerWidth < 750;
       if (this.isMobile == true) {
