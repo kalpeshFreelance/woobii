@@ -101,9 +101,20 @@
             <v-layout row wrap v-if="churchesList">
               <v-flex d-flex xs12 md4 v-for="churche in churchesList">
                 <v-card flat color="white" class="kFinderWrap">
-                  <v-img src="https://cdn.vuetifyjs.com/images/cards/desert.jpg"></v-img>
+                  <v-img
+                    v-if="churche.bannerimage"
+                    :src="require(`@/assets/woobii-banner.jpg`)"
+                    :lazy-src="'/admin/'+churche.bannerimage"
+                  />
+                  <v-img
+                    v-else
+                    :src="require(`@/assets/woobii-banner.jpg`)"
+                    :lazy-src="require(`@/assets/woobii-banner.jpg`)"
+                  />
                   <v-card-text class="pa-0">
+                    <a :href="'/kitrchenfinder/'+churche.slug" class="caption black--text">
                     <h4 class="body-1 my-2">{{ churche.title }}</h4>
+                    </a>
                     <div>
                       <v-chip small label dark class="white--text ma-0">Top Gemeinde</v-chip>
                     </div>
@@ -217,19 +228,9 @@ export default {
     };
   },
   mounted() {
-    this.onResize();
-    window.addEventListener("resize", this.onResize, { passive: true });
     this.churchlist();
   },
-  beforeDestroy() {
-    if (typeof window !== "undefined") {
-      window.removeEventListener("resize", this.onResize, { passive: true });
-    }
-  },
   methods: {
-    onResize() {
-      this.isMobile = window.innerWidth < 750;
-    },
     churchlist: function() {
       var e = this;
       axios

@@ -174,18 +174,13 @@ export default {
     };
   },
   mounted() {
-    this.onResize();
-    window.addEventListener("resize", this.onResize, { passive: true });
+
   },
   beforeDestroy() {
-    if (typeof window !== "undefined") {
-      window.removeEventListener("resize", this.onResize, { passive: true });
-    }
+    
   },
   methods: {
-    onResize() {
-      this.isMobile = window.innerWidth < 750;
-    }
+
   }
 };
 </script>
