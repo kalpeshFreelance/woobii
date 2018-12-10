@@ -90,7 +90,7 @@
                       v-for="(m, index) in markers"
                       :position="m.position"
                       :clickable="true"
-                      :draggable="true"
+                      :draggable="false"
                       @click="center=m.position"
                     />
                   </GmapMap>
@@ -101,19 +101,21 @@
             <v-layout row wrap v-if="churchesList">
               <v-flex d-flex xs12 md4 v-for="churche in churchesList">
                 <v-card flat color="white" class="kFinderWrap">
-                  <v-img
-                    v-if="churche.bannerimage"
-                    :src="require(`@/assets/woobii-banner.jpg`)"
-                    :lazy-src="'/admin/'+churche.bannerimage"
-                  />
-                  <v-img
-                    v-else
-                    :src="require(`@/assets/woobii-banner.jpg`)"
-                    :lazy-src="require(`@/assets/woobii-banner.jpg`)"
-                  />
+                  <a :href="'/Kirchenfinder/'+churche.slug" class="caption black--text">
+                    <v-img
+                      v-if="churche.bannerimage"
+                      :lazy-src="'http://dev.woobii.com/admin/'+churche.bannerimage"
+                      :src="'http://dev.woobii.com/admin/'+churche.bannerimage"
+                    />
+                    <v-img
+                      v-else
+                      :src="require(`@/assets/woobii-banner.jpg`)"
+                      :lazy-src="require(`@/assets/woobii-banner.jpg`)"
+                    />
+                  </a>
                   <v-card-text class="pa-0">
-                    <a :href="'/kitrchenfinder/'+churche.slug" class="caption black--text">
-                    <h4 class="body-1 my-2">{{ churche.title }}</h4>
+                    <a :href="'/Kirchenfinder/'+churche.slug" class="caption black--text">
+                      <h4 class="body-1 my-2">{{ churche.title }}</h4>
                     </a>
                     <div>
                       <v-chip small label dark class="white--text ma-0">Top Gemeinde</v-chip>
@@ -126,7 +128,7 @@
                       <v-icon small class="black--text">star_border</v-icon>
                       <span class="body-1 font-weight-bold ml-2">4,49</span>
                     </div>
-                    <a :href="'/kitrchenfinder/'+churche.slug" class="caption black--text">
+                    <a :href="'/Kirchenfinder/'+churche.slug" class="caption black--text">
                       <v-icon small class="black--text">chevron_right</v-icon>Zur Gemeinde
                     </a>
                   </v-card-text>
