@@ -71,8 +71,8 @@
           <v-flex xs12 md8>
             <v-img
               v-if="churchesData[0].bannerimage"
-              :src="require(`@/assets/woobii-banner.jpg`)"
-              :lazy-src="'/admin/'+churchesData[0].bannerimage"
+              :lazy-src="'http://dev.woobii.com/admin/'+churchesData[0].bannerimage"
+              :src="'http://dev.woobii.com/admin/'+churchesData[0].bannerimage"
             />
             <v-img
               v-else

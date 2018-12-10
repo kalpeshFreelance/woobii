@@ -59,6 +59,12 @@ form {
     border-bottom: 2px solid transparent;
     border-radius: 0px;
 }
+a.router-link-exact-active.router-link-active .v-tooltip span button {
+    background-color: #0b324f;
+    border-color: #fa6e2f;
+    color: #fa6e2f;
+}
+
 .main-header .smallHeader button:hover {
     background-color: #0b324f;
     border-color: #fa6e2f;
