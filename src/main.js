@@ -18,6 +18,7 @@ Vue.config.productionTip = false
 Vue.use(Nprogress)
 Vue.use(axios)
 Vue.use(VeeValidate)
+Vue.use(require('vue-moment'))
 
 Vue.use(VueGoogleMaps, {
   load: {

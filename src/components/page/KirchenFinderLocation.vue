@@ -41,18 +41,19 @@
           <v-flex xs12 md4>
             <v-img
               v-if="churchesData[0].logo"
-              :src="'/admin/'+churchesData[0].logo"
+              :src="'http://dev.woobii.com/admin/'+churchesData[0].logo"
               max-width="175"
               class="mb-3"
             ></v-img>
             <p class="headline mb-2">{{ churchesData[0].title }}</p>
             <p class="subheading mb-2">FKÖ
               <br>
-              <span class="caption">Freikirchen in Österreich</span>
+              <span class="caption">Freikirchen in {{ churchesData[0].country }}</span>
             </p>
-            <p class="subheading mb-2">Innsbruck
+            <p class="subheading mb-2">
+              {{ churchesData[0].city }}
               <br>
-              <span class="caption">Österreich</span>
+              <span class="caption">{{ churchesData[0].country }}</span>
             </p>
             <p class="subheading mb-2">
               {{ churchesData[0].visitor_range }}
@@ -81,15 +82,15 @@
             />
           </v-flex>
           <v-flex xs12 class>
-            <v-tabs slider-color="grey darken-3">
-              <v-tab>Über uns</v-tab>
-              <v-tab>Angebote</v-tab>
-              <v-tab>Neuigkeiten</v-tab>
-              <v-tab>Social Media Wall</v-tab>
-              <v-tab>Events</v-tab>
-              <v-tab>Jobs</v-tab>
-              <v-tab>Bewertungen</v-tab>
-              <v-tab-item>
+            <v-tabs slider-color="grey darken-3" v-model="active_tab">
+              <v-tab href="#tab-1">Über uns</v-tab>
+              <v-tab href="#tab-2">Angebote</v-tab>
+              <v-tab href="#tab-3">Neuigkeiten</v-tab>
+              <v-tab grow href="#tab-4">Social Media Wall</v-tab>
+              <v-tab href="#tab-5">Events</v-tab>
+              <v-tab href="#tab-6">Jobs</v-tab>
+              <v-tab href="#tab-7">Bewertungen</v-tab>
+              <v-tab-item id="tab-1">
                 <v-card flat>
                   <v-card-text class="px-0">
                     <v-layout row wrap>
@@ -151,7 +152,7 @@
                         <v-btn flat block class="colorGreen ma-0 mb-3 py-2">
                           <v-icon class="mr-2">share</v-icon>Kirchengemeinde empfehlen
                         </v-btn>
-                        <v-btn flat block class="grey lighten-2 ma-0 mb-4 py-2">
+                        <v-btn flat block class="grey lighten-4 ma-0 mb-4 py-2">
                           <v-icon class>stars</v-icon>
                           <v-icon class>stars</v-icon>
                           <v-icon class>stars</v-icon>
@@ -161,36 +162,34 @@
                         <p class="headline">Gemeindeprofil</p>
                         <p class="body-1">
                           <span class="font-weight-bold black--text">Gottesdienste</span>
-                          <br>Heden Sonntag
-                          <br>100:00 bis 11:30 Uhr
+                          <br>
+                          {{churchesData[0].timing}}
                         </p>
-                        <p class="body-1">Cineplexx-Kino
-                          <br>TschamlerstraBe 7 (Sudring)
-                          <br>6020 Innsbruck
-                          <br>Osterreich
-                        </p>
-                        <p class="body-1">
+                        <p class="body-1">{{churchesData[0].address}}</p>
+                        <!-- <p class="body-1">
                           <span class="font-weight-bold black--text">Head Office</span>
                           <br>Gutenbergstr. 6
                           <br>6020 Innsbruck
                           <br>Osterreich
-                        </p>
-                        <p class="body-1">Tel: +43 699 18114153
+                        </p>-->
+                        <p class="body-1" v-if="churchesData[0].head_office">
+                          Tel: {{churchesData[0].head_office}}
                           <br>
                           <a
-                            href="mailto:knotakt@kirchenimkno.at"
+                            v-if="churchesData[0].email_id"
+                            :href="'mailto:'+churchesData[0].email_id"
                             target="new"
-                          >knotakt@kirchenimkno.at</a>
+                          >{{churchesData[0].email_id}}</a>
                         </p>
-                        <p class="body-1">
-                          <a href>www.kirchenimkno.at</a>
+                        <p class="body-1" v-if="churchesData[0].website">
+                          <a href>{{ churchesData[0].website }}</a>
                         </p>
                       </v-flex>
                     </v-layout>
                   </v-card-text>
                 </v-card>
               </v-tab-item>
-              <v-tab-item>
+              <v-tab-item id="tab-2">
                 <v-card flat>
                   <v-card-text class="px-0">
                     <v-layout row wrap>
@@ -211,36 +210,34 @@
                         <p class="headline">Gemeindeprofil</p>
                         <p class="body-1">
                           <span class="font-weight-bold black--text">Gottesdienste</span>
-                          <br>Heden Sonntag
-                          <br>100:00 bis 11:30 Uhr
+                          <br>
+                          {{churchesData[0].timing}}
                         </p>
-                        <p class="body-1">Cineplexx-Kino
-                          <br>TschamlerstraBe 7 (Sudring)
-                          <br>6020 Innsbruck
-                          <br>Osterreich
-                        </p>
-                        <p class="body-1">
+                        <p class="body-1">{{churchesData[0].address}}</p>
+                        <!-- <p class="body-1">
                           <span class="font-weight-bold black--text">Head Office</span>
                           <br>Gutenbergstr. 6
                           <br>6020 Innsbruck
                           <br>Osterreich
-                        </p>
-                        <p class="body-1">Tel: +43 699 18114153
+                        </p>-->
+                        <p class="body-1" v-if="churchesData[0].head_office">
+                          Tel: {{churchesData[0].head_office}}
                           <br>
                           <a
-                            href="mailto:knotakt@kirchenimkno.at"
+                            v-if="churchesData[0].email_id"
+                            :href="'mailto:'+churchesData[0].email_id"
                             target="new"
-                          >knotakt@kirchenimkno.at</a>
+                          >{{churchesData[0].email_id}}</a>
                         </p>
-                        <p class="body-1">
-                          <a href>www.kirchenimkno.at</a>
+                        <p class="body-1" v-if="churchesData[0].website">
+                          <a href>{{ churchesData[0].website }}</a>
                         </p>
                       </v-flex>
                     </v-layout>
                   </v-card-text>
                 </v-card>
               </v-tab-item>
-              <v-tab-item>
+              <v-tab-item id="tab-3">
                 <v-card flat>
                   <v-card-text class="px-0">
                     <v-layout row wrap>
@@ -296,41 +293,39 @@
                         <p class="headline">Gemeindeprofil</p>
                         <p class="body-1">
                           <span class="font-weight-bold black--text">Gottesdienste</span>
-                          <br>Heden Sonntag
-                          <br>100:00 bis 11:30 Uhr
+                          <br>
+                          {{churchesData[0].timing}}
                         </p>
-                        <p class="body-1">Cineplexx-Kino
-                          <br>TschamlerstraBe 7 (Sudring)
-                          <br>6020 Innsbruck
-                          <br>Osterreich
-                        </p>
-                        <p class="body-1">
+                        <p class="body-1">{{churchesData[0].address}}</p>
+                        <!-- <p class="body-1">
                           <span class="font-weight-bold black--text">Head Office</span>
                           <br>Gutenbergstr. 6
                           <br>6020 Innsbruck
                           <br>Osterreich
-                        </p>
-                        <p class="body-1">Tel: +43 699 18114153
+                        </p>-->
+                        <p class="body-1" v-if="churchesData[0].head_office">
+                          Tel: {{churchesData[0].head_office}}
                           <br>
                           <a
-                            href="mailto:knotakt@kirchenimkno.at"
+                            v-if="churchesData[0].email_id"
+                            :href="'mailto:'+churchesData[0].email_id"
                             target="new"
-                          >knotakt@kirchenimkno.at</a>
+                          >{{churchesData[0].email_id}}</a>
                         </p>
-                        <p class="body-1">
-                          <a href>www.kirchenimkno.at</a>
+                        <p class="body-1" v-if="churchesData[0].website">
+                          <a href>{{ churchesData[0].website }}</a>
                         </p>
                       </v-flex>
                     </v-layout>
                   </v-card-text>
                 </v-card>
               </v-tab-item>
-              <v-tab-item>
+              <v-tab-item id="tab-4">
                 <v-card flat>
                   <v-card-text class="px-0">
                     <v-layout row wrap>
                       <v-flex xs12 md8>
-                        <p class="headline">Text 4</p>
+                        <p class="headline">Social Media Wall</p>
                       </v-flex>
                       <v-flex xs12 md4 class="tabRight">
                         <v-btn flat block class="colorGreen ma-0 mb-3 py-2">
@@ -346,42 +341,64 @@
                         <p class="headline">Gemeindeprofil</p>
                         <p class="body-1">
                           <span class="font-weight-bold black--text">Gottesdienste</span>
-                          <br>Heden Sonntag
-                          <br>100:00 bis 11:30 Uhr
+                          <br>
+                          {{churchesData[0].timing}}
                         </p>
-                        <p class="body-1">Cineplexx-Kino
-                          <br>TschamlerstraBe 7 (Sudring)
-                          <br>6020 Innsbruck
-                          <br>Osterreich
-                        </p>
-                        <p class="body-1">
+                        <p class="body-1">{{churchesData[0].address}}</p>
+                        <!-- <p class="body-1">
                           <span class="font-weight-bold black--text">Head Office</span>
                           <br>Gutenbergstr. 6
                           <br>6020 Innsbruck
                           <br>Osterreich
-                        </p>
-                        <p class="body-1">Tel: +43 699 18114153
+                        </p>-->
+                        <p class="body-1" v-if="churchesData[0].head_office">
+                          Tel: {{churchesData[0].head_office}}
                           <br>
                           <a
-                            href="mailto:knotakt@kirchenimkno.at"
+                            v-if="churchesData[0].email_id"
+                            :href="'mailto:'+churchesData[0].email_id"
                             target="new"
-                          >knotakt@kirchenimkno.at</a>
+                          >{{churchesData[0].email_id}}</a>
                         </p>
-                        <p class="body-1">
-                          <a href>www.kirchenimkno.at</a>
+                        <p class="body-1" v-if="churchesData[0].website">
+                          <a href>{{ churchesData[0].website }}</a>
                         </p>
                       </v-flex>
                     </v-layout>
                   </v-card-text>
                 </v-card>
               </v-tab-item>
-              <v-tab-item>
+              <v-tab-item id="tab-5">
                 <v-card flat>
                   <v-card-text class="px-0">
                     <v-layout row wrap>
                       <v-flex xs12 md8>
                         <p class="headline">Events</p>
-                        <v-layout row class="mb-3">
+                        <v-layout row class="mb-3" v-if="churchesData.events" v-for="event in churchesData.events">
+                          <v-flex d-flex md3 class="pa-0">
+                            <v-card dark tile flat color="dark">
+                              <v-card-text>
+                                <p class="body-2 text-xs-center">Sonntag
+                                  <br>
+                                  <span class="display-2">{{ event.event_date | moment("DD") }}</span>
+                                  <br>{{ event.event_date | moment("MMM YYYY") }}
+                                  <br>{{ event.event_date | moment("HH:mm") }}
+                                </p>
+                              </v-card-text>
+                            </v-card>
+                          </v-flex>
+                          <v-flex d-flex md9 class="pa-0">
+                            <v-card light tile flat color="grey lighten-4">
+                              <v-card-text>
+                                <h3 class="headline font-weight-medium mb-1">{{ event.event_title }}</h3>
+                                <h3 class="body-3 mb-2">{{ event.event_date }}</h3>
+                                <p class="body-1">{{ event.event_description }}
+                                </p>
+                              </v-card-text>
+                            </v-card>
+                          </v-flex>
+                        </v-layout>
+                        <!-- <v-layout row class="mb-3">
                           <v-flex d-flex md3 class="pa-0">
                             <v-card dark tile flat color="dark">
                               <v-card-text>
@@ -405,32 +422,7 @@
                               </v-card-text>
                             </v-card>
                           </v-flex>
-                        </v-layout>
-                        <v-layout row class="mb-3">
-                          <v-flex d-flex md3 class="pa-0">
-                            <v-card dark tile flat color="dark">
-                              <v-card-text>
-                                <p class="body-2 text-xs-center">Sonntag
-                                  <br>
-                                  <span class="display-2">10</span>
-                                  <br>JUN 2018
-                                  <br>10:00 Uhr
-                                </p>
-                              </v-card-text>
-                            </v-card>
-                          </v-flex>
-                          <v-flex d-flex md9 class="pa-0">
-                            <v-card light tile flat color="grey lighten-4">
-                              <v-card-text>
-                                <h3 class="headline font-weight-medium mb-1">Gottesdienst</h3>
-                                <h3 class="body-3 mb-2">10:00 - 11:30 Uhr</h3>
-                                <p class="body-1">TschamlerstraBe 7
-                                  <br>6020 Innsbruck
-                                </p>
-                              </v-card-text>
-                            </v-card>
-                          </v-flex>
-                        </v-layout>
+                        </v-layout> -->
                       </v-flex>
                       <v-flex xs12 md4 class="tabRight">
                         <v-btn flat block class="colorGreen ma-0 mb-3 py-2">
@@ -446,39 +438,37 @@
                         <p class="headline">Gemeindeprofil</p>
                         <p class="body-1">
                           <span class="font-weight-bold black--text">Gottesdienste</span>
-                          <br>Heden Sonntag
-                          <br>100:00 bis 11:30 Uhr
+                          <br>
+                          {{churchesData[0].timing}}
                         </p>
-                        <p class="body-1">Cineplexx-Kino
-                          <br>TschamlerstraBe 7 (Sudring)
-                          <br>6020 Innsbruck
-                          <br>Osterreich
-                        </p>
-                        <p class="body-1">
+                        <p class="body-1">{{churchesData[0].address}}</p>
+                        <!-- <p class="body-1">
                           <span class="font-weight-bold black--text">Head Office</span>
                           <br>Gutenbergstr. 6
                           <br>6020 Innsbruck
                           <br>Osterreich
-                        </p>
-                        <p class="body-1">Tel: +43 699 18114153
+                        </p>-->
+                        <p class="body-1" v-if="churchesData[0].head_office">
+                          Tel: {{churchesData[0].head_office}}
                           <br>
                           <a
-                            href="mailto:knotakt@kirchenimkno.at"
+                            v-if="churchesData[0].email_id"
+                            :href="'mailto:'+churchesData[0].email_id"
                             target="new"
-                          >knotakt@kirchenimkno.at</a>
+                          >{{churchesData[0].email_id}}</a>
                         </p>
-                        <p class="body-1">
-                          <a href>www.kirchenimkno.at</a>
+                        <p class="body-1" v-if="churchesData[0].website">
+                          <a href>{{ churchesData[0].website }}</a>
                         </p>
                       </v-flex>
                     </v-layout>
                   </v-card-text>
                 </v-card>
               </v-tab-item>
-              <v-tab-item>
+              <v-tab-item id="tab-6">
                 <v-card flat>
                   <v-card-text class="px-0">
-                    <v-layout row wrap>
+                    <v-layout row wrap v-if="churchesData.jobs" v-for="job in churchesData.jobs">
                       <v-flex xs12 md8>
                         <p class="headline">Jobs</p>
                         <v-layout row class="mb-3">
@@ -493,17 +483,15 @@
                             <v-card light tile flat color="grey lighten-4">
                               <v-card-text>
                                 <h3 class="headline font-weight-medium mb-2">
-                                  Poster
-                                  <span class="right body-1">10.06.2018</span>
+                                  {{job.job_title}}
+                                  <span class="right body-1">{{job.date | moment("DD.MM.YYYY")}}</span>
                                 </h3>
-                                <p class="body-1">Vollzeit
-                                  <br>Kirche im Kino, Innsbruck (A)
-                                </p>
+                                <p class="body-1">{{job.job_description}}</p>
                               </v-card-text>
                             </v-card>
                           </v-flex>
                         </v-layout>
-                        <v-layout row>
+                        <!-- <v-layout row>
                           <v-flex d-flex md3 class="pa-0">
                             <v-card dark tile flat color="dark">
                               <v-card-text>
@@ -527,7 +515,7 @@
                               </v-card-text>
                             </v-card>
                           </v-flex>
-                        </v-layout>
+                        </v-layout> -->
                       </v-flex>
                       <v-flex xs12 md4 class="tabRight">
                         <v-btn flat block class="colorGreen ma-0 mb-3 py-2">
@@ -543,36 +531,34 @@
                         <p class="headline">Gemeindeprofil</p>
                         <p class="body-1">
                           <span class="font-weight-bold black--text">Gottesdienste</span>
-                          <br>Heden Sonntag
-                          <br>100:00 bis 11:30 Uhr
+                          <br>
+                          {{churchesData[0].timing}}
                         </p>
-                        <p class="body-1">Cineplexx-Kino
-                          <br>TschamlerstraBe 7 (Sudring)
-                          <br>6020 Innsbruck
-                          <br>Osterreich
-                        </p>
-                        <p class="body-1">
+                        <p class="body-1">{{churchesData[0].address}}</p>
+                        <!-- <p class="body-1">
                           <span class="font-weight-bold black--text">Head Office</span>
                           <br>Gutenbergstr. 6
                           <br>6020 Innsbruck
                           <br>Osterreich
-                        </p>
-                        <p class="body-1">Tel: +43 699 18114153
+                        </p>-->
+                        <p class="body-1" v-if="churchesData[0].head_office">
+                          Tel: {{churchesData[0].head_office}}
                           <br>
                           <a
-                            href="mailto:knotakt@kirchenimkno.at"
+                            v-if="churchesData[0].email_id"
+                            :href="'mailto:'+churchesData[0].email_id"
                             target="new"
-                          >knotakt@kirchenimkno.at</a>
+                          >{{churchesData[0].email_id}}</a>
                         </p>
-                        <p class="body-1">
-                          <a href>www.kirchenimkno.at</a>
+                        <p class="body-1" v-if="churchesData[0].website">
+                          <a href>{{ churchesData[0].website }}</a>
                         </p>
                       </v-flex>
                     </v-layout>
                   </v-card-text>
                 </v-card>
               </v-tab-item>
-              <v-tab-item>
+              <v-tab-item id="tab-7">
                 <v-card flat>
                   <v-card-text class="px-0">
                     <v-layout row wrap>
@@ -682,29 +668,27 @@
                         <p class="headline">Gemeindeprofil</p>
                         <p class="body-1">
                           <span class="font-weight-bold black--text">Gottesdienste</span>
-                          <br>Heden Sonntag
-                          <br>100:00 bis 11:30 Uhr
+                          <br>
+                          {{churchesData[0].timing}}
                         </p>
-                        <p class="body-1">Cineplexx-Kino
-                          <br>TschamlerstraBe 7 (Sudring)
-                          <br>6020 Innsbruck
-                          <br>Osterreich
-                        </p>
-                        <p class="body-1">
+                        <p class="body-1">{{churchesData[0].address}}</p>
+                        <!-- <p class="body-1">
                           <span class="font-weight-bold black--text">Head Office</span>
                           <br>Gutenbergstr. 6
                           <br>6020 Innsbruck
                           <br>Osterreich
-                        </p>
-                        <p class="body-1">Tel: +43 699 18114153
+                        </p>-->
+                        <p class="body-1" v-if="churchesData[0].head_office">
+                          Tel: {{churchesData[0].head_office}}
                           <br>
                           <a
-                            href="mailto:knotakt@kirchenimkno.at"
+                            v-if="churchesData[0].email_id"
+                            :href="'mailto:'+churchesData[0].email_id"
                             target="new"
-                          >knotakt@kirchenimkno.at</a>
+                          >{{churchesData[0].email_id}}</a>
                         </p>
-                        <p class="body-1">
-                          <a href>www.kirchenimkno.at</a>
+                        <p class="body-1" v-if="churchesData[0].website">
+                          <a href>{{ churchesData[0].website }}</a>
                         </p>
                       </v-flex>
                     </v-layout>
@@ -728,11 +712,8 @@ export default {
       // baseUrl: process.env.BASE_URL
       isMobile: false,
       drawer: null,
-      items: [
-        { title: "Home", icon: "dashboard" },
-        { title: "About", icon: "question_answer" }
-      ],
-      churchesData: []
+      churchesData: [],
+      active_tab: "tab-4"
     };
   },
   mounted() {
