@@ -354,8 +354,8 @@
           <v-list-tile-action>
             <v-icon>dashboard</v-icon>
           </v-list-tile-action>
-          <router-link to="/newsroom" @click.stop="drawer = !drawer">
-            <v-list-tile-content>
+          <router-link to="/newsroom">
+            <v-list-tile-content @click.stop="drawer = !drawer">
               <v-list-tile-title>Newsroom</v-list-tile-title>
             </v-list-tile-content>
           </router-link>
