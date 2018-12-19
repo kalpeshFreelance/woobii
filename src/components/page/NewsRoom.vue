@@ -33,8 +33,33 @@
             </v-card>
           </v-flex>
           <v-flex xs12 md9>
-            <v-layout row wrap>
-              <v-flex d-flex xs12 md4>
+            <v-layout row wrap >
+              <v-flex d-flex xs12 md4 v-if="newsroomList" v-for="news in newsroomList">
+                <v-card flat color="grey lighten-4">
+                  <a :href="'/newsroom/'+news.slug" class="caption black--text">
+                    <v-img
+                      v-if="news.bannerimage"
+                      :lazy-src="'http://dev.woobii.com/admin/'+news.bannerimage"
+                      :src="'http://dev.woobii.com/admin/'+news.bannerimage"
+                    />
+                    <v-img
+                      v-else
+                      :src="require(`@/assets/woobii-banner.jpg`)"
+                      :lazy-src="require(`@/assets/woobii-banner.jpg`)"
+                    />
+                  </a>
+                  <v-card-title>
+                    <h4 class="caption text-uppercase mb-2">
+                      <span class="font-weight-black">{{news.category}}</span> | {{news.subcategory}}
+                    </h4>
+                    <h4
+                      class="caption text-uppercase font-weight-black mb-2"
+                    ><a :href="'/newsroom/'+news.slug" class="caption black--text">{{news.title}}</a></h4>
+                    <h4 class="caption">{{ news.author}} | {{ news.date | moment("DD.MM.YYYY")}}</h4>
+                  </v-card-title>
+                </v-card>
+              </v-flex>
+              <!-- <v-flex d-flex xs12 md4>
                 <v-card flat color="grey lighten-4">
                   <v-img src="https://cdn.vuetifyjs.com/images/cards/desert.jpg"></v-img>
                   <v-card-title>
@@ -75,21 +100,7 @@
                     <h4 class="caption">epdO | 30.05.2018</h4>
                   </v-card-title>
                 </v-card>
-              </v-flex>
-              <v-flex d-flex xs12 md4>
-                <v-card flat color="grey lighten-4">
-                  <v-img src="https://cdn.vuetifyjs.com/images/cards/desert.jpg"></v-img>
-                  <v-card-title>
-                    <h4 class="caption text-uppercase mb-2">
-                      <span class="font-weight-black">Evangeelische Kirch</span> | Kunstliche Intelligenz
-                    </h4>
-                    <h4
-                      class="caption text-uppercase font-weight-black mb-2"
-                    >Evangelischer Bund: Umfrage zu künstlicher Intelligenz und Religion</h4>
-                    <h4 class="caption">epdO | 30.05.2018</h4>
-                  </v-card-title>
-                </v-card>
-              </v-flex>
+              </v-flex> -->
             </v-layout>
           </v-flex>
         </v-layout>
@@ -99,6 +110,8 @@
 </template>
 
 <script>
+import axios from "axios"
+
 export default {
   name: "App",
   data() {
@@ -106,6 +119,7 @@ export default {
       // baseUrl: process.env.BASE_URL
       isMobile: false,
       drawer: null,
+      newsroomList: {},
       items: [
         { title: "Home", icon: "dashboard" },
         { title: "About", icon: "question_answer" }
@@ -113,13 +127,45 @@ export default {
     };
   },
   mounted() {
-
+    this.newsroomlist();
   },
   beforeDestroy() {
 
   },
   methods: {
-
+    newsroomlist: function(){
+      var e = this;
+      axios
+        .get("/churcheview/newsroomlist")
+        .then(function(response) {
+          if (response.data.status == true) {
+            e.newsroomList = response.data.newsroom;
+          }
+          // console.log(response.data);
+          // console.log(response.status);
+          // console.log(response.statusText);
+          // console.log(response.headers);
+          // console.log(response.config);
+        })
+        .catch(function(error) {
+          if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          } else if (error.request) {
+            // The request was made but no response was received
+            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+            // http.ClientRequest in node.js
+            console.log(error.request);
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            console.log("Error", error.message);
+          }
+          console.log(error.config);
+        });
+    }
   }
 };
 </script>
