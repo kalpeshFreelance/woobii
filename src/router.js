@@ -33,7 +33,7 @@ export default new Router({
       ]*/
     },
     {
-      path: '/newsroomDetail',
+      path: '/newsroom/:slug',
       name: 'newsroomDetail',
       component: NewsRoomDetail
     },

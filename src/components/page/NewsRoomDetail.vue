@@ -36,20 +36,26 @@
             <v-card flat color="white">
               <v-tabs slider-color="deep-orange accent-3">
                 <v-tab>Text</v-tab>
-                <v-tab  v-model="selectedTab">Bilder</v-tab>
+                <v-tab>Bilder</v-tab>
                 <v-tab>Dokument</v-tab>
                 <v-tab-item>
                   <v-card flat>
                     <v-card-text class="px-0">
-                      <p class="caption mb-1">31.05.2018</p>
-                      <p
-                        class="caption mb-1"
-                      >Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-                      <p
-                        class="caption mb-1"
-                      >Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                      <p class="caption mb-1">{{ newsroomData[0].date | moment("DD.MM.YYYY")}}</p>
+                      <p class="caption mb-1" v-html="newsroomData[0].description"></p>
                       <div class="grey lighten-3 my-3 pa-2">
-                        <v-img src="https://cdn.vuetifyjs.com/images/cards/desert.jpg" class="mb-2"></v-img>
+                        <v-img
+                          v-if="newsroomData[0].bannerimage"
+                          :lazy-src="'http://dev.woobii.com/admin/'+newsroomData[0].bannerimage"
+                          :src="'http://dev.woobii.com/admin/'+newsroomData[0].bannerimage"
+                          class="mb-2"
+                        />
+                        <v-img
+                          v-else
+                          :src="require(`@/assets/woobii-banner.jpg`)"
+                          :lazy-src="require(`@/assets/woobii-banner.jpg`)"
+                          class="mb-2"
+                        />
                         <p
                           class="caption font-weight-bold text-xs-center mb-1 orangeText"
                         >Contrary to popular belief, Lorem Ipsum is not simply random text.</p>
@@ -126,21 +132,21 @@
               </v-btn>
               <v-divider class="my-3"></v-divider>
               <h2 class="subheading font-weight-bold mb-3">
-                <v-icon small class="black--text mr-2">camera_alt</v-icon>
-                Bilder
+                <v-icon small class="black--text mr-2">camera_alt</v-icon>Bilder
                 <v-icon class="right black--text ml-2">keyboard_arrow_right</v-icon>
               </h2>
               <v-img src="https://cdn.vuetifyjs.com/images/cards/desert.jpg" class="mb-2"></v-img>
               <v-img src="https://cdn.vuetifyjs.com/images/cards/desert.jpg" class="mb-2"></v-img>
               <v-divider class="my-3"></v-divider>
               <h2 class="subheading font-weight-bold mb-3">
-                <v-icon small class="black--text mr-2">edit</v-icon>
-                Bilder
+                <v-icon small class="black--text mr-2">edit</v-icon>Bilder
                 <v-icon class="right black--text ml-2">keyboard_arrow_right</v-icon>
               </h2>
               <p class="caption mb-2">demo- 152769333-1527673223</p>
               <router-link to="/" class="caption mb-2">
-                <p>.docs | 1.25 MB<v-icon small class="right black--text ml-2">edit</v-icon></p>
+                <p>.docs | 1.25 MB
+                  <v-icon small class="right black--text ml-2">edit</v-icon>
+                </p>
               </router-link>
               <v-divider class="my-3"></v-divider>
               <h2 class="subheading font-weight-bold mb-2">Pressekontakt</h2>
@@ -160,6 +166,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "App",
   data() {
@@ -167,6 +175,7 @@ export default {
       // baseUrl: process.env.BASE_URL
       isMobile: false,
       drawer: null,
+      newsroomData: {},
       items: [
         { title: "Home", icon: "dashboard" },
         { title: "About", icon: "question_answer" }
@@ -174,13 +183,44 @@ export default {
     };
   },
   mounted() {
-
+    this.newsroomdata(this.$route.params.slug);
   },
-  beforeDestroy() {
-    
-  },
+  beforeDestroy() {},
   methods: {
-
+    newsroomdata: function(slug) {
+      var e = this;
+      axios
+        .get("/churcheview/newsroom?s=" + slug)
+        .then(function(response) {
+          if (response.data.status == true) {
+            console.log(response.data.newsroom);
+            e.newsroomData = response.data.newsroom;
+          }
+          // console.log(response.data);
+          // console.log(response.status);
+          // console.log(response.statusText);
+          // console.log(response.headers);
+          // console.log(response.config);
+        })
+        .catch(function(error) {
+          if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          } else if (error.request) {
+            // The request was made but no response was received
+            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+            // http.ClientRequest in node.js
+            console.log(error.request);
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            console.log("Error", error.message);
+          }
+          console.log(error.config);
+        });
+    }
   }
 };
 </script>

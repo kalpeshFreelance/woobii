@@ -33,16 +33,16 @@
                   <br>dann 19,99 pro Monat (oder 199,99 pro Jahr)
                 </p>
                 <v-layout row wrap>
-                  <form @submit.prevent="submit('form-1')" data-vv-scope="form-1">
+                  <form @submit.prevent="submit('form1')" data-vv-scope="form1">
                     <v-flex xs12 md10 offset-md1>
                       <v-autocomplete
                         light
                         placeholder="Gemeindetyp"
                         solo
-                        v-model="gemeindetype"
+                        v-model="form1.gemeindetype"
                         :items="GemeindetypeList"
                         v-validate="'required'"
-                        :error-messages="errors.collect('form-1.gemeindetype')"
+                        :error-messages="errors.collect('form1.gemeindetype')"
                         label="Gemeindetyp"
                         item-text="type"
                         item-value="id"
@@ -54,11 +54,11 @@
                         light
                         placeholder="Land"
                         solo
-                        v-model="land"
+                        v-model="form1.land"
                         @change="listofcity"
                         :items="LandList"
                         v-validate="'required'"
-                        :error-messages="errors.collect('form-1.land')"
+                        :error-messages="errors.collect('form1.land')"
                         label="Land"
                         item-text="name"
                         item-value="id"
@@ -70,10 +70,10 @@
                         light
                         placeholder="Ort"
                         solo
-                        v-model="ort"
+                        v-model="form1.ort"
                         :items="OrtList"
                         v-validate="'required'"
-                        :error-messages="errors.collect('form-1.ort')"
+                        :error-messages="errors.collect('form1.ort')"
                         label="Ort"
                         item-text="place"
                         item-value="id"
@@ -86,9 +86,9 @@
                         placeholder="Gemeindename..."
                         solo
                         type="text"
-                        v-validate="'required'"
-                        v-model="gemeindename"
-                        :error-messages="errors.collect('form-1.gemeindename')"
+                        v-validate="'required|alpha_num|min:6|max:12'"
+                        v-model="form1.gemeindename"
+                        :error-messages="errors.collect('form1.gemeindename')"
                         label="Gemeindename"
                         data-vv-name="gemeindename"
                       ></v-text-field>
@@ -100,8 +100,8 @@
                         solo
                         type="email"
                         v-validate="'required|email'"
-                        v-model="Emailadresse"
-                        :error-messages="errors.collect('form-1.Emailadresse')"
+                        v-model="form1.Emailadresse"
+                        :error-messages="errors.collect('form1.Emailadresse')"
                         label="Emailadresse"
                         data-vv-name="Emailadresse"
                       ></v-text-field>
@@ -112,12 +112,14 @@
                         placeholder="Passwort..."
                         solo
                         type="password"
-                        v-validate="'required'"
-                        v-model="enterpassword"
-                        :error-messages="errors.collect('form-1.enterpassword')"
+                        v-validate="'required|min:4|max:12'"
+                        v-model="form1.enterpassword"
+                        name="enterpassword"
+                        :error-messages="errors.collect('form1.enterpassword')"
                         label="Password"
                         data-vv-name="enterpassword"
                         autocomplete="enterpassword"
+                        ref="enterpassword"
                       ></v-text-field>
                     </v-flex>
                     <v-flex xs12 md10 offset-md1>
@@ -126,9 +128,10 @@
                         placeholder="Re-Enter Passwort..."
                         solo
                         type="password"
-                        v-validate="'required|confirmed:enterpassword'"
-                        v-model="reenterpassword"
-                        :error-messages="errors.collect('form-1.reenterpassword')"
+                        name="reenterpassword"
+                        v-validate="'required|min:4|max:12|confirmed:enterpassword'"
+                        v-model="form1.reenterpassword"
+                        :error-messages="errors.collect('form1.reenterpassword')"
                         label="Re-Enter Password"
                         data-vv-name="reenterpassword"
                         autocomplete="reenterpassword"
@@ -153,15 +156,23 @@
             </v-card-text>
           </v-card>
         </v-dialog>
+
         <v-dialog v-model="dialoglog" max-width="600px">
           <v-btn slot="activator" flat class="hover-orange">Einloggen</v-btn>
           <v-card dark>
             <v-card-text>
               <v-container grid-list-md>
+                <v-dialog v-model="dialogLoader" hide-overlay persistent width="300">
+                  <v-card color="#FA6E2F" dark>
+                    <v-card-text>Please stand by
+                      <v-progress-linear indeterminate color="white" class="mb-0"></v-progress-linear>
+                    </v-card-text>
+                  </v-card>
+                </v-dialog>
                 <v-icon small class="mr-2 lockIcon">lock</v-icon>
                 <h1 class="display-2 text-md-center mb-4">WooBii Login</h1>
                 <v-layout row wrap>
-                  <v-form @submit.prevent="submit('form-2')" data-vv-scope="form-2">
+                  <v-form @submit.prevent="submit('form2')" data-vv-scope="form2">
                     <v-flex xs12 md10 offset-md1>
                       <v-text-field
                         light
@@ -169,8 +180,8 @@
                         placeholder="Email/Username..."
                         solo
                         v-validate="'required'"
-                        v-model="emailusername"
-                        :error-messages="errors.collect('form-2.emailusername')"
+                        v-model="form2.emailusername"
+                        :error-messages="errors.collect('form2.emailusername')"
                         label="Email/Username"
                         data-vv-name="emailusername"
                       ></v-text-field>
@@ -181,9 +192,9 @@
                         solo
                         type="password"
                         placeholder="Passwort..."
-                        v-validate="'required'"
-                        v-model="loginpassword"
-                        :error-messages="errors.collect('form-2.loginpassword')"
+                        v-validate="'required|alpha_num|min:6|max:12'"
+                        v-model="form2.loginpassword"
+                        :error-messages="errors.collect('form2.loginpassword')"
                         label="Password"
                         data-vv-name="loginpassword"
                         autocomplete="loginpassword"
@@ -194,10 +205,10 @@
                     </v-flex>
                   </v-form>
                   <v-flex xs12 class="text-xs-center">
-                    <span
+                    <a
                       class="body-1 white--text"
-                      @click="login = false, password = !password"
-                    >Passwort vergessen</span>
+                      @click="dialoglog = false, password = !password"
+                    >Passwort vergessen</a>
                   </v-flex>
                   <v-flex xs6>
                     <v-btn outline color="white" class="right" @click="facebookLogin">
@@ -219,7 +230,7 @@
             <v-card-text>
               <v-container grid-list-md>
                 <v-icon small class="mr-2 lockIcon">lock</v-icon>
-                <form @submit.prevent="submit('form-3')" data-vv-scope="form-3">
+                <form @submit.prevent="submit('form3')" data-vv-scope="form3">
                   <h1 class="display-2 text-md-center mb-4">Passwort Vergessen</h1>
                   <v-layout row wrap>
                     <v-flex xs12 md10 offset-md1>
@@ -227,8 +238,8 @@
                         light
                         placeholder="Emailadresse..."
                         solo
-                        v-model="forgotemail"
-                        :error-messages="errors.collect('form-3.forgotemail')"
+                        v-model="form3.forgotemail"
+                        :error-messages="errors.collect('form3.forgotemail')"
                         label="Emailadresse"
                         v-validate="'required|email'"
                         data-vv-name="forgotemail"
@@ -405,6 +416,7 @@
 <script>
 import { mapGetters } from "vuex";
 import axios from "axios";
+
 export default {
   name: "Header",
   data: () => ({
@@ -419,20 +431,31 @@ export default {
     offsetTop: 0,
     dialogreg: false,
     dialoglog: false,
+    dialogLoader: false,
 
     GemeindetypeList: [],
     LandList: [],
     OrtList: [],
-    gemeindetype: "",
-    land: "",
-    ort: "",
-    gemeindename: "",
-    Emailadresse: "",
-    enterpassword: "",
-    reenterpassword: "",
-    emailusername: "",
-    forgotemail: "",
-    loginpassword: "",
+
+    form1: {
+      gemeindetype: "",
+      land: "",
+      ort: "",
+      gemeindename: "",
+      Emailadresse: "",
+      enterpassword: "",
+      reenterpassword: "",
+      social_flag: 0,
+      social_name: ""
+    },
+    form2: {
+      emailusername: "",
+      loginpassword: "",
+    },
+    form3: {
+      forgotemail: ""
+    },
+    
     dictionary: {
       attributes: {
         forgotemail: "Emailadresse",
@@ -473,15 +496,115 @@ export default {
     twitterLogin() {
       this.$store.dispatch("signinUserWithTwitter");
     },
-    loginsubmit() {},
-    forgotsubmit() {},
+    loginsubmit() {
+      console.log("DATA 2 ", this.form2);
+      console.log("Login");
+       axios
+        .post("/churcheview/login",{ 
+              email: form2.emailusername,
+              password: form2.loginpassword,
+          })
+        .then(function(response) {
+          console.log(response);
+          if (response.data.status == true) {
+            e.LandList = response.data.countries.country;
+          }
+        })
+        .catch(function(error) {
+          if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          } else if (error.request) {
+            // The request was made but no response was received
+            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+            // http.ClientRequest in node.js
+            console.log(error.request);
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            console.log("Error", error.message);
+          }
+        });
+    },
+    forgotsubmit() {
+      console.log("DATA 3 ", this.form3);
+      console.log("Forget");
+       axios
+        .post("/churcheview/forgotusername",{ 
+              email: form3.forgotemail
+          })
+        .then(function(response) {
+          console.log(response);
+          if (response.data.status == true) {
+            e.LandList = response.data.countries.country;
+          }
+        })
+        .catch(function(error) {
+          if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          } else if (error.request) {
+            // The request was made but no response was received
+            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+            // http.ClientRequest in node.js
+            console.log(error.request);
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            console.log("Error", error.message);
+          }
+        });
+    },
+    regsubmit() {
+      console.log("DATA", this.form1);
+      console.log("Registration");
+      axios
+        .post("/churcheview/registration",{ 
+              gemeindetype: form1.gemeindetype,
+              gemeindename: form1.gemeindename,
+              land: form1.land,
+              ort: form1.ort,
+              email: form1.email,
+              password: form1.password,
+              social_flag: form1.social_flag,
+              social_name: form1.social_name,
+          })
+        .then(function(response) {
+          console.log(response);
+          if (response.data.status == true) {
+            e.LandList = response.data.countries.country;
+          }
+        })
+        .catch(function(error) {
+          if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          } else if (error.request) {
+            // The request was made but no response was received
+            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+            // http.ClientRequest in node.js
+            console.log(error.request);
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            console.log("Error", error.message);
+          }
+        });
+    },
     submit(scope) {
       this.$validator.validateAll(scope).then(result => {
-        console.log(scope);
-        console.log(result);
-        if (result) {
-          // eslint-disable-next-line
-          alert("Form Submitted!");
+        if (result == true && scope == "form2") {
+          this.loginsubmit();
+        } else if (result == true && scope == "form1") {
+          this.regsubmit();
+        } else if (result == true && scope == "form3") {
+          this.forgotsubmit();
         }
       });
     },
@@ -516,21 +639,22 @@ export default {
     },
     listofcity: function(id) {
       var e = this;
-      if (e.land == "") {
+      if (e.form1.land == "") {
         var city = "DE";
       } else {
         var cityData = e.LandList.filter(col => {
           return col.id.match(id);
         });
         var city = cityData[0].country_code;
+        e.dialogLoader = true;
       }
+
       axios
         .get("/adminglobal/getallcity/?id=" + city)
         .then(function(response) {
-          console.log(response.data);
           if (response.data.status == true) {
-            console.log(response.data.cities);
             e.OrtList = response.data.cities.city;
+            e.dialogLoader = false;
           }
         })
         .catch(function(error) {
@@ -556,9 +680,7 @@ export default {
       axios
         .get("/adminglobal/getallcountry")
         .then(function(response) {
-          console.log(response.data);
           if (response.data.status == true) {
-            console.log(response.data.countries);
             e.LandList = response.data.countries.country;
           }
         })

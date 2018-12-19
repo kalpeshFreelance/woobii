@@ -22,14 +22,14 @@ export default new Vuex.Store({
       state.user = user;
       localStorage.setItem('user', JSON.stringify(user));
       state.isUserSigninWithAuth0 = false
-      router.push("/default/dashboard/ecommerce");
-      setTimeout(function () {
-        Vue.notify({
-          group: 'loggedIn',
-          type: 'success',
-          text: 'User Logged In Success!'
-        });
-      }, 1500);
+      //router.push("/default/dashboard/ecommerce");
+      // setTimeout(function () {
+      //   Vue.notify({
+      //     group: 'loggedIn',
+      //     type: 'success',
+      //     text: 'User Logged In Success!'
+      //   });
+      // }, 1500);
     },
     loginUserFailure(state, error) {
       Nprogress.done();
