@@ -21,8 +21,14 @@
           <v-btn slot="activator" flat class="hover-orange">Einloggen</v-btn>
           <span>Einloggen</span>
         </v-tooltip>-->
+        <v-btn v-if="logout" @click="logoutSession" flat class="hover-orange">Logout</v-btn>
         <v-dialog v-model="dialogreg" max-width="600px">
-          <v-btn slot="activator" flat class="hover-orange">KOSTENLOS ANMELDEN</v-btn>
+          <v-btn
+            slot="activator"
+            v-if="logout == false"
+            flat
+            class="hover-orange"
+          >KOSTENLOS ANMELDEN</v-btn>
           <v-card dark>
             <v-card-text>
               <v-container grid-list-md>
@@ -156,19 +162,18 @@
             </v-card-text>
           </v-card>
         </v-dialog>
-
+        <v-dialog v-model="dialogLoader" hide-overlay persistent width="300">
+          <v-card color="#FA6E2F" dark>
+            <v-card-text>Please stand by
+              <v-progress-linear indeterminate color="white" class="mb-0"></v-progress-linear>
+            </v-card-text>
+          </v-card>
+        </v-dialog>
         <v-dialog v-model="dialoglog" max-width="600px">
-          <v-btn slot="activator" flat class="hover-orange">Einloggen</v-btn>
+          <v-btn slot="activator" v-if="logout == false" flat class="hover-orange">Einloggen</v-btn>
           <v-card dark>
             <v-card-text>
               <v-container grid-list-md>
-                <v-dialog v-model="dialogLoader" hide-overlay persistent width="300">
-                  <v-card color="#FA6E2F" dark>
-                    <v-card-text>Please stand by
-                      <v-progress-linear indeterminate color="white" class="mb-0"></v-progress-linear>
-                    </v-card-text>
-                  </v-card>
-                </v-dialog>
                 <v-icon small class="mr-2 lockIcon">lock</v-icon>
                 <h1 class="display-2 text-md-center mb-4">WooBii Login</h1>
                 <v-layout row wrap>
@@ -432,7 +437,7 @@ export default {
     dialogreg: false,
     dialoglog: false,
     dialogLoader: false,
-
+    logout: false,
     GemeindetypeList: [],
     LandList: [],
     OrtList: [],
@@ -450,12 +455,12 @@ export default {
     },
     form2: {
       emailusername: "",
-      loginpassword: "",
+      loginpassword: ""
     },
     form3: {
       forgotemail: ""
     },
-    
+
     dictionary: {
       attributes: {
         forgotemail: "Emailadresse",
@@ -496,18 +501,37 @@ export default {
     twitterLogin() {
       this.$store.dispatch("signinUserWithTwitter");
     },
+    logoutSession() {
+      localStorage.clear();
+      this.logout = false;
+    },
     loginsubmit() {
       console.log("DATA 2 ", this.form2);
       console.log("Login");
-       axios
-        .post("/churcheview/login",{ 
-              email: form2.emailusername,
-              password: form2.loginpassword,
-          })
+      var e = this;
+      axios
+        .post("/churcheview/login", {
+          email: this.form2.emailusername,
+          password: this.form2.loginpassword
+        })
         .then(function(response) {
           console.log(response);
+          e.dialogLoader = false;
           if (response.data.status == true) {
-            e.LandList = response.data.countries.country;
+            localStorage.setItem("token", response.data.token);
+            localStorage.setItem("email", response.data.email);
+            localStorage.setItem("username", response.data.username);
+            e.logout = true;
+            e.dialoglog = false;
+            e.$toasted.success("Successfully login", {
+              position: "top-center",
+              duration: 2000
+            });
+          } else {
+            e.$toasted.error("Email or password mismatch", {
+              position: "top-center",
+              duration: 2000
+            });
           }
         })
         .catch(function(error) {
@@ -531,10 +555,10 @@ export default {
     forgotsubmit() {
       console.log("DATA 3 ", this.form3);
       console.log("Forget");
-       axios
-        .post("/churcheview/forgotusername",{ 
-              email: form3.forgotemail
-          })
+      axios
+        .post("/churcheview/forgotusername", {
+          email: this.form3.forgotemail
+        })
         .then(function(response) {
           console.log(response);
           if (response.data.status == true) {
@@ -560,23 +584,39 @@ export default {
         });
     },
     regsubmit() {
+      var e = this;
       console.log("DATA", this.form1);
       console.log("Registration");
+      e.dialogLoader = true;
       axios
-        .post("/churcheview/registration",{ 
-              gemeindetype: form1.gemeindetype,
-              gemeindename: form1.gemeindename,
-              land: form1.land,
-              ort: form1.ort,
-              email: form1.email,
-              password: form1.password,
-              social_flag: form1.social_flag,
-              social_name: form1.social_name,
-          })
+        .post("/churcheview/registration", {
+          gemeindetype: this.form1.gemeindetype,
+          gemeindename: this.form1.gemeindename,
+          land: this.form1.land,
+          ort: this.form1.ort,
+          email: this.form1.Emailadresse,
+          password: this.form1.enterpassword,
+          social_flag: this.form1.social_flag,
+          social_name: this.form1.social_name
+        })
         .then(function(response) {
-          console.log(response);
+          console.log(response.data);
+          e.dialogLoader = false;
           if (response.data.status == true) {
-            e.LandList = response.data.countries.country;
+            localStorage.setItem("token", response.data.token);
+            localStorage.setItem("email", response.data.email);
+            localStorage.setItem("username", response.data.username);
+            e.logout = true;
+            e.dialogreg = false;
+            e.$toasted.success("Successfully registered", {
+              position: "top-center",
+              duration: 2000
+            });
+          } else {
+            e.$toasted.error("Something went wrong, please try againe", {
+              position: "top-center",
+              duration: 2000
+            });
           }
         })
         .catch(function(error) {
