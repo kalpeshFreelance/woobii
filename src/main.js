@@ -6,12 +6,15 @@ import router from './router'
 import store from './store'
 import VeeValidate from 'vee-validate'
 import * as VueGoogleMaps from 'vue2-google-maps'
+//import 'vue-googlemaps/dist/vue-googlemaps.css'
+//import VueGoogleMaps from 'vue-googlemaps'
 import axios from 'axios'
 import '@/assets/css/style.css'
 import 'roboto-fontface/css/roboto/roboto-fontface.css'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
 import '@fortawesome/fontawesome-free/css/all.css'
 import Nprogress from 'nprogress'
+import Toasted from 'vue-toasted'
 
 Vue.config.productionTip = false
 
@@ -19,10 +22,23 @@ Vue.use(Nprogress)
 Vue.use(axios)
 Vue.use(VeeValidate)
 Vue.use(require('vue-moment'))
+Vue.use(Toasted)
+
+/*Vue.use(VueGoogleMaps, {
+  load: {
+    // Google API key
+    apiKey: 'AIzaSyD-rdRygIIUU40ksaF8ZGZ1n8rfsMdM0xc',
+    // Enable more Google Maps libraries here
+    libraries: ['places'],
+    // Use new renderer
+    useBetaRenderer: false,
+  }
+})*/
 
 Vue.use(VueGoogleMaps, {
   load: {
-    key: 'AIzaSyD0dmlob5GrKaKTRswuV3hpMjRuvb78JUI',
+    key: 'AIzaSyD-rdRygIIUU40ksaF8ZGZ1n8rfsMdM0xc',
+    //key: 'AIzaSyD0dmlob5GrKaKTRswuV3hpMjRuvb78JUI',
     libraries: 'places',
     // This is required if you use the Autocomplete plugin
     // OR: libraries: 'places,drawing'

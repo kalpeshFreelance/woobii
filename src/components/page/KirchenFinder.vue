@@ -81,19 +81,44 @@
                   </v-card-text>
                   <GmapMap
                     :center="{lat:18.5596581, lng:73.7799374}"
-                    :zoom="7"
+                    :zoom="zoom"
                     map-type-id="roadmap"
                     style="width: 100%; height: 450px"
                   >
                     <GmapMarker
                       :key="index"
                       v-for="(m, index) in markers"
-                      :position="m.position"
+                      :position="m"
                       :clickable="true"
                       :draggable="false"
-                      @click="center=m.position"
-                    />
+                      @click="center=m"
+                    /> 
+                    <GmapCircle :bounds="circleBounds" :center="center" :radius="radius" :options="{editable: false}"></GmapCircle> 
                   </GmapMap>
+                  <!--<googlemaps-map
+                    :center.sync="center"
+                    :zoom.sync="zoom"
+                    map-type-id="roadmap"
+                         style="width: 100%; height: 450px"              
+                  >:options="mapOptions"
+                    @idle="onIdle"
+                    @click="onMapClick"
+                    :label="{
+                        color: marker === currentmarker ? 'white' : 'black',
+                        fontFamily: 'Material Icons',
+                        fontSize: '20px',
+                        text: 'star_rate',
+                      }"
+                    <!-- User Position -->
+                    <!--<googlemaps-user-position @update:position="setUserPosition"/>
+                    <googlemaps-marker
+                      v-for="(marker, index) of markers"
+                      :key="index"                      
+                      :position="marker"
+                    >
+                    </googlemaps-marker>
+                    <!-- <circle :bounds.sync="circleBounds" :center.sync="center" :radius.sync="100000" :options="{editable: true}"></circle> 
+                  </googlemaps-map>-->
                   <!-- <v-img src="https://cdn.vuetifyjs.com/images/cards/desert.jpg"></v-img> -->
                 </v-card>
               </v-flex>
@@ -218,6 +243,12 @@ export default {
       // baseUrl: process.env.BASE_URL
       isMobile: false,
       drawer: null,
+      center: {
+	      lat: 18.5596581, lng: 73.7799374
+			},
+			userPosition: null,
+      zoom: 11,
+      radius: 10000,
       items: [
         { title: "Home", icon: "dashboard" },
         { title: "About", icon: "question_answer" }
@@ -226,13 +257,22 @@ export default {
         { lat: 18.5596581, lng: 73.7799374 },
         { lat: 18.574692, lng: 73.76381700000002 }
       ],
-      churchesList: []
+      churchesList: [],
+      circleBounds: {},
     };
   },
   mounted() {
     this.churchlist();
   },
   methods: {
+    centerOnUser () {
+			if (this.userPosition) {
+				this.center = this.userPosition
+			}
+		},
+		setUserPosition (position) {
+			this.userPosition = position
+		},
     churchlist: function() {
       var e = this;
       axios
