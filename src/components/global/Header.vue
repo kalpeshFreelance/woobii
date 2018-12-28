@@ -21,11 +21,11 @@
           <v-btn slot="activator" flat class="hover-orange">Einloggen</v-btn>
           <span>Einloggen</span>
         </v-tooltip>-->
-        <v-btn v-if="logout" @click="logoutSession" flat class="hover-orange">Logout</v-btn>
+        <v-btn v-show="logout" @click="logoutSession" flat class="hover-orange">Logout</v-btn>
         <v-dialog v-model="dialogreg" max-width="600px">
           <v-btn
             slot="activator"
-            v-if="logout == false"
+            v-show="logout == false"
             flat
             class="hover-orange"
           >KOSTENLOS ANMELDEN</v-btn>
@@ -170,7 +170,7 @@
           </v-card>
         </v-dialog>
         <v-dialog v-model="dialoglog" max-width="600px">
-          <v-btn slot="activator" v-if="logout == false" flat class="hover-orange">Einloggen</v-btn>
+          <v-btn slot="activator" v-show="logout == false" flat class="hover-orange">Einloggen</v-btn>
           <v-card dark>
             <v-card-text>
               <v-container grid-list-md>
@@ -509,6 +509,7 @@ export default {
       console.log("DATA 2 ", this.form2);
       console.log("Login");
       var e = this;
+       e.dialogLoader = true;
       axios
         .post("/churcheview/login", {
           email: this.form2.emailusername,
