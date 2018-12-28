@@ -196,6 +196,27 @@
                       <v-flex xs12 md8>
                         <p class="headline">Angebote</p>
                       </v-flex>
+                      <v-flex md8>
+                        <v-flex d-flex md2 v-if="churchesData.offers">
+                          <v-card
+                            flat
+                            color="white"
+                            class="grey lighten-4"
+                            v-for="offer in churchesData.offers"
+                          >
+                            <v-card-title>
+                              <div>
+                                <span>{{ offer.offer_name }}</span>
+                              </div>
+                            </v-card-title>
+                            <v-img
+                              v-if="offer.offer_img"
+                              :lazy-src="'http://dev.woobii.com/admin/'+offer.offer_img"
+                              :src="'http://dev.woobii.com/admin/'+offer.offer_img"
+                            />
+                          </v-card>
+                        </v-flex>
+                      </v-flex>
                       <v-flex xs12 md4 class="tabRight">
                         <v-btn flat block class="colorGreen ma-0 mb-3 py-2">
                           <v-icon class="mr-2">share</v-icon>Kirchengemeinde empfehlen
@@ -243,13 +264,60 @@
                     <v-layout row wrap>
                       <v-flex xs12 md8>
                         <p class="headline">Gemeindenews</p>
-                        <v-layout row wrap>
-                          <v-flex d-flex md12>
+                        <v-layout row wrap v-show="churchesData.newsroom">
+                          <v-flex
+                            d-flex
+                            v-for="(newsroom, index) in churchesData.newsroom"
+                            v-bind:class="[ index == 0 ? 'md12' : 'md6']"
+                          >
                             <v-card flat color="white" class="grey lighten-4">
-                              <v-img src="https://cdn.vuetifyjs.com/images/cards/desert.jpg"></v-img>
+                              <v-img
+                                v-if="newsroom.bannerimage"
+                                :lazy-src="'http://dev.woobii.com/admin/'+newsroom.bannerimage"
+                                :src="'http://dev.woobii.com/admin/'+newsroom.bannerimage"
+                              >
+                                <v-container fill-height fluid v-if="index == 0">
+                                  <v-layout fill-height>
+                                    <v-flex xs12 align-end flexbox>
+                                      <h4 class="body-1 my-2 white--text">
+                                        <span class="font-weight-bold">{{ newsroom.category }}</span>
+                                        <span class="ml-2" style="color:#fa6e2f;">|</span>
+                                        {{ newsroom.subcategory }}
+                                      </h4>
+                                      <h4 class="body-1 my-2 white--text">{{ newsroom.title }}</h4>
+                                    </v-flex>
+                                  </v-layout>
+                                </v-container>
+                              </v-img>
+                              <v-card-text v-if="index != 0">
+                                <h4 class="body-1 my-2">
+                                  <span class="font-weight-bold">{{ newsroom.category }}</span>
+                                  <span class="ml-2" style="color:#fa6e2f;">|</span>
+                                  {{ newsroom.subcategory }}
+                                </h4>
+                                <h4 class="body-1 my-2">{{ newsroom.title }}</h4>
+                              </v-card-text>
                             </v-card>
                           </v-flex>
-                          <v-flex d-flex xs12 md6>
+                          <!-- <v-flex d-flex xs12 md6>
+                            <v-card flat color="white" class="grey lighten-4">
+                              <v-img
+                              v-if="newsroom.bannerimage"
+                              :lazy-src="'http://dev.woobii.com/admin/'+newsroom.bannerimage"
+                              :src="'http://dev.woobii.com/admin/'+newsroom.bannerimage"
+                            />
+                              <v-card-text>
+                                <h4 class="body-1 my-2">
+                                  <span class="font-weight-bold">{{ newsroom.category }}</span>
+                                  <span class="ml-2" style="color:#fa6e2f;">|</span> {{ newsroom.subcategory }}
+                                </h4>
+                                <h4
+                                  class="body-1 my-2"
+                                >{{ newsroom.title }}</h4>
+                              </v-card-text>
+                            </v-card>
+                          </v-flex>-->
+                          <!-- <v-flex d-flex xs12 md6>
                             <v-card flat color="white" class="grey lighten-4">
                               <v-img src="https://cdn.vuetifyjs.com/images/cards/desert.jpg"></v-img>
                               <v-card-text>
@@ -262,21 +330,7 @@
                                 >70 Jahre Staat Israel: Evangelischer Oberkichenrat gratuliert</h4>
                               </v-card-text>
                             </v-card>
-                          </v-flex>
-                          <v-flex d-flex xs12 md6>
-                            <v-card flat color="white" class="grey lighten-4">
-                              <v-img src="https://cdn.vuetifyjs.com/images/cards/desert.jpg"></v-img>
-                              <v-card-text>
-                                <h4 class="body-1 my-2">
-                                  <span class="font-weight-bold">Ausland</span>
-                                  <span class="ml-2" style="color:#fa6e2f;">|</span> Israel
-                                </h4>
-                                <h4
-                                  class="body-1 my-2"
-                                >70 Jahre Staat Israel: Evangelischer Oberkichenrat gratuliert</h4>
-                              </v-card-text>
-                            </v-card>
-                          </v-flex>
+                          </v-flex>-->
                         </v-layout>
                       </v-flex>
                       <v-flex xs12 md4 class="tabRight">
@@ -374,15 +428,22 @@
                     <v-layout row wrap>
                       <v-flex xs12 md8>
                         <p class="headline">Events</p>
-                        <v-layout row class="mb-3" v-if="churchesData.events" v-for="event in churchesData.events">
+                        <v-layout
+                          row
+                          class="mb-3"
+                          v-if="churchesData.events"
+                          v-for="event in churchesData.events"
+                        >
                           <v-flex d-flex md3 class="pa-0">
                             <v-card dark tile flat color="dark">
                               <v-card-text>
                                 <p class="body-2 text-xs-center">Sonntag
                                   <br>
                                   <span class="display-2">{{ event.event_date | moment("DD") }}</span>
-                                  <br>{{ event.event_date | moment("MMM YYYY") }}
-                                  <br>{{ event.event_date | moment("HH:mm") }}
+                                  <br>
+                                  {{ event.event_date | moment("MMM YYYY") }}
+                                  <br>
+                                  {{ event.event_date | moment("HH:mm") }}
                                 </p>
                               </v-card-text>
                             </v-card>
@@ -392,8 +453,7 @@
                               <v-card-text>
                                 <h3 class="headline font-weight-medium mb-1">{{ event.event_title }}</h3>
                                 <h3 class="body-3 mb-2">{{ event.event_date }}</h3>
-                                <p class="body-1">{{ event.event_description }}
-                                </p>
+                                <p class="body-1">{{ event.event_description }}</p>
                               </v-card-text>
                             </v-card>
                           </v-flex>
@@ -422,7 +482,7 @@
                               </v-card-text>
                             </v-card>
                           </v-flex>
-                        </v-layout> -->
+                        </v-layout>-->
                       </v-flex>
                       <v-flex xs12 md4 class="tabRight">
                         <v-btn flat block class="colorGreen ma-0 mb-3 py-2">
@@ -468,10 +528,10 @@
               <v-tab-item id="tab-6">
                 <v-card flat>
                   <v-card-text class="px-0">
-                    <v-layout row wrap v-if="churchesData.jobs" v-for="job in churchesData.jobs">
+                    <v-layout row wrap >
                       <v-flex xs12 md8>
                         <p class="headline">Jobs</p>
-                        <v-layout row class="mb-3">
+                        <v-layout row class="mb-3" v-if="churchesData.jobs" v-for="job in churchesData.jobs">
                           <v-flex d-flex md3 class="pa-0">
                             <v-card dark tile flat color="dark">
                               <v-card-text>
@@ -484,7 +544,9 @@
                               <v-card-text>
                                 <h3 class="headline font-weight-medium mb-2">
                                   {{job.job_title}}
-                                  <span class="right body-1">{{job.date | moment("DD.MM.YYYY")}}</span>
+                                  <span
+                                    class="right body-1"
+                                  >{{job.date | moment("DD.MM.YYYY")}}</span>
                                 </h3>
                                 <p class="body-1">{{job.job_description}}</p>
                               </v-card-text>
@@ -515,7 +577,7 @@
                               </v-card-text>
                             </v-card>
                           </v-flex>
-                        </v-layout> -->
+                        </v-layout>-->
                       </v-flex>
                       <v-flex xs12 md4 class="tabRight">
                         <v-btn flat block class="colorGreen ma-0 mb-3 py-2">
