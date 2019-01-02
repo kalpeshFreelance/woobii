@@ -22,9 +22,15 @@
               <v-card-text>
                 <v-form>
                   <v-text-field placeholder="Placeholder" append-icon="search" class="searchInput"></v-text-field>
-                  <v-select :items="items" label="Gemeindetyp:" placeholder="Bitte auswählen"></v-select>
-                  <v-select :items="items" label="Ressort:" placeholder="Bitte auswählen"></v-select>
-                  <v-select :items="items" label="Subressort:" placeholder="Stichwort einfügen"></v-select>
+                  <v-select
+                    :items="GemeindetypeList"
+                    item-text="type"
+                    item-value="id"
+                    label="Gemeindetyp:"
+                    placeholder="Bitte auswählen"
+                  ></v-select>
+                  <v-select label="Ressort:" placeholder="Bitte auswählen"></v-select>
+                  <v-select label="Subressort:" placeholder="Stichwort einfügen"></v-select>
                   <v-text-field label="Themen:" placeholder="Themen..."></v-text-field>
                   <v-text-field label="People:" placeholder="People..."></v-text-field>
                   <v-text-field label="Land:" placeholder="Land..."></v-text-field>
@@ -33,14 +39,15 @@
             </v-card>
           </v-flex>
           <v-flex xs12 md9>
-            <v-layout row wrap >
+            <v-layout row wrap>
               <v-flex d-flex xs12 md4 v-if="newsroomList" v-for="news in newsroomList">
                 <v-card flat color="grey lighten-4">
                   <a :href="'/newsroom/'+news.slug" class="caption black--text">
                     <v-img
                       v-if="news.bannerimage"
                       :lazy-src="'http://dev.woobii.com/admin/'+news.bannerimage"
-                      :src="'http://dev.woobii.com/admin/'+news.bannerimage" class="newsImage"
+                      :src="'http://dev.woobii.com/admin/'+news.bannerimage"
+                      class="newsImage"
                     />
                     <v-img
                       v-else
@@ -49,12 +56,13 @@
                     />
                   </a>
                   <v-card-title>
-                    <h4 class="caption text-uppercase mb-2">
-                      <span class="font-weight-black">{{news.category}}</span> | {{news.subcategory}}
+                    <h4 class="caption text-uppercase mb-2" style="width: 100%;">
+                      <span class="font-weight-black">{{news.category}}</span>
+                      | {{news.subcategory}}
                     </h4>
-                    <h4
-                      class="caption text-uppercase font-weight-black mb-2"
-                    ><a :href="'/newsroom/'+news.slug" class="caption black--text">{{news.title}}</a></h4>
+                    <h4 class="caption text-uppercase font-weight-black mb-2" style="width: 100%;">
+                      <a :href="'/newsroom/'+news.slug" class="caption black--text">{{news.title}}</a>
+                    </h4>
                     <h4 class="caption">{{ news.author}} | {{ news.date | moment("DD.MM.YYYY")}}</h4>
                   </v-card-title>
                 </v-card>
@@ -100,7 +108,7 @@
                     <h4 class="caption">epdO | 30.05.2018</h4>
                   </v-card-title>
                 </v-card>
-              </v-flex> -->
+              </v-flex>-->
             </v-layout>
           </v-flex>
         </v-layout>
@@ -110,7 +118,7 @@
 </template>
 
 <script>
-import axios from "axios"
+import axios from "axios";
 
 export default {
   name: "App",
@@ -123,17 +131,46 @@ export default {
       items: [
         { title: "Home", icon: "dashboard" },
         { title: "About", icon: "question_answer" }
-      ]
+      ],
+      GemeindetypeList: []
     };
   },
   mounted() {
     this.newsroomlist();
+    this.listofmuncipalty();
   },
-  beforeDestroy() {
-
-  },
+  beforeDestroy() {},
   methods: {
-    newsroomlist: function(){
+    listofmuncipalty: function() {
+      var e = this;
+      axios
+        .get("/adminglobal/getallmuncipalitytype")
+        .then(function(response) {
+          console.log(response.data);
+          if (response.data.status == true) {
+            console.log(response.data.allmuncipalitytype);
+            e.GemeindetypeList = response.data.allmuncipalitytype;
+          }
+        })
+        .catch(function(error) {
+          if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          } else if (error.request) {
+            // The request was made but no response was received
+            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+            // http.ClientRequest in node.js
+            console.log(error.request);
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            console.log("Error", error.message);
+          }
+        });
+    },
+    newsroomlist: function() {
       var e = this;
       axios
         .get("/churcheview/newsroomlist")

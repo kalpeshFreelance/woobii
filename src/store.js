@@ -5,14 +5,16 @@ import Nprogress from 'nprogress'
 
 import {
   facebookAuthProvider,
-  twitterAuthProvider
+  twitterAuthProvider,
+  googleAuthProvider
 } from './firebase'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-
+    user: '',
+    isUserSigninWithAuth0: false
   },
   mutations: {
     loginUser(state) {
@@ -20,8 +22,8 @@ export default new Vuex.Store({
     },
     loginUserSuccess(state, user) {
       state.user = user;
-      localStorage.setItem('user', JSON.stringify(user));
-      state.isUserSigninWithAuth0 = false
+      //localStorage.setItem('user', JSON.stringify(user));
+      state.isUserSigninWithAuth0 = true
       //router.push("/default/dashboard/ecommerce");
       // setTimeout(function () {
       //   Vue.notify({
@@ -43,6 +45,12 @@ export default new Vuex.Store({
       state.user = null
       localStorage.removeItem('user');
       router.push("/session/login");
+    },
+    setUser: function (state, user) {
+      state.user = user;
+    },
+    setisUserSigninWithAuth0: function (state, setisUserSigninWithAuth0) {
+      state.isUserSigninWithAuth0 = setisUserSigninWithAuth0;
     }
   },
   actions: {
@@ -50,9 +58,11 @@ export default new Vuex.Store({
       context.commit('loginUser');
       firebase.auth().signInWithPopup(facebookAuthProvider).then((result) => {
         Nprogress.done();
-        setTimeout(() => {
-          context.commit('loginUserSuccess', result.user);
-        }, 500)
+        context.commit('setUser', result.user);
+        context.commit('setisUserSigninWithAuth0', 1);
+        // setTimeout(() => {
+        //   context.commit('loginUserSuccess', result.user);
+        // }, 500)
       }).catch(error => {
         context.commit('loginUserFailure', error);
       });
@@ -64,6 +74,19 @@ export default new Vuex.Store({
         setTimeout(() => {
           context.commit('loginUserSuccess', result.user);
         }, 500)
+      }).catch(error => {
+        context.commit('loginUserFailure', error);
+      });
+    },
+    signinUserWithGoogle(context) {
+      context.commit('loginUser');
+      firebase.auth().signInWithPopup(googleAuthProvider).then((result) => {
+        Nprogress.done();
+        // setTimeout(() => {
+        //   context.commit('loginUserSuccess', result.user);
+        // }, 500)
+        context.commit('setUser', result.user);
+        context.commit('setisUserSigninWithAuth0', 1);
       }).catch(error => {
         context.commit('loginUserFailure', error);
       });

@@ -26,7 +26,7 @@ a, a:hover {
     }
 }
 
-button, .display-1, .display-2, .body-1, .body-2, .body-3, .title, .subheading, .headline, .v-list, .flex, .caption, .v-chip, .v-tabs {
+button, .display-1, .display-2, .body-1, .body-2, .body-3, .title, .subheading, .headline, .v-list, .flex, .caption, .v-chip, .v-tabs, pre {
     font-family: 'LinotypeUnivers-BasicRegular' !important;
 }
 /*
@@ -376,6 +376,9 @@ a.router-link-exact-active.router-link-active .v-tooltip span button {
 .kitchenFinderSection .kFinderMapWrap span.display-1 {
     font-size: 30px !important;
     line-height: 35px !important;
+}
+.kitchenFinderSection pre {
+    white-space: inherit !important;
 }
 .kitchenFinderSection .kFinderWrap {
     padding: 12px;
