@@ -154,7 +154,7 @@
                   </v-flex>
                   <v-flex xs6>
                     <v-btn outline color="white" @click="twitterLogin">
-                      <v-icon small class="mr-2">fab fa-twitter</v-icon>Twitter
+                      <v-icon small class="mr-2">fab fa-google</v-icon>Google
                     </v-btn>
                   </v-flex>
                 </v-layout>
@@ -222,7 +222,7 @@
                   </v-flex>
                   <v-flex xs6>
                     <v-btn outline color="white" @click="twitterLogin">
-                      <v-icon small class="mr-2">fab fa-twitter</v-icon>Twitter
+                      <v-icon small class="mr-2">fab fa-google</v-icon>Google
                     </v-btn>
                   </v-flex>
                 </v-layout>
@@ -481,6 +481,14 @@ export default {
       return value.charAt(0).toUpperCase() + value.slice(1);
     }
   },
+  computed: {
+    socailuser() {
+      return this.$store.state.user;
+    },
+    socailFlag() {
+      return this.$store.state.isUserSigninWithAuth0;
+    }
+  },
   mounted() {
     this.onResize();
     window.addEventListener("resize", this.onResize, { passive: true });
@@ -499,7 +507,8 @@ export default {
       this.$store.dispatch("signinUserWithFacebook");
     },
     twitterLogin() {
-      this.$store.dispatch("signinUserWithTwitter");
+      //this.$store.dispatch("signinUserWithTwitter");
+      this.$store.dispatch("signinUserWithGoogle");
     },
     logoutSession() {
       localStorage.clear();
@@ -509,7 +518,7 @@ export default {
       console.log("DATA 2 ", this.form2);
       console.log("Login");
       var e = this;
-       e.dialogLoader = true;
+      e.dialogLoader = true;
       axios
         .post("/churcheview/login", {
           email: this.form2.emailusername,

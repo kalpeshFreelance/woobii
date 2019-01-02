@@ -83,10 +83,10 @@
           </v-flex>
           <v-flex xs12 class>
             <v-tabs slider-color="grey darken-3" v-model="active_tab">
-              <v-tab href="#tab-1">Über uns</v-tab>
+              <v-tab grow href="#tab-1">Über uns</v-tab>
               <v-tab href="#tab-2">Angebote</v-tab>
               <v-tab href="#tab-3">Neuigkeiten</v-tab>
-              <v-tab grow href="#tab-4">Social Media Wall</v-tab>
+              <v-tab href="#tab-4">Social Media Wall</v-tab>
               <v-tab href="#tab-5">Events</v-tab>
               <v-tab href="#tab-6">Jobs</v-tab>
               <v-tab href="#tab-7">Bewertungen</v-tab>
@@ -97,9 +97,9 @@
                       <v-flex xs12 md8>
                         <p class="headline">Über uns</p>
                         <div v-html="churchesData[0].about_us"></div>
-                        <p class="body-1 font-weight-bold">
+                        <!-- <p class="body-1 font-weight-bold">
                           <v-icon small class="black--text mr-1">expand_more</v-icon>Weiterlesen
-                        </p>
+                        </p>-->
                         <p class="headline">GLAUBE.at empfiehlt folgende Gemeinden:</p>
                         <v-layout row wrap>
                           <v-flex d-flex xs12 md6>
@@ -165,7 +165,7 @@
                           <br>
                           {{churchesData[0].timing}}
                         </p>
-                        <p class="body-1">{{churchesData[0].address}}</p>
+                        <p class="body-1" v-html="churchesData[0].address"></p>
                         <!-- <p class="body-1">
                           <span class="font-weight-bold black--text">Head Office</span>
                           <br>Gutenbergstr. 6
@@ -184,6 +184,19 @@
                         <p class="body-1" v-if="churchesData[0].website">
                           <a href>{{ churchesData[0].website }}</a>
                         </p>
+                        <GmapMap
+                          :center="{lat: parseFloat(churchesData[0].lat), lng: parseFloat(churchesData[0].lng)}"
+                          :zoom="12"
+                          map-type-id="roadmap"
+                          style="width: 100%; height: 180px"
+                        >
+                          <GmapMarker
+                            :position="{lat: parseFloat(churchesData[0].lat), lng: parseFloat(churchesData[0].lng)}"
+                            :clickable="true"
+                            :draggable="false"
+                            @click="center={lat: parseFloat(churchesData[0].lat), lng: parseFloat(churchesData[0].lng)}"
+                          />
+                        </GmapMap>
                       </v-flex>
                     </v-layout>
                   </v-card-text>
@@ -234,7 +247,7 @@
                           <br>
                           {{churchesData[0].timing}}
                         </p>
-                        <p class="body-1">{{churchesData[0].address}}</p>
+                        <p class="body-1" v-html="churchesData[0].address"></p>
                         <!-- <p class="body-1">
                           <span class="font-weight-bold black--text">Head Office</span>
                           <br>Gutenbergstr. 6
@@ -253,6 +266,19 @@
                         <p class="body-1" v-if="churchesData[0].website">
                           <a href>{{ churchesData[0].website }}</a>
                         </p>
+                        <GmapMap
+                          :center="{lat: parseFloat(churchesData[0].lat), lng: parseFloat(churchesData[0].lng)}"
+                          :zoom="12"
+                          map-type-id="roadmap"
+                          style="width: 100%; height: 180px"
+                        >
+                          <GmapMarker
+                            :position="{lat: parseFloat(churchesData[0].lat), lng: parseFloat(churchesData[0].lng)}"
+                            :clickable="true"
+                            :draggable="false"
+                            @click="center={lat: parseFloat(churchesData[0].lat), lng: parseFloat(churchesData[0].lng)}"
+                          />
+                        </GmapMap>
                       </v-flex>
                     </v-layout>
                   </v-card-text>
@@ -350,7 +376,7 @@
                           <br>
                           {{churchesData[0].timing}}
                         </p>
-                        <p class="body-1">{{churchesData[0].address}}</p>
+                        <p class="body-1" v-html="churchesData[0].address"></p>
                         <!-- <p class="body-1">
                           <span class="font-weight-bold black--text">Head Office</span>
                           <br>Gutenbergstr. 6
@@ -369,6 +395,19 @@
                         <p class="body-1" v-if="churchesData[0].website">
                           <a href>{{ churchesData[0].website }}</a>
                         </p>
+                        <GmapMap
+                          :center="{lat: parseFloat(churchesData[0].lat), lng: parseFloat(churchesData[0].lng)}"
+                          :zoom="12"
+                          map-type-id="roadmap"
+                          style="width: 100%; height: 180px"
+                        >
+                          <GmapMarker
+                            :position="{lat: parseFloat(churchesData[0].lat), lng: parseFloat(churchesData[0].lng)}"
+                            :clickable="true"
+                            :draggable="false"
+                            @click="center={lat: parseFloat(churchesData[0].lat), lng: parseFloat(churchesData[0].lng)}"
+                          />
+                        </GmapMap>
                       </v-flex>
                     </v-layout>
                   </v-card-text>
@@ -398,7 +437,7 @@
                           <br>
                           {{churchesData[0].timing}}
                         </p>
-                        <p class="body-1">{{churchesData[0].address}}</p>
+                        <p class="body-1" v-html="churchesData[0].address"></p>
                         <!-- <p class="body-1">
                           <span class="font-weight-bold black--text">Head Office</span>
                           <br>Gutenbergstr. 6
@@ -417,6 +456,19 @@
                         <p class="body-1" v-if="churchesData[0].website">
                           <a href>{{ churchesData[0].website }}</a>
                         </p>
+                        <GmapMap
+                          :center="{lat: parseFloat(churchesData[0].lat), lng: parseFloat(churchesData[0].lng)}"
+                          :zoom="12"
+                          map-type-id="roadmap"
+                          style="width: 100%; height: 180px"
+                        >
+                          <GmapMarker
+                            :position="{lat: parseFloat(churchesData[0].lat), lng: parseFloat(churchesData[0].lng)}"
+                            :clickable="true"
+                            :draggable="false"
+                            @click="center={lat: parseFloat(churchesData[0].lat), lng: parseFloat(churchesData[0].lng)}"
+                          />
+                        </GmapMap>
                       </v-flex>
                     </v-layout>
                   </v-card-text>
@@ -520,6 +572,19 @@
                         <p class="body-1" v-if="churchesData[0].website">
                           <a href>{{ churchesData[0].website }}</a>
                         </p>
+                        <GmapMap
+                          :center="{lat: parseFloat(churchesData[0].lat), lng: parseFloat(churchesData[0].lng)}"
+                          :zoom="12"
+                          map-type-id="roadmap"
+                          style="width: 100%; height: 180px"
+                        >
+                          <GmapMarker
+                            :position="{lat: parseFloat(churchesData[0].lat), lng: parseFloat(churchesData[0].lng)}"
+                            :clickable="true"
+                            :draggable="false"
+                            @click="center={lat: parseFloat(churchesData[0].lat), lng: parseFloat(churchesData[0].lng)}"
+                          />
+                        </GmapMap>
                       </v-flex>
                     </v-layout>
                   </v-card-text>
@@ -528,10 +593,15 @@
               <v-tab-item id="tab-6">
                 <v-card flat>
                   <v-card-text class="px-0">
-                    <v-layout row wrap >
+                    <v-layout row wrap>
                       <v-flex xs12 md8>
                         <p class="headline">Jobs</p>
-                        <v-layout row class="mb-3" v-if="churchesData.jobs" v-for="job in churchesData.jobs">
+                        <v-layout
+                          row
+                          class="mb-3"
+                          v-if="churchesData.jobs"
+                          v-for="job in churchesData.jobs"
+                        >
                           <v-flex d-flex md3 class="pa-0">
                             <v-card dark tile flat color="dark">
                               <v-card-text>
@@ -596,7 +666,7 @@
                           <br>
                           {{churchesData[0].timing}}
                         </p>
-                        <p class="body-1">{{churchesData[0].address}}</p>
+                        <p class="body-1" v-html="churchesData[0].address"></p>
                         <!-- <p class="body-1">
                           <span class="font-weight-bold black--text">Head Office</span>
                           <br>Gutenbergstr. 6
@@ -615,6 +685,19 @@
                         <p class="body-1" v-if="churchesData[0].website">
                           <a href>{{ churchesData[0].website }}</a>
                         </p>
+                        <GmapMap
+                          :center="{lat: parseFloat(churchesData[0].lat), lng: parseFloat(churchesData[0].lng)}"
+                          :zoom="12"
+                          map-type-id="roadmap"
+                          style="width: 100%; height: 180px"
+                        >
+                          <GmapMarker
+                            :position="{lat: parseFloat(churchesData[0].lat), lng: parseFloat(churchesData[0].lng)}"
+                            :clickable="true"
+                            :draggable="false"
+                            @click="center={lat: parseFloat(churchesData[0].lat), lng: parseFloat(churchesData[0].lng)}"
+                          />
+                        </GmapMap>
                       </v-flex>
                     </v-layout>
                   </v-card-text>
@@ -752,6 +835,19 @@
                         <p class="body-1" v-if="churchesData[0].website">
                           <a href>{{ churchesData[0].website }}</a>
                         </p>
+                        <GmapMap
+                          :center="{lat: parseFloat(churchesData[0].lat), lng: parseFloat(churchesData[0].lng)}"
+                          :zoom="12"
+                          map-type-id="roadmap"
+                          style="width: 100%; height: 180px"
+                        >
+                          <GmapMarker
+                            :position="{lat: parseFloat(churchesData[0].lat), lng: parseFloat(churchesData[0].lng)}"
+                            :clickable="true"
+                            :draggable="false"
+                            @click="center={lat: parseFloat(churchesData[0].lat), lng: parseFloat(churchesData[0].lng)}"
+                          />
+                        </GmapMap>
                       </v-flex>
                     </v-layout>
                   </v-card-text>
@@ -775,7 +871,7 @@ export default {
       isMobile: false,
       drawer: null,
       churchesData: [],
-      active_tab: "tab-4"
+      active_tab: "tab-1"
     };
   },
   mounted() {

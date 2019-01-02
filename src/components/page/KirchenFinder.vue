@@ -43,9 +43,9 @@
               <v-card-text>
                 <v-form>
                   <v-text-field placeholder="Placeholder" append-icon="search"></v-text-field>
-                  <v-select :items="items" label="Gemeindetyp:" placeholder="Bitte auswählen"></v-select>
-                  <v-select :items="items" label="Ressort:" placeholder="Bitte auswählen"></v-select>
-                  <v-select :items="items" label="Subressort:" placeholder="Stichwort einfügen"></v-select>
+                  <v-select :items="GemeindetypeList" item-text="type" item-value="id" label="Gemeindetyp:" placeholder="Bitte auswählen"></v-select>
+                  <v-select label="Ressort:" placeholder="Bitte auswählen"></v-select>
+                  <v-select label="Subressort:" placeholder="Stichwort einfügen"></v-select>
                   <v-text-field label="Themen:" placeholder="Themen..."></v-text-field>
                   <v-text-field label="People:" placeholder="People..."></v-text-field>
                   <v-text-field label="Land:" placeholder="Land..."></v-text-field>
@@ -80,7 +80,7 @@
                     </v-layout>
                   </v-card-text>
                   <GmapMap
-                    :center="{lat:18.5596581, lng:73.7799374}"
+                    :center="{lat:46.5271217, lng:6.5917258}"
                     :zoom="zoom"
                     map-type-id="roadmap"
                     style="width: 100%; height: 450px"
@@ -92,8 +92,13 @@
                       :clickable="true"
                       :draggable="false"
                       @click="center=m"
-                    /> 
-                    <GmapCircle :bounds="circleBounds" :center="center" :radius="radius" :options="{editable: false}"></GmapCircle> 
+                    />
+                    <GmapCircle
+                      :bounds="circleBounds"
+                      :center="center"
+                      :radius="radius"
+                      :options="{editable: false}"
+                    ></GmapCircle>
                   </GmapMap>
                   <!--<googlemaps-map
                     :center.sync="center"
@@ -109,8 +114,8 @@
                         fontSize: '20px',
                         text: 'star_rate',
                       }"
-                    <!-- User Position -->
-                    <!--<googlemaps-user-position @update:position="setUserPosition"/>
+                  <!-- User Position-->
+                  <!--<googlemaps-user-position @update:position="setUserPosition"/>
                     <googlemaps-marker
                       v-for="(marker, index) of markers"
                       :key="index"                      
@@ -130,7 +135,8 @@
                     <v-img
                       v-if="churche.bannerimage"
                       :lazy-src="'http://dev.woobii.com/admin/'+churche.bannerimage"
-                      :src="'http://dev.woobii.com/admin/'+churche.bannerimage" class="kitchenImage"
+                      :src="'http://dev.woobii.com/admin/'+churche.bannerimage"
+                      class="kitchenImage"
                     />
                     <v-img
                       v-else
@@ -244,9 +250,10 @@ export default {
       isMobile: false,
       drawer: null,
       center: {
-	      lat: 18.5596581, lng: 73.7799374
-			},
-			userPosition: null,
+        lat: 46.5271217,
+        lng: 6.5917258
+      },
+      userPosition: null,
       zoom: 11,
       radius: 10000,
       items: [
@@ -254,25 +261,58 @@ export default {
         { title: "About", icon: "question_answer" }
       ],
       markers: [
-        { lat: 18.5596581, lng: 73.7799374 },
-        { lat: 18.574692, lng: 73.76381700000002 }
+        { lat: 46.5271217, lng: 6.5917258 },
+        { lat: 48.1908278, lng: 16.3514073 },
+        { lat: 51.04789, lng: 13.7391 },
+        { lat: 46.5238983, lng: 6.6321776 }
       ],
       churchesList: [],
       circleBounds: {},
+      GemeindetypeList: []
     };
   },
   mounted() {
     this.churchlist();
+    this.listofmuncipalty();
   },
   methods: {
-    centerOnUser () {
-			if (this.userPosition) {
-				this.center = this.userPosition
-			}
-		},
-		setUserPosition (position) {
-			this.userPosition = position
-		},
+    centerOnUser() {
+      if (this.userPosition) {
+        this.center = this.userPosition;
+      }
+    },
+    setUserPosition(position) {
+      this.userPosition = position;
+    },
+    listofmuncipalty: function() {
+      var e = this;
+      axios
+        .get("/adminglobal/getallmuncipalitytype")
+        .then(function(response) {
+          console.log(response.data);
+          if (response.data.status == true) {
+            console.log(response.data.allmuncipalitytype);
+            e.GemeindetypeList = response.data.allmuncipalitytype;
+          }
+        })
+        .catch(function(error) {
+          if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          } else if (error.request) {
+            // The request was made but no response was received
+            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+            // http.ClientRequest in node.js
+            console.log(error.request);
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            console.log("Error", error.message);
+          }
+        });
+    },
     churchlist: function() {
       var e = this;
       axios
