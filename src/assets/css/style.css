@@ -227,6 +227,10 @@ a.router-link-exact-active.router-link-active .v-tooltip span button {
 }
 
 /* ----- News Room News ----- */
+.newsRoomSection .newsImage {
+    width: 100%;
+    max-height: 110px;
+}
 .newsRoomSection .newsRoomWrap .v-card__title {
     line-height: 22px;
 }
@@ -381,6 +385,10 @@ a.router-link-exact-active.router-link-active .v-tooltip span button {
     border-top: 4px solid #0b324f;
     border-color: #0b324f !important;
     border-radius: 0;
+}
+.kitchenFinderSection .kFinderWrap .kitchenImage {
+    width: 100%;
+    max-height: 110px;
 }
 .kitchenFinderSection .v-chip {
     font-size: 11px;
