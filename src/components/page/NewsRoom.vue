@@ -40,7 +40,7 @@
                     <v-img
                       v-if="news.bannerimage"
                       :lazy-src="'http://dev.woobii.com/admin/'+news.bannerimage"
-                      :src="'http://dev.woobii.com/admin/'+news.bannerimage"
+                      :src="'http://dev.woobii.com/admin/'+news.bannerimage" class="newsImage"
                     />
                     <v-img
                       v-else

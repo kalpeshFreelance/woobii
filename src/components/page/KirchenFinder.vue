@@ -130,7 +130,7 @@
                     <v-img
                       v-if="churche.bannerimage"
                       :lazy-src="'http://dev.woobii.com/admin/'+churche.bannerimage"
-                      :src="'http://dev.woobii.com/admin/'+churche.bannerimage"
+                      :src="'http://dev.woobii.com/admin/'+churche.bannerimage" class="kitchenImage"
                     />
                     <v-img
                       v-else
