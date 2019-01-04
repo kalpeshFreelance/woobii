@@ -41,21 +41,30 @@
           <v-flex xs12 md3>
             <v-card flat color="white" class="kitchenFinderFilter">
               <v-card-text>
-                <v-form>
-                  <v-text-field placeholder="Placeholder" append-icon="search"></v-text-field>
-                  <v-select
-                    :items="GemeindetypeList"
-                    item-text="type"
-                    item-value="id"
-                    label="Gemeindetyp:"
-                    placeholder="Bitte auswählen"
-                  ></v-select>
-                  <v-select label="Ressort:" placeholder="Bitte auswählen"></v-select>
-                  <v-select label="Subressort:" placeholder="Stichwort einfügen"></v-select>
-                  <v-text-field label="Themen:" placeholder="Themen..."></v-text-field>
-                  <v-text-field label="People:" placeholder="People..."></v-text-field>
-                  <v-text-field label="Land:" placeholder="Land..."></v-text-field>
-                </v-form>
+                <v-expansion-panel>
+                  <v-expansion-panel-content v-model="panel">
+                    <div slot="header">Filter</div>
+                    <v-card>
+                      <v-card-text>
+                        <v-form>
+                          <v-text-field placeholder="Placeholder" append-icon="search"></v-text-field>
+                          <v-select
+                            :items="GemeindetypeList"
+                            item-text="type"
+                            item-value="id"
+                            label="Gemeindetyp:"
+                            placeholder="Bitte auswählen"
+                          ></v-select>
+                          <v-select label="Ressort:" placeholder="Bitte auswählen"></v-select>
+                          <v-select label="Subressort:" placeholder="Stichwort einfügen"></v-select>
+                          <v-text-field label="Themen:" placeholder="Themen..."></v-text-field>
+                          <v-text-field label="People:" placeholder="People..."></v-text-field>
+                          <v-text-field label="Land:" placeholder="Land..."></v-text-field>
+                        </v-form>
+                      </v-card-text>
+                    </v-card>
+                  </v-expansion-panel-content>
+                </v-expansion-panel>
               </v-card-text>
             </v-card>
           </v-flex>
@@ -158,11 +167,12 @@
                       <v-chip small label dark class="white--text ma-0">Top Gemeinde</v-chip>
                     </div>
                     <div class="my-2">
-                      <v-icon small class="black--text">star</v-icon>
+                      <v-rating v-model="rating" readonly dense small background-color="grey darken-4" color="grey darken-4"></v-rating>
+                      <!-- <v-icon small class="black--text">star</v-icon>
                       <v-icon small class="black--text">star</v-icon>
                       <v-icon small class="black--text">star</v-icon>
                       <v-icon small class="black--text">star_half</v-icon>
-                      <v-icon small class="black--text">star_border</v-icon>
+                      <v-icon small class="black--text">star_border</v-icon> -->
                       <span class="body-1 font-weight-bold ml-2">4,49</span>
                     </div>
                     <a :href="'/Kirchenfinder/'+churche.slug" class="caption black--text">
@@ -260,6 +270,8 @@ export default {
   name: "App",
   data() {
     return {
+      panel: true,
+      rating: 3,
       // baseUrl: process.env.BASE_URL
       isMobile: false,
       drawer: null,

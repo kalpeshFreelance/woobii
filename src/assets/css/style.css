@@ -190,6 +190,21 @@ a.router-link-exact-active.router-link-active .v-tooltip span button {
     -moz-border-radius: 2px;
     border-radius: 2px;
 }
+.newsRoomSection .newsRoomFilter .v-card__text {
+    padding: 10px 16px;
+}
+.newsRoomSection .newsRoomFilter .v-expansion-panel {
+    box-shadow: none;
+}
+.newsRoomSection .newsRoomFilter .v-expansion-panel__header {
+    padding: 0;
+    min-height: 35px;
+    /* border-bottom: 1px solid #CCC; */
+    display: none;
+}
+.newsRoomSection .newsRoomFilter .v-expansion-panel__body .v-card__text {
+    padding: 0px;
+}
 .newsRoomSection .newsRoomFilter .v-text-field>.v-input__control>.v-input__slot:before {
     border-style: hidden;
 }
@@ -224,6 +239,14 @@ a.router-link-exact-active.router-link-active .v-tooltip span button {
 .v-select-list .v-list__tile {
     font-size: 13px;
     height: 28px;
+}
+@media screen and (max-width: 992px) {
+    .newsRoomSection .newsRoomFilter .v-expansion-panel__header {
+        display: -webkit-box;
+    }
+    .newsRoomSection .newsRoomFilter .v-card__text {
+        padding: 5px 16px;
+    }
 }
 
 /* ----- News Room News ----- */
@@ -338,6 +361,21 @@ a.router-link-exact-active.router-link-active .v-tooltip span button {
     -moz-border-radius: 2px;
     border-radius: 2px;
 }
+.kitchenFinderSection .kitchenFinderFilter .v-card__text {
+    padding: 10px 16px;
+}
+.kitchenFinderSection .kitchenFinderFilter .v-expansion-panel {
+    box-shadow: none;
+}
+.kitchenFinderSection .kitchenFinderFilter .v-expansion-panel__header {
+    padding: 0;
+    min-height: 35px;
+    /* border-bottom: 1px solid #CCC; */
+    display: none;
+}
+.kitchenFinderSection .kitchenFinderFilter .v-expansion-panel__body .v-card__text {
+    padding: 0px;
+}
 .kitchenFinderSection .kitchenFinderFilter .v-text-field>.v-input__control>.v-input__slot:before {
     border-style: hidden;
 }
@@ -366,6 +404,14 @@ a.router-link-exact-active.router-link-active .v-tooltip span button {
 .kitchenFinderSection .kitchenFinderFilter .v-text-field .v-input__prepend-inner {
     margin-top: 0px;
 }
+@media screen and (max-width: 992px) {
+    .kitchenFinderSection .kitchenFinderFilter .v-expansion-panel__header {
+        display: -webkit-box;
+    }
+    .kitchenFinderSection .kitchenFinderFilter .v-card__text {
+        padding: 5px 16px;
+    }
+}
 
 /* ----- Kitchen Finder Map Details ----- */
 .kitchenFinderSection .kFinderMapWrap {
@@ -392,6 +438,9 @@ a.router-link-exact-active.router-link-active .v-tooltip span button {
 .kitchenFinderSection .kFinderWrap .kitchenImage {
     width: 100%;
     max-height: 110px;
+}
+.kitchenFinderSection .kFinderWrap .v-rating--dense{
+    display: -webkit-inline-box;
 }
 .kitchenFinderSection .v-chip {
     font-size: 11px;
