@@ -43,7 +43,13 @@
               <v-card-text>
                 <v-form>
                   <v-text-field placeholder="Placeholder" append-icon="search"></v-text-field>
-                  <v-select :items="GemeindetypeList" item-text="type" item-value="id" label="Gemeindetyp:" placeholder="Bitte auswählen"></v-select>
+                  <v-select
+                    :items="GemeindetypeList"
+                    item-text="type"
+                    item-value="id"
+                    label="Gemeindetyp:"
+                    placeholder="Bitte auswählen"
+                  ></v-select>
                   <v-select label="Ressort:" placeholder="Bitte auswählen"></v-select>
                   <v-select label="Subressort:" placeholder="Stichwort einfügen"></v-select>
                   <v-text-field label="Themen:" placeholder="Themen..."></v-text-field>
@@ -80,7 +86,7 @@
                     </v-layout>
                   </v-card-text>
                   <GmapMap
-                    :center="{lat:46.5271217, lng:6.5917258}"
+                    :center="center"
                     :zoom="zoom"
                     map-type-id="roadmap"
                     style="width: 100%; height: 450px"
@@ -232,6 +238,14 @@
                 </v-card>
               </v-flex>-->
             </v-layout>
+               <div class="text-xs-center">
+                <v-pagination
+                  v-model="page"
+                  :length="Math.floor(totalcount/30)"
+                  :total-visible="7"
+                   @input="onPageChange"
+                ></v-pagination>
+              </div>
           </v-flex>
         </v-layout>
       </v-container>
@@ -250,9 +264,11 @@ export default {
       isMobile: false,
       drawer: null,
       center: {
-        lat: 46.5271217,
-        lng: 6.5917258
+        lat: 48.2142855,
+        lng: 16.4191467
       },
+      page: 1,
+      totalcount: 0,
       userPosition: null,
       zoom: 11,
       radius: 10000,
@@ -260,12 +276,7 @@ export default {
         { title: "Home", icon: "dashboard" },
         { title: "About", icon: "question_answer" }
       ],
-      markers: [
-        { lat: 46.5271217, lng: 6.5917258 },
-        { lat: 48.1908278, lng: 16.3514073 },
-        { lat: 51.04789, lng: 13.7391 },
-        { lat: 46.5238983, lng: 6.6321776 }
-      ],
+      markers: [],
       churchesList: [],
       circleBounds: {},
       GemeindetypeList: []
@@ -291,7 +302,6 @@ export default {
         .then(function(response) {
           console.log(response.data);
           if (response.data.status == true) {
-            console.log(response.data.allmuncipalitytype);
             e.GemeindetypeList = response.data.allmuncipalitytype;
           }
         })
@@ -313,16 +323,20 @@ export default {
           }
         });
     },
-    churchlist: function() {
+    churchlist: function(pageNum = 0) {
       var e = this;
       axios
-        .get("/churcheview/churchelist")
+        .get("/churcheview/churchelist?p="+pageNum)
         .then(function(response) {
           if (response.data.status == true) {
-            console.log(response.data.churches);
-            e.churchesList = response.data.churches;
+            e.churchesList = response.data.churches.community;
+            if (response.data.churches.community) {
+              e.totalcount = response.data.churches.communitycount;
+              for (var prop in response.data.churches.community) {
+                e.markers.push({ lat:  parseFloat(response.data.churches.community[prop].lat), lng:  parseFloat(response.data.churches.community[prop].lng) });
+              }
+            }
           }
-          // console.log(response.data);
           // console.log(response.status);
           // console.log(response.statusText);
           // console.log(response.headers);
@@ -346,6 +360,9 @@ export default {
           }
           console.log(error.config);
         });
+    },
+    onPageChange :function(pageNum){
+      this.churchlist(pageNum-1);
     }
   }
 };
