@@ -1,6 +1,28 @@
 <template>
   <v-content class="white">
     <section class="newsRoomSectionTop" style="border-bottom: 1px solid #EAEAEA;">
+      <v-btn fab dark small color="primary" @click.stop="drawer = !drawer" class="btnFilter"><v-icon dark>filter_list</v-icon></v-btn>
+      <v-navigation-drawer v-model="drawer" absolute temporary>
+        <v-card flat color="white" class="mobileFilterWarp">
+          <v-card-text>
+            <v-form>
+              <v-text-field placeholder="Placeholder" append-icon="search" class="searchInput"></v-text-field>
+              <v-select
+                :items="GemeindetypeList"
+                item-text="type"
+                item-value="id"
+                label="Gemeindetyp:"
+                placeholder="Bitte auswählen"
+              ></v-select>
+              <v-select label="Ressort:" placeholder="Bitte auswählen"></v-select>
+              <v-select label="Subressort:" placeholder="Stichwort einfügen"></v-select>
+              <v-text-field label="Themen:" placeholder="Themen..."></v-text-field>
+              <v-text-field label="People:" placeholder="People..."></v-text-field>
+              <v-text-field label="Land:" placeholder="Land..."></v-text-field>
+            </v-form>
+          </v-card-text>
+        </v-card>
+      </v-navigation-drawer>
       <v-container class="white py-0">
         <v-layout>
           <v-flex xs6>

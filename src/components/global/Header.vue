@@ -11,7 +11,8 @@
       v-show="fixedHeader == true"
     >
       <v-layout>
-        <v-img :max-width="150" contain :src="require(`@/assets/logo-woobii.jpg`)"/>
+        <router-link style="width:150px;" to="/"><v-img :max-width="150" contain :src="require(`@/assets/logo-woobii.jpg`)"/></router-link>
+        <!-- <v-img :max-width="150" contain :src="require(`@/assets/logo-woobii.jpg`)"/> -->
         <v-spacer></v-spacer>
         <!-- <v-tooltip bottom>
           <v-btn slot="activator" flat class="hover-orange">KOSTENLOS ANMELDEN</v-btn>
@@ -299,7 +300,7 @@
         </span>
       </v-toolbar>
       <v-toolbar prominent color="#0B324F" dark height="40" v-show="fixedHeader == false" fixed>
-        <v-img class :max-width="120" contain :src="require(`@/assets/logo-woobii.jpg`)"/>
+        <router-link style="width:120px;" to="/"><v-img class :max-width="120" contain :src="require(`@/assets/logo-woobii.jpg`)"/></router-link>
         <router-link to="/">
           <v-tooltip bottom>
             <v-btn slot="activator" class="ma-0 mx-3 px-0 hidden-md-and-down" flat>Home</v-btn>
@@ -344,6 +345,7 @@
       right
       disable-resize-watcher
       disable-route-watcher
+      class="mobileNavigation"
     >
       <v-list class="pt-0" dense>
         <v-list-tile>
