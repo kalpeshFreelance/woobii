@@ -96,6 +96,9 @@
                   <v-card-text class="px-0">
                     <v-layout row wrap>
                       <v-flex xs12>
+                        <div class="blue-grey lighten-5 text-xs-center pa-2">
+                          <span class="subtitle blue-grey--text"><v-icon large class="blue-grey--text">error_outline</v-icon><br />No data found in<br /><span class="title">Über uns</span></span>
+                        </div>
                         <p class="headline">Über uns</p>
                         <div v-html="churchesData[0].about_us"></div>
                         <!-- <p class="body-1 font-weight-bold">
@@ -150,6 +153,9 @@
                   <v-card-text class="px-0">
                     <v-layout row wrap>
                       <v-flex xs12>
+                        <div class="blue-grey lighten-5 text-xs-center pa-2">
+                          <span class="subtitle blue-grey--text"><v-icon large class="blue-grey--text">error_outline</v-icon><br />No data found in<br /><span class="title">Angebote</span></span>
+                        </div>
                         <p class="headline">Angebote</p>
                       </v-flex>
                       <v-flex xs12>
@@ -182,6 +188,9 @@
                   <v-card-text class="px-0">
                     <v-layout row wrap>
                       <v-flex xs12>
+                        <div class="blue-grey lighten-5 text-xs-center pa-2">
+                          <span class="subtitle blue-grey--text"><v-icon large class="blue-grey--text">error_outline</v-icon><br />No data found in<br /><span class="title">Gemeindenews</span></span>
+                        </div>
                         <p class="headline">Gemeindenews</p>
                         <v-layout row wrap v-show="churchesData.newsroom">
                           <v-flex
@@ -261,6 +270,9 @@
                   <v-card-text class="px-0">
                     <v-layout row wrap>
                       <v-flex xs12>
+                        <div class="blue-grey lighten-5 text-xs-center pa-2">
+                          <span class="subtitle blue-grey--text"><v-icon large class="blue-grey--text">error_outline</v-icon><br />No data found in<br /><span class="title">Social Media Wall</span></span>
+                        </div>
                         <p class="headline">Social Media Wall</p>
                       </v-flex>
                     </v-layout>
@@ -272,6 +284,9 @@
                   <v-card-text class="px-0">
                     <v-layout row wrap>
                       <v-flex xs12>
+                        <div class="blue-grey lighten-5 text-xs-center pa-2">
+                          <span class="subtitle blue-grey--text"><v-icon large class="blue-grey--text">error_outline</v-icon><br />No data found in<br /><span class="title">Events</span></span>
+                        </div>
                         <p class="headline">Events</p>
                         <v-layout
                           row
@@ -338,6 +353,9 @@
                   <v-card-text class="px-0">
                     <v-layout row wrap>
                       <v-flex xs12>
+                        <div class="blue-grey lighten-5 text-xs-center pa-2">
+                          <span class="subtitle blue-grey--text"><v-icon large class="blue-grey--text">error_outline</v-icon><br />No data found in<br /><span class="title">Jobs</span></span>
+                        </div>
                         <p class="headline">Jobs</p>
                         <v-layout
                           row
@@ -401,6 +419,9 @@
                   <v-card-text class="px-0">
                     <v-layout row wrap>
                       <v-flex xs12>
+                        <div class="blue-grey lighten-5 text-xs-center pa-2">
+                          <span class="subtitle blue-grey--text"><v-icon large class="blue-grey--text">error_outline</v-icon><br />No data found in<br /><span class="title">Bewertungen</span></span>
+                        </div>
                         <p class="headline">Bewertungen</p>
                         <p
                           class="body-1 font-weight-bold"
@@ -480,7 +501,7 @@
                 <br>
                 {{churchesData[0].timing}}
               </p>
-              <p class="body-1">{{churchesData[0].address}}</p>
+              <p class="body-1" v-html="churchesData[0].address"></p>
               <!-- <p class="body-1">
                 <span class="font-weight-bold black--text">Head Office</span>
                 <br>Gutenbergstr. 6

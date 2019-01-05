@@ -1,6 +1,28 @@
 <template>
   <v-content class="white">
     <section class="newsRoomSectionTop" style="border-bottom: 1px solid #EAEAEA;">
+      <v-btn fab dark small color="primary" @click.stop="drawer = !drawer" class="btnFilter"><v-icon dark>filter_list</v-icon></v-btn>
+      <v-navigation-drawer v-model="drawer" absolute temporary>
+        <v-card flat color="white" class="mobileFilterWarp">
+          <v-card-text>
+            <v-form>
+              <v-text-field placeholder="Placeholder" append-icon="search" class="searchInput"></v-text-field>
+              <v-select
+                :items="GemeindetypeList"
+                item-text="type"
+                item-value="id"
+                label="Gemeindetyp:"
+                placeholder="Bitte auswählen"
+              ></v-select>
+              <v-select label="Ressort:" placeholder="Bitte auswählen"></v-select>
+              <v-select label="Subressort:" placeholder="Stichwort einfügen"></v-select>
+              <v-text-field label="Themen:" placeholder="Themen..."></v-text-field>
+              <v-text-field label="People:" placeholder="People..."></v-text-field>
+              <v-text-field label="Land:" placeholder="Land..."></v-text-field>
+            </v-form>
+          </v-card-text>
+        </v-card>
+      </v-navigation-drawer>
       <v-container class="white py-0">
         <v-layout>
           <v-flex xs6>
@@ -20,30 +42,21 @@
           <v-flex xs12 md3>
             <v-card flat color="white" class="newsRoomFilter">
               <v-card-text>
-                <v-expansion-panel>
-                  <v-expansion-panel-content v-model="panel">
-                    <div slot="header">Filter</div>
-                    <v-card>
-                      <v-card-text>
-                        <v-form>
-                          <v-text-field placeholder="Placeholder" append-icon="search" class="searchInput"></v-text-field>
-                          <v-select
-                            :items="GemeindetypeList"
-                            item-text="type"
-                            item-value="id"
-                            label="Gemeindetyp:"
-                            placeholder="Bitte auswählen"
-                          ></v-select>
-                          <v-select label="Ressort:" placeholder="Bitte auswählen"></v-select>
-                          <v-select label="Subressort:" placeholder="Stichwort einfügen"></v-select>
-                          <v-text-field label="Themen:" placeholder="Themen..."></v-text-field>
-                          <v-text-field label="People:" placeholder="People..."></v-text-field>
-                          <v-text-field label="Land:" placeholder="Land..."></v-text-field>
-                        </v-form>
-                      </v-card-text>
-                    </v-card>
-                  </v-expansion-panel-content>
-                </v-expansion-panel>
+                <v-form>
+                  <v-text-field placeholder="Placeholder" append-icon="search" class="searchInput"></v-text-field>
+                  <v-select
+                    :items="GemeindetypeList"
+                    item-text="type"
+                    item-value="id"
+                    label="Gemeindetyp:"
+                    placeholder="Bitte auswählen"
+                  ></v-select>
+                  <v-select label="Ressort:" placeholder="Bitte auswählen"></v-select>
+                  <v-select label="Subressort:" placeholder="Stichwort einfügen"></v-select>
+                  <v-text-field label="Themen:" placeholder="Themen..."></v-text-field>
+                  <v-text-field label="People:" placeholder="People..."></v-text-field>
+                  <v-text-field label="Land:" placeholder="Land..."></v-text-field>
+                </v-form>
               </v-card-text>
             </v-card>
           </v-flex>
@@ -133,7 +146,6 @@ export default {
   name: "App",
   data() {
     return {
-      panel: true,
       // baseUrl: process.env.BASE_URL
       isMobile: false,
       drawer: null,
