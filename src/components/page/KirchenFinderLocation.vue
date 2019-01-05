@@ -61,12 +61,13 @@
               <span class="caption">Besucher</span>
             </p>
             <p class="caption mb-0">
-              <v-icon class="black--text">star</v-icon>
+              <v-rating v-model="rating" readonly dense background-color="grey darken-4" color="grey darken-4"></v-rating>
+              <!-- <v-icon class="black--text">star</v-icon>
               <v-icon class="black--text">star</v-icon>
               <v-icon class="black--text">star</v-icon>
               <v-icon class="black--text">star_half</v-icon>
-              <v-icon class="black--text">star_border</v-icon>
-              <br>40 Besucherbewertungen
+              <v-icon class="black--text">star_border</v-icon> -->
+              40 Besucherbewertungen
             </p>
           </v-flex>
           <v-flex xs12 md8>
@@ -81,7 +82,7 @@
               :lazy-src="require(`@/assets/woobii-banner.jpg`)"
             />
           </v-flex>
-          <v-flex xs12 class>
+          <v-flex xs12 md8 class>
             <v-tabs slider-color="grey darken-3" v-model="active_tab">
               <v-tab grow href="#tab-1">Über uns</v-tab>
               <v-tab href="#tab-2">Angebote</v-tab>
@@ -94,7 +95,7 @@
                 <v-card flat>
                   <v-card-text class="px-0">
                     <v-layout row wrap>
-                      <v-flex xs12 md8>
+                      <v-flex xs12>
                         <p class="headline">Über uns</p>
                         <div v-html="churchesData[0].about_us"></div>
                         <!-- <p class="body-1 font-weight-bold">
@@ -111,11 +112,7 @@
                                   <v-chip small label dark class="white--text ma-0">Top Gemeinde</v-chip>
                                 </div>
                                 <div class="my-2">
-                                  <v-icon small class="black--text">star</v-icon>
-                                  <v-icon small class="black--text">star</v-icon>
-                                  <v-icon small class="black--text">star</v-icon>
-                                  <v-icon small class="black--text">star_half</v-icon>
-                                  <v-icon small class="black--text">star_border</v-icon>
+                                  <v-rating v-model="rating" readonly dense small background-color="grey darken-4" color="grey darken-4"></v-rating>
                                   <span class="body-1 font-weight-bold ml-2">4,49</span>
                                 </div>
                                 <a href class="caption black--text">
@@ -133,11 +130,7 @@
                                   <v-chip small label dark class="white--text ma-0">Top Gemeinde</v-chip>
                                 </div>
                                 <div class="my-2">
-                                  <v-icon small class="black--text">star</v-icon>
-                                  <v-icon small class="black--text">star</v-icon>
-                                  <v-icon small class="black--text">star</v-icon>
-                                  <v-icon small class="black--text">star_half</v-icon>
-                                  <v-icon small class="black--text">star_border</v-icon>
+                                  <v-rating v-model="rating" readonly dense small background-color="grey darken-4" color="grey darken-4"></v-rating>
                                   <span class="body-1 font-weight-bold ml-2">4,49</span>
                                 </div>
                                 <a href class="caption black--text">
@@ -148,56 +141,6 @@
                           </v-flex>
                         </v-layout>
                       </v-flex>
-                      <v-flex xs12 md4 class="tabRight">
-                        <v-btn flat block class="colorGreen ma-0 mb-3 py-2">
-                          <v-icon class="mr-2">share</v-icon>Kirchengemeinde empfehlen
-                        </v-btn>
-                        <v-btn flat block class="grey lighten-4 ma-0 mb-4 py-2">
-                          <v-icon class>stars</v-icon>
-                          <v-icon class>stars</v-icon>
-                          <v-icon class>stars</v-icon>
-                          <v-icon class>stars</v-icon>
-                          <v-icon class="mr-2">stars</v-icon>Kirchengemeinde bewerten
-                        </v-btn>
-                        <p class="headline">Gemeindeprofil</p>
-                        <p class="body-1">
-                          <span class="font-weight-bold black--text">Gottesdienste</span>
-                          <br>
-                          {{churchesData[0].timing}}
-                        </p>
-                        <p class="body-1" v-html="churchesData[0].address"></p>
-                        <!-- <p class="body-1">
-                          <span class="font-weight-bold black--text">Head Office</span>
-                          <br>Gutenbergstr. 6
-                          <br>6020 Innsbruck
-                          <br>Osterreich
-                        </p>-->
-                        <p class="body-1" v-if="churchesData[0].head_office">
-                          Tel: {{churchesData[0].head_office}}
-                          <br>
-                          <a
-                            v-if="churchesData[0].email_id"
-                            :href="'mailto:'+churchesData[0].email_id"
-                            target="new"
-                          >{{churchesData[0].email_id}}</a>
-                        </p>
-                        <p class="body-1" v-if="churchesData[0].website">
-                          <a href>{{ churchesData[0].website }}</a>
-                        </p>
-                        <GmapMap
-                          :center="{lat: parseFloat(churchesData[0].lat), lng: parseFloat(churchesData[0].lng)}"
-                          :zoom="12"
-                          map-type-id="roadmap"
-                          style="width: 100%; height: 180px"
-                        >
-                          <GmapMarker
-                            :position="{lat: parseFloat(churchesData[0].lat), lng: parseFloat(churchesData[0].lng)}"
-                            :clickable="true"
-                            :draggable="false"
-                            @click="center={lat: parseFloat(churchesData[0].lat), lng: parseFloat(churchesData[0].lng)}"
-                          />
-                        </GmapMap>
-                      </v-flex>
                     </v-layout>
                   </v-card-text>
                 </v-card>
@@ -206,10 +149,10 @@
                 <v-card flat>
                   <v-card-text class="px-0">
                     <v-layout row wrap>
-                      <v-flex xs12 md8>
+                      <v-flex xs12>
                         <p class="headline">Angebote</p>
                       </v-flex>
-                      <v-flex md8>
+                      <v-flex xs12>
                         <v-flex d-flex md2 v-if="churchesData.offers">
                           <v-card
                             flat
@@ -230,56 +173,6 @@
                           </v-card>
                         </v-flex>
                       </v-flex>
-                      <v-flex xs12 md4 class="tabRight">
-                        <v-btn flat block class="colorGreen ma-0 mb-3 py-2">
-                          <v-icon class="mr-2">share</v-icon>Kirchengemeinde empfehlen
-                        </v-btn>
-                        <v-btn flat block class="grey lighten-4 ma-0 mb-4 py-2">
-                          <v-icon class>stars</v-icon>
-                          <v-icon class>stars</v-icon>
-                          <v-icon class>stars</v-icon>
-                          <v-icon class>stars</v-icon>
-                          <v-icon class="mr-2">stars</v-icon>Kirchengemeinde bewerten
-                        </v-btn>
-                        <p class="headline">Gemeindeprofil</p>
-                        <p class="body-1">
-                          <span class="font-weight-bold black--text">Gottesdienste</span>
-                          <br>
-                          {{churchesData[0].timing}}
-                        </p>
-                        <p class="body-1" v-html="churchesData[0].address"></p>
-                        <!-- <p class="body-1">
-                          <span class="font-weight-bold black--text">Head Office</span>
-                          <br>Gutenbergstr. 6
-                          <br>6020 Innsbruck
-                          <br>Osterreich
-                        </p>-->
-                        <p class="body-1" v-if="churchesData[0].head_office">
-                          Tel: {{churchesData[0].head_office}}
-                          <br>
-                          <a
-                            v-if="churchesData[0].email_id"
-                            :href="'mailto:'+churchesData[0].email_id"
-                            target="new"
-                          >{{churchesData[0].email_id}}</a>
-                        </p>
-                        <p class="body-1" v-if="churchesData[0].website">
-                          <a href>{{ churchesData[0].website }}</a>
-                        </p>
-                        <GmapMap
-                          :center="{lat: parseFloat(churchesData[0].lat), lng: parseFloat(churchesData[0].lng)}"
-                          :zoom="12"
-                          map-type-id="roadmap"
-                          style="width: 100%; height: 180px"
-                        >
-                          <GmapMarker
-                            :position="{lat: parseFloat(churchesData[0].lat), lng: parseFloat(churchesData[0].lng)}"
-                            :clickable="true"
-                            :draggable="false"
-                            @click="center={lat: parseFloat(churchesData[0].lat), lng: parseFloat(churchesData[0].lng)}"
-                          />
-                        </GmapMap>
-                      </v-flex>
                     </v-layout>
                   </v-card-text>
                 </v-card>
@@ -288,7 +181,7 @@
                 <v-card flat>
                   <v-card-text class="px-0">
                     <v-layout row wrap>
-                      <v-flex xs12 md8>
+                      <v-flex xs12>
                         <p class="headline">Gemeindenews</p>
                         <v-layout row wrap v-show="churchesData.newsroom">
                           <v-flex
@@ -359,56 +252,6 @@
                           </v-flex>-->
                         </v-layout>
                       </v-flex>
-                      <v-flex xs12 md4 class="tabRight">
-                        <v-btn flat block class="colorGreen ma-0 mb-3 py-2">
-                          <v-icon class="mr-2">share</v-icon>Kirchengemeinde empfehlen
-                        </v-btn>
-                        <v-btn flat block class="grey lighten-4 ma-0 mb-4 py-2">
-                          <v-icon class>stars</v-icon>
-                          <v-icon class>stars</v-icon>
-                          <v-icon class>stars</v-icon>
-                          <v-icon class>stars</v-icon>
-                          <v-icon class="mr-2">stars</v-icon>Kirchengemeinde bewerten
-                        </v-btn>
-                        <p class="headline">Gemeindeprofil</p>
-                        <p class="body-1">
-                          <span class="font-weight-bold black--text">Gottesdienste</span>
-                          <br>
-                          {{churchesData[0].timing}}
-                        </p>
-                        <p class="body-1" v-html="churchesData[0].address"></p>
-                        <!-- <p class="body-1">
-                          <span class="font-weight-bold black--text">Head Office</span>
-                          <br>Gutenbergstr. 6
-                          <br>6020 Innsbruck
-                          <br>Osterreich
-                        </p>-->
-                        <p class="body-1" v-if="churchesData[0].head_office">
-                          Tel: {{churchesData[0].head_office}}
-                          <br>
-                          <a
-                            v-if="churchesData[0].email_id"
-                            :href="'mailto:'+churchesData[0].email_id"
-                            target="new"
-                          >{{churchesData[0].email_id}}</a>
-                        </p>
-                        <p class="body-1" v-if="churchesData[0].website">
-                          <a href>{{ churchesData[0].website }}</a>
-                        </p>
-                        <GmapMap
-                          :center="{lat: parseFloat(churchesData[0].lat), lng: parseFloat(churchesData[0].lng)}"
-                          :zoom="12"
-                          map-type-id="roadmap"
-                          style="width: 100%; height: 180px"
-                        >
-                          <GmapMarker
-                            :position="{lat: parseFloat(churchesData[0].lat), lng: parseFloat(churchesData[0].lng)}"
-                            :clickable="true"
-                            :draggable="false"
-                            @click="center={lat: parseFloat(churchesData[0].lat), lng: parseFloat(churchesData[0].lng)}"
-                          />
-                        </GmapMap>
-                      </v-flex>
                     </v-layout>
                   </v-card-text>
                 </v-card>
@@ -417,58 +260,8 @@
                 <v-card flat>
                   <v-card-text class="px-0">
                     <v-layout row wrap>
-                      <v-flex xs12 md8>
+                      <v-flex xs12>
                         <p class="headline">Social Media Wall</p>
-                      </v-flex>
-                      <v-flex xs12 md4 class="tabRight">
-                        <v-btn flat block class="colorGreen ma-0 mb-3 py-2">
-                          <v-icon class="mr-2">share</v-icon>Kirchengemeinde empfehlen
-                        </v-btn>
-                        <v-btn flat block class="grey lighten-4 ma-0 mb-4 py-2">
-                          <v-icon class>stars</v-icon>
-                          <v-icon class>stars</v-icon>
-                          <v-icon class>stars</v-icon>
-                          <v-icon class>stars</v-icon>
-                          <v-icon class="mr-2">stars</v-icon>Kirchengemeinde bewerten
-                        </v-btn>
-                        <p class="headline">Gemeindeprofil</p>
-                        <p class="body-1">
-                          <span class="font-weight-bold black--text">Gottesdienste</span>
-                          <br>
-                          {{churchesData[0].timing}}
-                        </p>
-                        <p class="body-1" v-html="churchesData[0].address"></p>
-                        <!-- <p class="body-1">
-                          <span class="font-weight-bold black--text">Head Office</span>
-                          <br>Gutenbergstr. 6
-                          <br>6020 Innsbruck
-                          <br>Osterreich
-                        </p>-->
-                        <p class="body-1" v-if="churchesData[0].head_office">
-                          Tel: {{churchesData[0].head_office}}
-                          <br>
-                          <a
-                            v-if="churchesData[0].email_id"
-                            :href="'mailto:'+churchesData[0].email_id"
-                            target="new"
-                          >{{churchesData[0].email_id}}</a>
-                        </p>
-                        <p class="body-1" v-if="churchesData[0].website">
-                          <a href>{{ churchesData[0].website }}</a>
-                        </p>
-                        <GmapMap
-                          :center="{lat: parseFloat(churchesData[0].lat), lng: parseFloat(churchesData[0].lng)}"
-                          :zoom="12"
-                          map-type-id="roadmap"
-                          style="width: 100%; height: 180px"
-                        >
-                          <GmapMarker
-                            :position="{lat: parseFloat(churchesData[0].lat), lng: parseFloat(churchesData[0].lng)}"
-                            :clickable="true"
-                            :draggable="false"
-                            @click="center={lat: parseFloat(churchesData[0].lat), lng: parseFloat(churchesData[0].lng)}"
-                          />
-                        </GmapMap>
                       </v-flex>
                     </v-layout>
                   </v-card-text>
@@ -478,7 +271,7 @@
                 <v-card flat>
                   <v-card-text class="px-0">
                     <v-layout row wrap>
-                      <v-flex xs12 md8>
+                      <v-flex xs12>
                         <p class="headline">Events</p>
                         <v-layout
                           row
@@ -536,56 +329,6 @@
                           </v-flex>
                         </v-layout>-->
                       </v-flex>
-                      <v-flex xs12 md4 class="tabRight">
-                        <v-btn flat block class="colorGreen ma-0 mb-3 py-2">
-                          <v-icon class="mr-2">share</v-icon>Kirchengemeinde empfehlen
-                        </v-btn>
-                        <v-btn flat block class="grey lighten-4 ma-0 mb-4 py-2">
-                          <v-icon class>stars</v-icon>
-                          <v-icon class>stars</v-icon>
-                          <v-icon class>stars</v-icon>
-                          <v-icon class>stars</v-icon>
-                          <v-icon class="mr-2">stars</v-icon>Kirchengemeinde bewerten
-                        </v-btn>
-                        <p class="headline">Gemeindeprofil</p>
-                        <p class="body-1">
-                          <span class="font-weight-bold black--text">Gottesdienste</span>
-                          <br>
-                          {{churchesData[0].timing}}
-                        </p>
-                        <p class="body-1">{{churchesData[0].address}}</p>
-                        <!-- <p class="body-1">
-                          <span class="font-weight-bold black--text">Head Office</span>
-                          <br>Gutenbergstr. 6
-                          <br>6020 Innsbruck
-                          <br>Osterreich
-                        </p>-->
-                        <p class="body-1" v-if="churchesData[0].head_office">
-                          Tel: {{churchesData[0].head_office}}
-                          <br>
-                          <a
-                            v-if="churchesData[0].email_id"
-                            :href="'mailto:'+churchesData[0].email_id"
-                            target="new"
-                          >{{churchesData[0].email_id}}</a>
-                        </p>
-                        <p class="body-1" v-if="churchesData[0].website">
-                          <a href>{{ churchesData[0].website }}</a>
-                        </p>
-                        <GmapMap
-                          :center="{lat: parseFloat(churchesData[0].lat), lng: parseFloat(churchesData[0].lng)}"
-                          :zoom="12"
-                          map-type-id="roadmap"
-                          style="width: 100%; height: 180px"
-                        >
-                          <GmapMarker
-                            :position="{lat: parseFloat(churchesData[0].lat), lng: parseFloat(churchesData[0].lng)}"
-                            :clickable="true"
-                            :draggable="false"
-                            @click="center={lat: parseFloat(churchesData[0].lat), lng: parseFloat(churchesData[0].lng)}"
-                          />
-                        </GmapMap>
-                      </v-flex>
                     </v-layout>
                   </v-card-text>
                 </v-card>
@@ -594,7 +337,7 @@
                 <v-card flat>
                   <v-card-text class="px-0">
                     <v-layout row wrap>
-                      <v-flex xs12 md8>
+                      <v-flex xs12>
                         <p class="headline">Jobs</p>
                         <v-layout
                           row
@@ -649,56 +392,6 @@
                           </v-flex>
                         </v-layout>-->
                       </v-flex>
-                      <v-flex xs12 md4 class="tabRight">
-                        <v-btn flat block class="colorGreen ma-0 mb-3 py-2">
-                          <v-icon class="mr-2">share</v-icon>Kirchengemeinde empfehlen
-                        </v-btn>
-                        <v-btn flat block class="grey lighten-4 ma-0 mb-4 py-2">
-                          <v-icon class>stars</v-icon>
-                          <v-icon class>stars</v-icon>
-                          <v-icon class>stars</v-icon>
-                          <v-icon class>stars</v-icon>
-                          <v-icon class="mr-2">stars</v-icon>Kirchengemeinde bewerten
-                        </v-btn>
-                        <p class="headline">Gemeindeprofil</p>
-                        <p class="body-1">
-                          <span class="font-weight-bold black--text">Gottesdienste</span>
-                          <br>
-                          {{churchesData[0].timing}}
-                        </p>
-                        <p class="body-1" v-html="churchesData[0].address"></p>
-                        <!-- <p class="body-1">
-                          <span class="font-weight-bold black--text">Head Office</span>
-                          <br>Gutenbergstr. 6
-                          <br>6020 Innsbruck
-                          <br>Osterreich
-                        </p>-->
-                        <p class="body-1" v-if="churchesData[0].head_office">
-                          Tel: {{churchesData[0].head_office}}
-                          <br>
-                          <a
-                            v-if="churchesData[0].email_id"
-                            :href="'mailto:'+churchesData[0].email_id"
-                            target="new"
-                          >{{churchesData[0].email_id}}</a>
-                        </p>
-                        <p class="body-1" v-if="churchesData[0].website">
-                          <a href>{{ churchesData[0].website }}</a>
-                        </p>
-                        <GmapMap
-                          :center="{lat: parseFloat(churchesData[0].lat), lng: parseFloat(churchesData[0].lng)}"
-                          :zoom="12"
-                          map-type-id="roadmap"
-                          style="width: 100%; height: 180px"
-                        >
-                          <GmapMarker
-                            :position="{lat: parseFloat(churchesData[0].lat), lng: parseFloat(churchesData[0].lng)}"
-                            :clickable="true"
-                            :draggable="false"
-                            @click="center={lat: parseFloat(churchesData[0].lat), lng: parseFloat(churchesData[0].lng)}"
-                          />
-                        </GmapMap>
-                      </v-flex>
                     </v-layout>
                   </v-card-text>
                 </v-card>
@@ -707,7 +400,7 @@
                 <v-card flat>
                   <v-card-text class="px-0">
                     <v-layout row wrap>
-                      <v-flex xs12 md8>
+                      <v-flex xs12>
                         <p class="headline">Bewertungen</p>
                         <p
                           class="body-1 font-weight-bold"
@@ -719,135 +412,53 @@
                         <p class="body-1 pl-3">
                           Offenheit fur neue Besucher
                           <span class="right">
-                            <v-icon class="black--text">star</v-icon>
-                            <v-icon class="black--text">star</v-icon>
-                            <v-icon class="black--text">star</v-icon>
-                            <v-icon class="black--text">star_half</v-icon>
-                            <v-icon class="black--text">star_border</v-icon>
+                            <v-rating v-model="rating" readonly dense background-color="grey darken-4" color="grey darken-4"></v-rating>
                           </span>
                         </p>
                         <p class="body-1 pl-3">
                           Christuszentrierte Predigten
                           <span class="right">
-                            <v-icon class="black--text">star</v-icon>
-                            <v-icon class="black--text">star</v-icon>
-                            <v-icon class="black--text">star</v-icon>
-                            <v-icon class="black--text">star_half</v-icon>
-                            <v-icon class="black--text">star_border</v-icon>
+                            <v-rating v-model="rating" readonly dense background-color="grey darken-4" color="grey darken-4"></v-rating>
                           </span>
                         </p>
                         <p class="title font-weight-regular mt-4">Gemeinschaft</p>
                         <p class="body-1 pl-3">
                           Kleingruppen & Hauskreise
                           <span class="right">
-                            <v-icon class="black--text">star</v-icon>
-                            <v-icon class="black--text">star</v-icon>
-                            <v-icon class="black--text">star</v-icon>
-                            <v-icon class="black--text">star_half</v-icon>
-                            <v-icon class="black--text">star_border</v-icon>
+                            <v-rating v-model="rating" readonly dense background-color="grey darken-4" color="grey darken-4"></v-rating>
                           </span>
                         </p>
                         <p class="body-1 pl-3">
                           Genertfruhstuck & Gebetsabende
                           <span class="right">
-                            <v-icon class="black--text">star</v-icon>
-                            <v-icon class="black--text">star</v-icon>
-                            <v-icon class="black--text">star</v-icon>
-                            <v-icon class="black--text">star_half</v-icon>
-                            <v-icon class="black--text">star_border</v-icon>
+                            <v-rating v-model="rating" readonly dense background-color="grey darken-4" color="grey darken-4"></v-rating>
                           </span>
                         </p>
                         <p class="body-1 pl-3">
                           Dienstbereitschaft
                           <span class="right">
-                            <v-icon class="black--text">star</v-icon>
-                            <v-icon class="black--text">star</v-icon>
-                            <v-icon class="black--text">star</v-icon>
-                            <v-icon class="black--text">star_half</v-icon>
-                            <v-icon class="black--text">star_border</v-icon>
+                            <v-rating v-model="rating" readonly dense background-color="grey darken-4" color="grey darken-4"></v-rating>
                           </span>
                         </p>
                         <p class="title font-weight-regular mt-4">Nachfolge</p>
                         <p class="body-1 pl-3">
                           Sehnsucht Gott ahnlicher zu werden
                           <span class="right">
-                            <v-icon class="black--text">star</v-icon>
-                            <v-icon class="black--text">star</v-icon>
-                            <v-icon class="black--text">star</v-icon>
-                            <v-icon class="black--text">star_half</v-icon>
-                            <v-icon class="black--text">star_border</v-icon>
+                            <v-rating v-model="rating" readonly dense background-color="grey darken-4" color="grey darken-4"></v-rating>
                           </span>
                         </p>
                         <p class="body-1 pl-3">
                           Genertfruhstuck & Gebetsabende
                           <span class="right">
-                            <v-icon class="black--text">star</v-icon>
-                            <v-icon class="black--text">star</v-icon>
-                            <v-icon class="black--text">star</v-icon>
-                            <v-icon class="black--text">star_half</v-icon>
-                            <v-icon class="black--text">star_border</v-icon>
+                            <v-rating v-model="rating" readonly dense background-color="grey darken-4" color="grey darken-4"></v-rating>
                           </span>
                         </p>
                         <p class="body-1 pl-3">
                           Dienstbereitschaft
                           <span class="right">
-                            <v-icon class="black--text">star</v-icon>
-                            <v-icon class="black--text">star</v-icon>
-                            <v-icon class="black--text">star</v-icon>
-                            <v-icon class="black--text">star_half</v-icon>
-                            <v-icon class="black--text">star_border</v-icon>
+                            <v-rating v-model="rating" readonly dense background-color="grey darken-4" color="grey darken-4"></v-rating>
                           </span>
                         </p>
-                      </v-flex>
-                      <v-flex xs12 md4 class="tabRight">
-                        <v-btn flat block class="colorGreen ma-0 mb-3 py-2">
-                          <v-icon class="mr-2">share</v-icon>Kirchengemeinde empfehlen
-                        </v-btn>
-                        <v-btn flat block class="grey lighten-4 ma-0 mb-4 py-2">
-                          <v-icon class>stars</v-icon>
-                          <v-icon class>stars</v-icon>
-                          <v-icon class>stars</v-icon>
-                          <v-icon class>stars</v-icon>
-                          <v-icon class="mr-2">stars</v-icon>Kirchengemeinde bewerten
-                        </v-btn>
-                        <p class="headline">Gemeindeprofil</p>
-                        <p class="body-1">
-                          <span class="font-weight-bold black--text">Gottesdienste</span>
-                          <br>
-                          {{churchesData[0].timing}}
-                        </p>
-                        <p class="body-1">{{churchesData[0].address}}</p>
-                        <!-- <p class="body-1">
-                          <span class="font-weight-bold black--text">Head Office</span>
-                          <br>Gutenbergstr. 6
-                          <br>6020 Innsbruck
-                          <br>Osterreich
-                        </p>-->
-                        <p class="body-1" v-if="churchesData[0].head_office">
-                          Tel: {{churchesData[0].head_office}}
-                          <br>
-                          <a
-                            v-if="churchesData[0].email_id"
-                            :href="'mailto:'+churchesData[0].email_id"
-                            target="new"
-                          >{{churchesData[0].email_id}}</a>
-                        </p>
-                        <p class="body-1" v-if="churchesData[0].website">
-                          <a href>{{ churchesData[0].website }}</a>
-                        </p>
-                        <GmapMap
-                          :center="{lat: parseFloat(churchesData[0].lat), lng: parseFloat(churchesData[0].lng)}"
-                          :zoom="12"
-                          map-type-id="roadmap"
-                          style="width: 100%; height: 180px"
-                        >
-                          <GmapMarker
-                            :position="{lat: parseFloat(churchesData[0].lat), lng: parseFloat(churchesData[0].lng)}"
-                            :clickable="true"
-                            :draggable="false"
-                            @click="center={lat: parseFloat(churchesData[0].lat), lng: parseFloat(churchesData[0].lng)}"
-                          />
-                        </GmapMap>
                       </v-flex>
                     </v-layout>
                   </v-card-text>
@@ -855,6 +466,53 @@
               </v-tab-item>
             </v-tabs>
           </v-flex>
+          <v-flex xs12 md4 class="tabRight">
+              <v-btn flat block class="colorGreen ma-0 mb-3 py-2">
+                <v-icon class="mr-2">share</v-icon>Kirchengemeinde empfehlen
+              </v-btn>
+              <v-btn flat block class="grey lighten-4 ma-0 mb-4 py-2">
+                <v-rating v-model="rating" readonly dense small background-color="grey darken-4" color="grey darken-4"></v-rating>
+                Kirchengemeinde bewerten
+              </v-btn>
+              <p class="headline">Gemeindeprofil</p>
+              <p class="body-1">
+                <span class="font-weight-bold black--text">Gottesdienste</span>
+                <br>
+                {{churchesData[0].timing}}
+              </p>
+              <p class="body-1">{{churchesData[0].address}}</p>
+              <!-- <p class="body-1">
+                <span class="font-weight-bold black--text">Head Office</span>
+                <br>Gutenbergstr. 6
+                <br>6020 Innsbruck
+                <br>Osterreich
+              </p>-->
+              <p class="body-1" v-if="churchesData[0].head_office">
+                Tel: {{churchesData[0].head_office}}
+                <br>
+                <a
+                  v-if="churchesData[0].email_id"
+                  :href="'mailto:'+churchesData[0].email_id"
+                  target="new"
+                >{{churchesData[0].email_id}}</a>
+              </p>
+              <p class="body-1" v-if="churchesData[0].website">
+                <a href>{{ churchesData[0].website }}</a>
+              </p>
+              <GmapMap
+                :center="{lat: parseFloat(churchesData[0].lat), lng: parseFloat(churchesData[0].lng)}"
+                :zoom="12"
+                map-type-id="roadmap"
+                style="width: 100%; height: 180px"
+              >
+                <GmapMarker
+                  :position="{lat: parseFloat(churchesData[0].lat), lng: parseFloat(churchesData[0].lng)}"
+                  :clickable="true"
+                  :draggable="false"
+                  @click="center={lat: parseFloat(churchesData[0].lat), lng: parseFloat(churchesData[0].lng)}"
+                />
+              </GmapMap>
+            </v-flex>
         </v-layout>
       </v-container>
     </section>
@@ -867,6 +525,7 @@ export default {
   name: "KitrchenFinderLocation",
   data() {
     return {
+      rating: 3,
       // baseUrl: process.env.BASE_URL
       isMobile: false,
       drawer: null,

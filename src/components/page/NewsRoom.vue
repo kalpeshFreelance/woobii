@@ -20,21 +20,30 @@
           <v-flex xs12 md3>
             <v-card flat color="white" class="newsRoomFilter">
               <v-card-text>
-                <v-form>
-                  <v-text-field placeholder="Placeholder" append-icon="search" class="searchInput"></v-text-field>
-                  <v-select
-                    :items="GemeindetypeList"
-                    item-text="type"
-                    item-value="id"
-                    label="Gemeindetyp:"
-                    placeholder="Bitte auswählen"
-                  ></v-select>
-                  <v-select label="Ressort:" placeholder="Bitte auswählen"></v-select>
-                  <v-select label="Subressort:" placeholder="Stichwort einfügen"></v-select>
-                  <v-text-field label="Themen:" placeholder="Themen..."></v-text-field>
-                  <v-text-field label="People:" placeholder="People..."></v-text-field>
-                  <v-text-field label="Land:" placeholder="Land..."></v-text-field>
-                </v-form>
+                <v-expansion-panel>
+                  <v-expansion-panel-content v-model="panel">
+                    <div slot="header">Filter</div>
+                    <v-card>
+                      <v-card-text>
+                        <v-form>
+                          <v-text-field placeholder="Placeholder" append-icon="search" class="searchInput"></v-text-field>
+                          <v-select
+                            :items="GemeindetypeList"
+                            item-text="type"
+                            item-value="id"
+                            label="Gemeindetyp:"
+                            placeholder="Bitte auswählen"
+                          ></v-select>
+                          <v-select label="Ressort:" placeholder="Bitte auswählen"></v-select>
+                          <v-select label="Subressort:" placeholder="Stichwort einfügen"></v-select>
+                          <v-text-field label="Themen:" placeholder="Themen..."></v-text-field>
+                          <v-text-field label="People:" placeholder="People..."></v-text-field>
+                          <v-text-field label="Land:" placeholder="Land..."></v-text-field>
+                        </v-form>
+                      </v-card-text>
+                    </v-card>
+                  </v-expansion-panel-content>
+                </v-expansion-panel>
               </v-card-text>
             </v-card>
           </v-flex>
@@ -124,6 +133,7 @@ export default {
   name: "App",
   data() {
     return {
+      panel: true,
       // baseUrl: process.env.BASE_URL
       isMobile: false,
       drawer: null,
