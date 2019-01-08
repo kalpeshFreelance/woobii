@@ -1,28 +1,34 @@
 <template>
-  <v-content class="white">
+  <v-content class="mainWrapper white">
     <section class="kitchenFinderSectionTop">
-      <v-btn fab dark small color="primary" @click.stop="drawer = !drawer" class="btnFilter"><v-icon dark>filter_list</v-icon></v-btn>
+      <v-btn fab dark small color="primary" @click.stop="drawer = !drawer" class="btnFilter">
+        <v-icon dark>filter_list</v-icon>
+      </v-btn>
       <v-navigation-drawer v-model="drawer" absolute temporary>
         <v-card flat color="white" class="mobileFilterWarp">
           <v-card-text>
             <v-form>
               <v-select
-                :items="GemeindetypeList"
-                item-text="type"
+                :items="LandList"
+                @change="listofcity"
+                item-text="name"
+                v-model="land"
                 item-value="id"
                 label="Land"
                 placeholder="Bitte auswählen"
               ></v-select>
-             <v-select
-                :items="GemeindetypeList"
-                item-text="type"
+              <v-select
+                :items="OrtList"
+                item-text="place"
                 item-value="id"
                 label="Stadt"
                 placeholder="Munchen"
               ></v-select>
-              <v-select label="Umfeld-Radius" placeholder="0"></v-select>
+              <!-- <v-select label="Umfeld-Radius" placeholder="0"></v-select> -->
+              <v-label><span class="custom">Umfeld-Radius</span></v-label>
+              <v-slider v-model="zoom" :max="25" :min="1"></v-slider>
               <v-select
-                :items="GemeindetypeList"
+                :items="topCommunity"
                 item-text="type"
                 item-value="id"
                 label="Top Gemeinden"
@@ -36,23 +42,19 @@
                 placeholder="Bitte auswählen"
               ></v-select>
               <v-select
-                :items="GemeindetypeList"
-                item-text="type"
-                item-value="id"
+                :items="communitySize"
                 label="Gemeindegröße"
                 placeholder="Bitte auswählen"
               ></v-select>
               <v-select
-                :items="GemeindetypeList"
-                item-text="type"
-                item-value="id"
+                :items="langauages"
                 label="Sprache"
                 placeholder="Bitte auswählen"
               ></v-select>
               <v-select
-                :items="GemeindetypeList"
-                item-text="type"
-                item-value="id"
+                :items="rating"
+                item-text="rate"
+                item-value="rate"
                 label="Bewertung"
                 placeholder="Bitte auswählen"
               ></v-select>
@@ -109,22 +111,26 @@
               <v-card-text>
                 <v-form>
                   <v-select
-                    :items="GemeindetypeList"
-                    item-text="type"
+                    placeholder="Bitte auswählen"
+                    :items="LandList"
+                    @change="listofcity"
+                    item-text="name"
+                    v-model="land"
                     item-value="id"
                     label="Land"
-                    placeholder="Bitte auswählen"
                   ></v-select>
                   <v-select
-                    :items="GemeindetypeList"
-                    item-text="type"
+                    :items="OrtList"
+                    item-text="place"
                     item-value="id"
                     label="Stadt"
                     placeholder="Munchen"
                   ></v-select>
-                  <v-select label="Umfeld-Radius" placeholder="0"></v-select>
+                  <!-- <v-select label="Umfeld-Radius" placeholder="0"></v-select> -->
+                  <v-label><span class="custom">Umfeld-Radius</span></v-label>
+                  <v-slider v-model="zoom" class="mt-0" :max="25" :min="1"></v-slider>
                   <v-select
-                    :items="GemeindetypeList"
+                    :items="topCommunity"
                     item-text="type"
                     item-value="id"
                     label="Top Gemeinden"
@@ -138,23 +144,19 @@
                     placeholder="Bitte auswählen"
                   ></v-select>
                   <v-select
-                    :items="GemeindetypeList"
-                    item-text="type"
-                    item-value="id"
+                    :items="communitySize"
                     label="Gemeindegröße"
                     placeholder="Bitte auswählen"
                   ></v-select>
                   <v-select
-                    :items="GemeindetypeList"
-                    item-text="type"
-                    item-value="id"
+                    :items="langauages"
                     label="Sprache"
                     placeholder="Bitte auswählen"
                   ></v-select>
                   <v-select
-                    :items="GemeindetypeList"
-                    item-text="type"
-                    item-value="id"
+                    :items="rating"
+                    item-text="rate"
+                    item-value="rate"
                     label="Bewertung"
                     placeholder="Bitte auswählen"
                   ></v-select>
@@ -268,12 +270,19 @@
                       <v-chip small label dark class="white--text ma-0">Top Gemeinde</v-chip>
                     </div>
                     <div class="my-2">
-                      <v-rating v-model="rating" readonly dense small background-color="grey darken-4" color="grey darken-4"></v-rating>
+                      <v-rating
+                        v-model="rating"
+                        readonly
+                        dense
+                        small
+                        background-color="grey darken-4"
+                        color="grey darken-4"
+                      ></v-rating>
                       <!-- <v-icon small class="black--text">star</v-icon>
                       <v-icon small class="black--text">star</v-icon>
                       <v-icon small class="black--text">star</v-icon>
                       <v-icon small class="black--text">star_half</v-icon>
-                      <v-icon small class="black--text">star_border</v-icon> -->
+                      <v-icon small class="black--text">star_border</v-icon>-->
                       <span class="body-1 font-weight-bold ml-2">4,49</span>
                     </div>
                     <a :href="'/Kirchenfinder/'+churche.slug" class="caption black--text">
@@ -349,14 +358,14 @@
                 </v-card>
               </v-flex>-->
             </v-layout>
-               <div class="text-xs-center">
-                <v-pagination
-                  v-model="page"
-                  :length="Math.floor(totalcount/30)"
-                  :total-visible="7"
-                   @input="onPageChange"
-                ></v-pagination>
-              </div>
+            <div class="text-xs-center">
+              <v-pagination
+                v-model="page"
+                :length="Math.floor(totalcount/30)"
+                :total-visible="7"
+                @input="onPageChange"
+              ></v-pagination>
+            </div>
           </v-flex>
         </v-layout>
       </v-container>
@@ -379,23 +388,50 @@ export default {
         lat: 48.2142855,
         lng: 16.4191467
       },
+      land: '',
       page: 1,
       totalcount: 0,
       userPosition: null,
-      zoom: 11,
+      zoom: 10,
       radius: 10000,
       items: [
         { title: "Home", icon: "dashboard" },
         { title: "About", icon: "question_answer" }
       ],
+      rating: [
+        { rate: '1', text: '<v-icon small class="black--text">star</v-icon><v-icon small class="black--text">star_half</v-icon><v-icon small class="black--text">star_border</v-icon>' },
+        { rate: '2', text: '<v-rating value="2" readonly dense small background-color="grey darken-4" color="grey darken-4"></v-rating>' },
+        { rate: "3", text: '<v-rating value="3" readonly dense small background-color="grey darken-4" color="grey darken-4"></v-rating>' },
+        { rate: "4", text: '<v-rating value="4" readonly dense small background-color="grey darken-4" color="grey darken-4"></v-rating>' },
+        { rate: "5", text: '<v-rating value="5" readonly dense small background-color="grey darken-4" color="grey darken-4"></v-rating>' }
+      ],
       markers: [],
       churchesList: [],
       circleBounds: {},
-      GemeindetypeList: []
+      GemeindetypeList: [],
+      LandList: [],
+      OrtList: [],
+      communitySize: ["110 - 440"],
+      topCommunity: ["Top Gemeinde", "Best Gemeinde", "Best Rating"],
+      langauages: [
+        "Französisch",
+        "Deutsch",
+        "Chinesisch",
+        "Ungarisch",
+        "Persisch",
+        "Englisch",
+        "Arabisch",
+        "Französisch",
+        "Portugiesisch",
+        "Rumänisch",
+        "Koreanisch"
+      ],
     };
   },
   mounted() {
     this.churchlist();
+    this.listofcountry();
+    this.listofcity();
     this.listofmuncipalty();
   },
   methods: {
@@ -435,17 +471,85 @@ export default {
           }
         });
     },
+    listofcity: function(id) {
+      var e = this;
+      if (e.land == "") {
+        var city = "DE";
+      } else {
+        var cityData = e.LandList.filter(col => {
+          return col.id.match(id);
+        });
+        var city = cityData[0].country_code;
+        e.dialogLoader = true;
+      }
+
+      axios
+        .get("/adminglobal/getallcity/?id=" + city)
+        .then(function(response) {
+          if (response.data.status == true) {
+            e.OrtList = response.data.cities.city;
+            e.dialogLoader = false;
+          }
+        })
+        .catch(function(error) {
+          if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          } else if (error.request) {
+            // The request was made but no response was received
+            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+            // http.ClientRequest in node.js
+            console.log(error.request);
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            console.log("Error", error.message);
+          }
+        });
+    },
+    listofcountry: function() {
+      var e = this;
+      axios
+        .get("/adminglobal/getallcountry")
+        .then(function(response) {
+          if (response.data.status == true) {
+            e.LandList = response.data.countries.country;
+          }
+        })
+        .catch(function(error) {
+          if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          } else if (error.request) {
+            // The request was made but no response was received
+            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+            // http.ClientRequest in node.js
+            console.log(error.request);
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            console.log("Error", error.message);
+          }
+        });
+    },    
     churchlist: function(pageNum = 0) {
       var e = this;
       axios
-        .get("/churcheview/churchelist?p="+pageNum)
+        .get("/churcheview/churchelist?p=" + pageNum)
         .then(function(response) {
           if (response.data.status == true) {
             e.churchesList = response.data.churches.community;
             if (response.data.churches.community) {
               e.totalcount = response.data.churches.communitycount;
               for (var prop in response.data.churches.community) {
-                e.markers.push({ lat:  parseFloat(response.data.churches.community[prop].lat), lng:  parseFloat(response.data.churches.community[prop].lng) });
+                e.markers.push({
+                  lat: parseFloat(response.data.churches.community[prop].lat),
+                  lng: parseFloat(response.data.churches.community[prop].lng)
+                });
               }
             }
           }
@@ -473,8 +577,8 @@ export default {
           console.log(error.config);
         });
     },
-    onPageChange :function(pageNum){
-      this.churchlist(pageNum-1);
+    onPageChange: function(pageNum) {
+      this.churchlist(pageNum - 1);
     }
   }
 };

@@ -1,7 +1,9 @@
 <template>
-  <v-content class="white">
+  <v-content class="mainWrapper white">
     <section class="newsRoomSectionTop" style="border-bottom: 1px solid #EAEAEA;">
-      <v-btn fab dark small color="primary" @click.stop="drawer = !drawer" class="btnFilter"><v-icon dark>filter_list</v-icon></v-btn>
+      <v-btn fab dark small color="primary" @click.stop="drawer = !drawer" class="btnFilter">
+        <v-icon dark>filter_list</v-icon>
+      </v-btn>
       <v-navigation-drawer v-model="drawer" absolute temporary>
         <v-card flat color="white" class="mobileFilterWarp">
           <v-card-text>
@@ -16,9 +18,16 @@
               ></v-select>
               <v-select label="Ressort:" placeholder="Bitte auswählen"></v-select>
               <v-select label="Subressort:" placeholder="Stichwort einfügen"></v-select>
-              <v-text-field label="Themen:" placeholder="Themen..."></v-text-field>
-              <v-text-field label="People:" placeholder="People..."></v-text-field>
-              <v-text-field label="Land:" placeholder="Land..."></v-text-field>
+              <v-select label="Themen:" placeholder="Themen..."></v-select>
+              <v-select label="People:" placeholder="People..."></v-select>
+              <v-select
+                label="Land:"
+                placeholder="Land..."
+                :items="LandList"
+                item-text="name"
+                v-model="land"
+                item-value="id"
+              ></v-select>
             </v-form>
           </v-card-text>
         </v-card>
@@ -53,9 +62,16 @@
                   ></v-select>
                   <v-select label="Ressort:" placeholder="Bitte auswählen"></v-select>
                   <v-select label="Subressort:" placeholder="Stichwort einfügen"></v-select>
-                  <v-text-field label="Themen:" placeholder="Themen..."></v-text-field>
-                  <v-text-field label="People:" placeholder="People..."></v-text-field>
-                  <v-text-field label="Land:" placeholder="Land..."></v-text-field>
+                  <v-select label="Themen:" placeholder="Themen..."></v-select>
+                  <v-select label="People:" placeholder="People..."></v-select>
+                  <v-select
+                    label="Land:"
+                    placeholder="Land..."
+                    :items="LandList"
+                    item-text="name"
+                    v-model="land"
+                    item-value="id"
+                  ></v-select>
                 </v-form>
               </v-card-text>
             </v-card>
@@ -150,16 +166,15 @@ export default {
       isMobile: false,
       drawer: null,
       newsroomList: {},
-      items: [
-        { title: "Home", icon: "dashboard" },
-        { title: "About", icon: "question_answer" }
-      ],
-      GemeindetypeList: []
+      GemeindetypeList: [],
+      LandList: [],
+      land: ""
     };
   },
   mounted() {
     this.newsroomlist();
     this.listofmuncipalty();
+    this.listofcountry();
   },
   beforeDestroy() {},
   methods: {
@@ -168,9 +183,7 @@ export default {
       axios
         .get("/adminglobal/getallmuncipalitytype")
         .then(function(response) {
-          console.log(response.data);
           if (response.data.status == true) {
-            console.log(response.data.allmuncipalitytype);
             e.GemeindetypeList = response.data.allmuncipalitytype;
           }
         })
@@ -223,6 +236,33 @@ export default {
             console.log("Error", error.message);
           }
           console.log(error.config);
+        });
+    },
+    listofcountry: function() {
+      var e = this;
+      axios
+        .get("/adminglobal/getallcountry")
+        .then(function(response) {
+          if (response.data.status == true) {
+            e.LandList = response.data.countries.country;
+          }
+        })
+        .catch(function(error) {
+          if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          } else if (error.request) {
+            // The request was made but no response was received
+            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+            // http.ClientRequest in node.js
+            console.log(error.request);
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            console.log("Error", error.message);
+          }
         });
     }
   }

@@ -32,6 +32,10 @@ button.btnFilter {
 button.btnFilter:hover, button.btnFilter:active, button.btnFilter:visited, button.btnFilter:focus {
    opacity: 1; 
 }
+.mainWrapper {
+    min-height: 450px;
+    background: #FFF;
+}
 @media screen and (max-width: 992px) {
     body {
         width: 100%;
@@ -366,6 +370,9 @@ a.router-link-exact-active.router-link-active .v-tooltip span button {
 .kitchenFinderSection .kitchenFinderFilter .v-card__text {
     padding: 10px 16px;
 }
+.mobileFilterWarp .v-input--slider{
+    margin-top: 0px;
+}
 .kitchenFinderSection .kitchenFinderFilter .v-text-field>.v-input__control>.v-input__slot:before {
     border-style: hidden;
 }
@@ -374,12 +381,18 @@ a.router-link-exact-active.router-link-active .v-tooltip span button {
     font-size: 18px;
     color: #000;
 }
+.kitchenFinderSection .kitchenFinderFilter .v-label span.custom,  .mobileFilterWarp .v-card__text .v-label span.custom{
+    font-size: 14px;
+}
 .kitchenFinderSection .kitchenFinderFilter .searchInput .material-icons {
     font-size: 20px;
 }
 .kitchenFinderSection .kitchenFinderFilter .v-input__slot {
     font-size: 13px;
     border: 1px solid #CCC;
+}
+.kitchenFinderSection .kitchenFinderFilter .v-input--slider .v-input__slot,  .mobileFilterWarp .v-input--slider .v-input__slot{
+    border: 0px solid #CCC;
 }
 .kitchenFinderSection .kitchenFinderFilter .v-select__selection--comma {
     margin: 0px auto;
