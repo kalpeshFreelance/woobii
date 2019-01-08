@@ -1,5 +1,5 @@
 <template>
-  <v-content>
+  <v-content class="mainWrapper white">
     <v-container class="white text-xs-center">
       <h2 class="headline align-center">Coming Soon</h2>
     </v-container>

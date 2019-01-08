@@ -1,5 +1,5 @@
 <template>
-  <v-content>
+  <v-content class="mainWrapper white">
     <section class="hbanner">
       <v-img
         :src="require(`@/assets/WooBii-hbanner.jpg`)"

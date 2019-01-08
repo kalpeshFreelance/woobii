@@ -1,5 +1,5 @@
 <template>
-  <v-content class="white">
+  <v-content class="mainWrapper white">
     <section class="kitchenFinderSectionTop">
       <v-container class="grey lighten-3 py-2">
         <v-layout>
@@ -61,12 +61,18 @@
               <span class="caption">Besucher</span>
             </p>
             <p class="caption mb-0">
-              <v-rating v-model="rating" readonly dense background-color="grey darken-4" color="grey darken-4"></v-rating>
+              <v-rating
+                v-model="rating"
+                readonly
+                dense
+                background-color="grey darken-4"
+                color="grey darken-4"
+              ></v-rating>
               <!-- <v-icon class="black--text">star</v-icon>
               <v-icon class="black--text">star</v-icon>
               <v-icon class="black--text">star</v-icon>
               <v-icon class="black--text">star_half</v-icon>
-              <v-icon class="black--text">star_border</v-icon> -->
+              <v-icon class="black--text">star_border</v-icon>-->
               40 Besucherbewertungen
             </p>
           </v-flex>
@@ -96,10 +102,18 @@
                   <v-card-text class="px-0">
                     <v-layout row wrap>
                       <v-flex xs12>
-                        <div class="blue-grey lighten-5 text-xs-center pa-2">
-                          <span class="subtitle blue-grey--text"><v-icon large class="blue-grey--text">error_outline</v-icon><br />No data found in<br /><span class="title">Über uns</span></span>
-                        </div>
                         <p class="headline">Über uns</p>
+                        <div
+                          class="blue-grey lighten-5 text-xs-center pa-2"
+                          v-if="churchesData[0].about_us == ' '"
+                        >
+                          <span class="subtitle blue-grey--text">
+                            <v-icon large class="blue-grey--text">error_outline</v-icon>
+                            <br>No data found in
+                            <br>
+                            <span class="title">Über uns</span>
+                          </span>
+                        </div>                        
                         <div v-html="churchesData[0].about_us"></div>
                         <!-- <p class="body-1 font-weight-bold">
                           <v-icon small class="black--text mr-1">expand_more</v-icon>Weiterlesen
@@ -115,7 +129,14 @@
                                   <v-chip small label dark class="white--text ma-0">Top Gemeinde</v-chip>
                                 </div>
                                 <div class="my-2">
-                                  <v-rating v-model="rating" readonly dense small background-color="grey darken-4" color="grey darken-4"></v-rating>
+                                  <v-rating
+                                    v-model="rating"
+                                    readonly
+                                    dense
+                                    small
+                                    background-color="grey darken-4"
+                                    color="grey darken-4"
+                                  ></v-rating>
                                   <span class="body-1 font-weight-bold ml-2">4,49</span>
                                 </div>
                                 <a href class="caption black--text">
@@ -133,7 +154,14 @@
                                   <v-chip small label dark class="white--text ma-0">Top Gemeinde</v-chip>
                                 </div>
                                 <div class="my-2">
-                                  <v-rating v-model="rating" readonly dense small background-color="grey darken-4" color="grey darken-4"></v-rating>
+                                  <v-rating
+                                    v-model="rating"
+                                    readonly
+                                    dense
+                                    small
+                                    background-color="grey darken-4"
+                                    color="grey darken-4"
+                                  ></v-rating>
                                   <span class="body-1 font-weight-bold ml-2">4,49</span>
                                 </div>
                                 <a href class="caption black--text">
@@ -153,10 +181,18 @@
                   <v-card-text class="px-0">
                     <v-layout row wrap>
                       <v-flex xs12>
-                        <div class="blue-grey lighten-5 text-xs-center pa-2">
-                          <span class="subtitle blue-grey--text"><v-icon large class="blue-grey--text">error_outline</v-icon><br />No data found in<br /><span class="title">Angebote</span></span>
-                        </div>
                         <p class="headline">Angebote</p>
+                        <div
+                          class="blue-grey lighten-5 text-xs-center pa-2"
+                          v-if="churchesData.offers == ''"
+                        >
+                          <span class="subtitle blue-grey--text">
+                            <v-icon large class="blue-grey--text">error_outline</v-icon>
+                            <br>No data found in
+                            <br>
+                            <span class="title">Angebote</span>
+                          </span>
+                        </div>
                       </v-flex>
                       <v-flex xs12>
                         <v-flex d-flex md2 v-if="churchesData.offers">
@@ -188,10 +224,19 @@
                   <v-card-text class="px-0">
                     <v-layout row wrap>
                       <v-flex xs12>
-                        <div class="blue-grey lighten-5 text-xs-center pa-2">
-                          <span class="subtitle blue-grey--text"><v-icon large class="blue-grey--text">error_outline</v-icon><br />No data found in<br /><span class="title">Gemeindenews</span></span>
-                        </div>
                         <p class="headline">Gemeindenews</p>
+                        <div
+                          class="blue-grey lighten-5 text-xs-center pa-2"
+                          v-if="churchesData.newsroom == ''"
+                        >
+                          <span class="subtitle blue-grey--text">
+                            <v-icon large class="blue-grey--text">error_outline</v-icon>
+                            <br>No data found in
+                            <br>
+                            <span class="title">Gemeindenews</span>
+                          </span>
+                        </div>
+
                         <v-layout row wrap v-show="churchesData.newsroom">
                           <v-flex
                             d-flex
@@ -270,10 +315,15 @@
                   <v-card-text class="px-0">
                     <v-layout row wrap>
                       <v-flex xs12>
-                        <div class="blue-grey lighten-5 text-xs-center pa-2">
-                          <span class="subtitle blue-grey--text"><v-icon large class="blue-grey--text">error_outline</v-icon><br />No data found in<br /><span class="title">Social Media Wall</span></span>
-                        </div>
                         <p class="headline">Social Media Wall</p>
+                        <div class="blue-grey lighten-5 text-xs-center pa-2">
+                          <span class="subtitle blue-grey--text">
+                            <v-icon large class="blue-grey--text">error_outline</v-icon>
+                            <br>No data found in
+                            <br>
+                            <span class="title">Social Media Wall</span>
+                          </span>
+                        </div>
                       </v-flex>
                     </v-layout>
                   </v-card-text>
@@ -284,10 +334,18 @@
                   <v-card-text class="px-0">
                     <v-layout row wrap>
                       <v-flex xs12>
-                        <div class="blue-grey lighten-5 text-xs-center pa-2">
-                          <span class="subtitle blue-grey--text"><v-icon large class="blue-grey--text">error_outline</v-icon><br />No data found in<br /><span class="title">Events</span></span>
-                        </div>
                         <p class="headline">Events</p>
+                        <div
+                          class="blue-grey lighten-5 text-xs-center pa-2"
+                          v-if="churchesData.events == ''"
+                        >
+                          <span class="subtitle blue-grey--text">
+                            <v-icon large class="blue-grey--text">error_outline</v-icon>
+                            <br>No data found in
+                            <br>
+                            <span class="title">Events</span>
+                          </span>
+                        </div>
                         <v-layout
                           row
                           class="mb-3"
@@ -353,10 +411,18 @@
                   <v-card-text class="px-0">
                     <v-layout row wrap>
                       <v-flex xs12>
-                        <div class="blue-grey lighten-5 text-xs-center pa-2">
-                          <span class="subtitle blue-grey--text"><v-icon large class="blue-grey--text">error_outline</v-icon><br />No data found in<br /><span class="title">Jobs</span></span>
-                        </div>
                         <p class="headline">Jobs</p>
+                        <div
+                          class="blue-grey lighten-5 text-xs-center pa-2"
+                          v-if="churchesData.jobs == ''"
+                        >
+                          <span class="subtitle blue-grey--text">
+                            <v-icon large class="blue-grey--text">error_outline</v-icon>
+                            <br>No data found in
+                            <br>
+                            <span class="title">Jobs</span>
+                          </span>
+                        </div>
                         <v-layout
                           row
                           class="mb-3"
@@ -419,10 +485,15 @@
                   <v-card-text class="px-0">
                     <v-layout row wrap>
                       <v-flex xs12>
-                        <div class="blue-grey lighten-5 text-xs-center pa-2">
-                          <span class="subtitle blue-grey--text"><v-icon large class="blue-grey--text">error_outline</v-icon><br />No data found in<br /><span class="title">Bewertungen</span></span>
-                        </div>
                         <p class="headline">Bewertungen</p>
+                        <!-- <div class="blue-grey lighten-5 text-xs-center pa-2">
+                          <span class="subtitle blue-grey--text">
+                            <v-icon large class="blue-grey--text">error_outline</v-icon>
+                            <br>No data found in
+                            <br>
+                            <span class="title">Bewertungen</span>
+                          </span>
+                        </div> -->
                         <p
                           class="body-1 font-weight-bold"
                         >Deine Meinung zahlt. Teile deine Erfahrung damit andere fie passende Gemeinde finden.</p>
@@ -433,51 +504,99 @@
                         <p class="body-1 pl-3">
                           Offenheit fur neue Besucher
                           <span class="right">
-                            <v-rating v-model="rating" readonly dense background-color="grey darken-4" color="grey darken-4"></v-rating>
+                            <v-rating
+                              v-model="rating"
+                              readonly
+                              dense
+                              background-color="grey darken-4"
+                              color="grey darken-4"
+                            ></v-rating>
                           </span>
                         </p>
                         <p class="body-1 pl-3">
                           Christuszentrierte Predigten
                           <span class="right">
-                            <v-rating v-model="rating" readonly dense background-color="grey darken-4" color="grey darken-4"></v-rating>
+                            <v-rating
+                              v-model="rating"
+                              readonly
+                              dense
+                              background-color="grey darken-4"
+                              color="grey darken-4"
+                            ></v-rating>
                           </span>
                         </p>
                         <p class="title font-weight-regular mt-4">Gemeinschaft</p>
                         <p class="body-1 pl-3">
                           Kleingruppen & Hauskreise
                           <span class="right">
-                            <v-rating v-model="rating" readonly dense background-color="grey darken-4" color="grey darken-4"></v-rating>
+                            <v-rating
+                              v-model="rating"
+                              readonly
+                              dense
+                              background-color="grey darken-4"
+                              color="grey darken-4"
+                            ></v-rating>
                           </span>
                         </p>
                         <p class="body-1 pl-3">
                           Genertfruhstuck & Gebetsabende
                           <span class="right">
-                            <v-rating v-model="rating" readonly dense background-color="grey darken-4" color="grey darken-4"></v-rating>
+                            <v-rating
+                              v-model="rating"
+                              readonly
+                              dense
+                              background-color="grey darken-4"
+                              color="grey darken-4"
+                            ></v-rating>
                           </span>
                         </p>
                         <p class="body-1 pl-3">
                           Dienstbereitschaft
                           <span class="right">
-                            <v-rating v-model="rating" readonly dense background-color="grey darken-4" color="grey darken-4"></v-rating>
+                            <v-rating
+                              v-model="rating"
+                              readonly
+                              dense
+                              background-color="grey darken-4"
+                              color="grey darken-4"
+                            ></v-rating>
                           </span>
                         </p>
                         <p class="title font-weight-regular mt-4">Nachfolge</p>
                         <p class="body-1 pl-3">
                           Sehnsucht Gott ahnlicher zu werden
                           <span class="right">
-                            <v-rating v-model="rating" readonly dense background-color="grey darken-4" color="grey darken-4"></v-rating>
+                            <v-rating
+                              v-model="rating"
+                              readonly
+                              dense
+                              background-color="grey darken-4"
+                              color="grey darken-4"
+                            ></v-rating>
                           </span>
                         </p>
                         <p class="body-1 pl-3">
                           Genertfruhstuck & Gebetsabende
                           <span class="right">
-                            <v-rating v-model="rating" readonly dense background-color="grey darken-4" color="grey darken-4"></v-rating>
+                            <v-rating
+                              v-model="rating"
+                              readonly
+                              dense
+                              background-color="grey darken-4"
+                              color="grey darken-4"
+                            ></v-rating>
                           </span>
                         </p>
                         <p class="body-1 pl-3">
                           Dienstbereitschaft
                           <span class="right">
-                            <v-rating v-model="rating" readonly dense background-color="grey darken-4" color="grey darken-4"></v-rating>
+                            <v-rating
+                              v-model="rating"
+                              readonly
+                              dense
+                              background-color="grey darken-4"
+                              color="grey darken-4"
+                            ></v-rating>
                           </span>
                         </p>
                       </v-flex>
@@ -488,52 +607,58 @@
             </v-tabs>
           </v-flex>
           <v-flex xs12 md4 class="tabRight">
-              <v-btn flat block class="colorGreen ma-0 mb-3 py-2">
-                <v-icon class="mr-2">share</v-icon>Kirchengemeinde empfehlen
-              </v-btn>
-              <v-btn flat block class="grey lighten-4 ma-0 mb-4 py-2">
-                <v-rating v-model="rating" readonly dense small background-color="grey darken-4" color="grey darken-4"></v-rating>
-                Kirchengemeinde bewerten
-              </v-btn>
-              <p class="headline">Gemeindeprofil</p>
-              <p class="body-1">
-                <span class="font-weight-bold black--text">Gottesdienste</span>
-                <br>
-                {{churchesData[0].timing}}
-              </p>
-              <p class="body-1" v-html="churchesData[0].address"></p>
-              <!-- <p class="body-1">
+            <v-btn flat block class="colorGreen ma-0 mb-3 py-2">
+              <v-icon class="mr-2">share</v-icon>Kirchengemeinde empfehlen
+            </v-btn>
+            <v-btn flat block class="grey lighten-4 ma-0 mb-4 py-2">
+              <v-rating
+                v-model="rating"
+                readonly
+                dense
+                small
+                background-color="grey darken-4"
+                color="grey darken-4"
+              ></v-rating>Kirchengemeinde bewerten
+            </v-btn>
+            <p class="headline">Gemeindeprofil</p>
+            <p class="body-1">
+              <span class="font-weight-bold black--text">Gottesdienste</span>
+              <br>
+              {{churchesData[0].timing}}
+            </p>
+            <p class="body-1" v-html="churchesData[0].address"></p>
+            <!-- <p class="body-1">
                 <span class="font-weight-bold black--text">Head Office</span>
                 <br>Gutenbergstr. 6
                 <br>6020 Innsbruck
                 <br>Osterreich
-              </p>-->
-              <p class="body-1" v-if="churchesData[0].head_office">
-                Tel: {{churchesData[0].head_office}}
-                <br>
-                <a
-                  v-if="churchesData[0].email_id"
-                  :href="'mailto:'+churchesData[0].email_id"
-                  target="new"
-                >{{churchesData[0].email_id}}</a>
-              </p>
-              <p class="body-1" v-if="churchesData[0].website">
-                <a href>{{ churchesData[0].website }}</a>
-              </p>
-              <GmapMap
-                :center="{lat: parseFloat(churchesData[0].lat), lng: parseFloat(churchesData[0].lng)}"
-                :zoom="12"
-                map-type-id="roadmap"
-                style="width: 100%; height: 180px"
-              >
-                <GmapMarker
-                  :position="{lat: parseFloat(churchesData[0].lat), lng: parseFloat(churchesData[0].lng)}"
-                  :clickable="true"
-                  :draggable="false"
-                  @click="center={lat: parseFloat(churchesData[0].lat), lng: parseFloat(churchesData[0].lng)}"
-                />
-              </GmapMap>
-            </v-flex>
+            </p>-->
+            <p class="body-1" v-if="churchesData[0].head_office">
+              Tel: {{churchesData[0].head_office}}
+              <br>
+              <a
+                v-if="churchesData[0].email_id"
+                :href="'mailto:'+churchesData[0].email_id"
+                target="new"
+              >{{churchesData[0].email_id}}</a>
+            </p>
+            <p class="body-1" v-if="churchesData[0].website">
+              <a href>{{ churchesData[0].website }}</a>
+            </p>
+            <GmapMap
+              :center="{lat: parseFloat(churchesData[0].lat), lng: parseFloat(churchesData[0].lng)}"
+              :zoom="12"
+              map-type-id="roadmap"
+              style="width: 100%; height: 180px"
+            >
+              <GmapMarker
+                :position="{lat: parseFloat(churchesData[0].lat), lng: parseFloat(churchesData[0].lng)}"
+                :clickable="true"
+                :draggable="false"
+                @click="center={lat: parseFloat(churchesData[0].lat), lng: parseFloat(churchesData[0].lng)}"
+              />
+            </GmapMap>
+          </v-flex>
         </v-layout>
       </v-container>
     </section>
