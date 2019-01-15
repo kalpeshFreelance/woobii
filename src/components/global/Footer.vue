@@ -2,7 +2,7 @@
   <template>
   <v-footer height="auto" color="#0B324F">
     <v-layout justify-center row wrap xs-12>
-      <v-flex py-2 text-xs-center white--text xs12>
+      <v-flex text-xs-center white--text xs12>
         <v-tooltip top>
           <v-btn slot="activator" flat small>
             <span class="white--text">Kontakt</span>
@@ -47,7 +47,7 @@
         </v-tooltip>
       </v-flex>
       <v-divider inset dark color="#606c7d" style="margin-left:1px;max-width:100%;"></v-divider>
-      <v-flex py-3 text-xs-center white--text xs12>Ein Angebot von SALZUNDLICHT e.U.</v-flex>
+      <v-flex py-2 text-xs-center white--text xs12>Ein Angebot von SALZUNDLICHT e.U.</v-flex>
     </v-layout>
   </v-footer>
 </template>
