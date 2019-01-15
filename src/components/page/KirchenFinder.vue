@@ -4,7 +4,7 @@
       <v-btn fab dark small color="primary" @click.stop="drawer = !drawer" class="btnFilter">
         <v-icon dark>filter_list</v-icon>
       </v-btn>
-      <v-navigation-drawer v-model="drawer" absolute temporary>
+      <v-navigation-drawer v-model="drawer" fixed temporary>
         <v-card flat color="white" class="mobileFilterWarp">
           <v-card-text>
             <v-form>
@@ -18,15 +18,20 @@
                 placeholder="Bitte auswählen"
               ></v-select>
               <v-select
+                v-model="selectCity"
                 :items="OrtList"
                 item-text="place"
                 item-value="id"
+                @input="mapCenterloation"
+                autocomplete
                 label="Stadt"
                 placeholder="Munchen"
               ></v-select>
               <!-- <v-select label="Umfeld-Radius" placeholder="0"></v-select> -->
-              <v-label><span class="custom">Umfeld-Radius</span></v-label>
-              <v-slider v-model="zoom" :max="25" :min="1"></v-slider>
+              <v-label>
+                <span class="custom">Umfeld-Radius</span>
+              </v-label>
+              <v-slider v-model="zoom" :max="15" :min="1"></v-slider>
               <v-select
                 :items="topCommunity"
                 item-text="type"
@@ -41,16 +46,8 @@
                 label="Gemeindetyp"
                 placeholder="Bitte auswählen"
               ></v-select>
-              <v-select
-                :items="communitySize"
-                label="Gemeindegröße"
-                placeholder="Bitte auswählen"
-              ></v-select>
-              <v-select
-                :items="langauages"
-                label="Sprache"
-                placeholder="Bitte auswählen"
-              ></v-select>
+              <v-select :items="communitySize" label="Gemeindegröße" placeholder="Bitte auswählen"></v-select>
+              <v-select :items="langauages" label="Sprache" placeholder="Bitte auswählen"></v-select>
               <v-select
                 :items="rating"
                 item-text="rate"
@@ -118,6 +115,7 @@
                     v-model="land"
                     item-value="id"
                     label="Land"
+                    autocomplete
                   ></v-select>
                   <v-select
                     :items="OrtList"
@@ -125,10 +123,14 @@
                     item-value="id"
                     label="Stadt"
                     placeholder="Munchen"
+                    @input="mapCenterloation"
+                    autocomplete
                   ></v-select>
                   <!-- <v-select label="Umfeld-Radius" placeholder="0"></v-select> -->
-                  <v-label><span class="custom">Umfeld-Radius</span></v-label>
-                  <v-slider v-model="zoom" class="mt-0" :max="25" :min="1"></v-slider>
+                  <v-label>
+                    <span class="custom">Umfeld-Radius</span>
+                  </v-label>
+                  <v-slider v-model="zoom" class="mt-0" :max="15" :min="1"></v-slider>
                   <v-select
                     :items="topCommunity"
                     item-text="type"
@@ -148,11 +150,7 @@
                     label="Gemeindegröße"
                     placeholder="Bitte auswählen"
                   ></v-select>
-                  <v-select
-                    :items="langauages"
-                    label="Sprache"
-                    placeholder="Bitte auswählen"
-                  ></v-select>
+                  <v-select :items="langauages" label="Sprache" placeholder="Bitte auswählen"></v-select>
                   <v-select
                     :items="rating"
                     item-text="rate"
@@ -168,6 +166,15 @@
                     placeholder="Bitte auswählen"
                   ></v-select>
                 </v-form>
+                <div class="dealsWrap">
+                  <h4 class="body-1">Angebote</h4>
+                  <v-img
+                    v-if="offers"
+                    v-for="offer in offers"
+                    :src="'http://dev.woobii.com/admin/'+offer.dealImg"
+                    class="imgDeal"
+                  ></v-img>
+                </div>
               </v-card-text>
             </v-card>
           </v-flex>
@@ -385,10 +392,9 @@ export default {
       isMobile: false,
       drawer: null,
       center: {
-        lat: 48.2142855,
-        lng: 16.4191467
+        lat: 48.05,
+        lng: 14.416667
       },
-      land: '',
       page: 1,
       totalcount: 0,
       userPosition: null,
@@ -405,7 +411,10 @@ export default {
         { rate: "4", text: '<v-rating value="4" readonly dense small background-color="grey darken-4" color="grey darken-4"></v-rating>' },
         { rate: "5", text: '<v-rating value="5" readonly dense small background-color="grey darken-4" color="grey darken-4"></v-rating>' }
       ],
+      selectCity: 59,
+      land: 14,
       markers: [],
+      offers: [],
       churchesList: [],
       circleBounds: {},
       GemeindetypeList: [],
@@ -433,6 +442,7 @@ export default {
     this.listofcountry();
     this.listofcity();
     this.listofmuncipalty();
+    this.listofoffer();
   },
   methods: {
     centerOnUser() {
@@ -442,6 +452,34 @@ export default {
     },
     setUserPosition(position) {
       this.userPosition = position;
+    },
+    listofoffer: function() {
+      var e = this;
+      axios
+        .get("/churcheview/offers")
+        .then(function(response) {
+          console.log(response.data);
+          if (response.data.status == true) {
+            e.offers = response.data.offer;
+          }
+        })
+        .catch(function(error) {
+          if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          } else if (error.request) {
+            // The request was made but no response was received
+            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+            // http.ClientRequest in node.js
+            console.log(error.request);
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            console.log("Error", error.message);
+          }
+        });
     },
     listofmuncipalty: function() {
       var e = this;
@@ -474,7 +512,7 @@ export default {
     listofcity: function(id) {
       var e = this;
       if (e.land == "") {
-        var city = "DE";
+        var city = "AT";
       } else {
         var cityData = e.LandList.filter(col => {
           return col.id.match(id);
@@ -509,6 +547,20 @@ export default {
           }
         });
     },
+    mapCenterloation: function(event){
+      var e = this;
+      var cityData = e.OrtList.filter(col => {
+          return col.id.match(event);
+        });
+        if(cityData.length == 1){
+          e.center.lat = parseFloat(cityData[0].lat);
+          e.center.lng = parseFloat(cityData[0].lng);
+          e.churchlist(0, e.selectCity, e.land);
+        }else{
+            e.center.lat = parseFloat('48.05');
+            e.center.lng = parseFloat('14.416667');
+        }
+    },
     listofcountry: function() {
       var e = this;
       axios
@@ -536,10 +588,10 @@ export default {
           }
         });
     },    
-    churchlist: function(pageNum = 0) {
+    churchlist: function(pageNum = 0, city = 59, country = 14) {
       var e = this;
       axios
-        .get("/churcheview/churchelist?p=" + pageNum)
+        .get("/churcheview/churchelist?p=" + pageNum+"&city="+city+"&country="+country)
         .then(function(response) {
           if (response.data.status == true) {
             e.churchesList = response.data.churches.community;
@@ -551,6 +603,8 @@ export default {
                   lng: parseFloat(response.data.churches.community[prop].lng)
                 });
               }
+            }else{
+              e.totalcount = 0;
             }
           }
           // console.log(response.status);

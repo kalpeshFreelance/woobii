@@ -30,7 +30,8 @@ button.btnFilter {
     display: none;
 }
 button.btnFilter:hover, button.btnFilter:active, button.btnFilter:visited, button.btnFilter:focus {
-   opacity: 1; 
+   opacity: 1;
+   position: fixed 
 }
 .mainWrapper {
     min-height: 450px;
@@ -39,6 +40,7 @@ button.btnFilter:hover, button.btnFilter:active, button.btnFilter:visited, butto
 @media screen and (max-width: 992px) {
     body {
         width: 100%;
+        padding-top: 40px;
     }
     button.btnFilter {
         display: flex;
@@ -165,6 +167,20 @@ a.router-link-exact-active.router-link-active .v-tooltip span button {
         font-size: 13px !important;
     }
 }
+
+/* =========== Mobile Packages =========== */
+.mobilePackageTab .v-tabs__container {
+    height: 58px;
+}
+.mobilePackageTab a.v-tabs__item {
+    text-transform: initial;
+    line-height: 20px;
+}
+.mobilePackageTab a.v-tabs__item--active {
+    background: #DEDEDE;
+}
+
+
 
 /* =========== News Room =========== */
 
@@ -407,6 +423,28 @@ a.router-link-exact-active.router-link-active .v-tooltip span button {
 .kitchenFinderSection .kitchenFinderFilter .v-text-field .v-input__prepend-inner {
     margin-top: 0px;
 }
+.kitchenFinderSection .kitchenFinderFilter .dealsWrap h4.body-1 {
+    font-size: 14px !important;
+    color: #000;
+    margin-bottom: 10px;
+}
+.kitchenFinderSection .kitchenFinderFilter .dealsWrap .imgDeal {
+    width: 22.6%;
+    display: inline-block;
+    margin-right: 3%;
+    border-radius: 50%;
+    -moz-transition: all 150ms ease-in-out;
+    -o-transition: all 150ms ease-in-out;
+    -ms-transition: all 150ms ease-in-out;
+    transition: all 150ms ease-in-out;
+}
+.kitchenFinderSection .kitchenFinderFilter .dealsWrap .imgDeal:nth-child(4n+1) {
+    margin-right: 0%;
+}
+.kitchenFinderSection .kitchenFinderFilter .dealsWrap .imgDeal:hover,
+.kitchenFinderSection .kitchenFinderFilter .dealsWrap .imgDeal:focus {
+    transform: scale(1.075);
+}
 @media screen and (max-width: 992px) {
     .kitchenFinderSection .kitchenFinderFilter {
         display: none;
@@ -461,6 +499,35 @@ a.router-link-exact-active.router-link-active .v-tooltip span button {
     height: auto;
     text-transform: initial;
 }
+.kitchenFinderSection .v-tabs__content .dealsWrap .wrap {
+    width: 17.6%;
+    display: inline-block;
+    margin-right: 3%;
+    margin-bottom: 15px;
+    border-radius: 50%;
+    text-align: center;
+}
+.kitchenFinderSection .v-tabs__content .dealsWrap .wrap:nth-child(5n+5) {
+    margin-right: 0%;
+}
+.kitchenFinderSection .v-tabs__content .dealsWrap .wrap .imgDeal {
+    width: 90%;
+    border-radius: 50%;
+    margin: auto;
+    -moz-transition: all 150ms ease-in-out;
+    -o-transition: all 150ms ease-in-out;
+    -ms-transition: all 150ms ease-in-out;
+    transition: all 150ms ease-in-out;
+}
+.kitchenFinderSection .v-tabs__content .dealsWrap .wrap .imgDeal:hover,
+.kitchenFinderSection .v-tabs__content .dealsWrap .wrap .imgDeal:focus {
+    transform: scale(1.075);
+}
+.kitchenFinderSection .kitchenFinderFilter .dealsWrap h4.body-1 {
+    font-size: 14px !important;
+    color: #000;
+    margin-bottom: 10px;
+}
 .kitchenFinderSection .tabRight button.v-btn {
     height: auto;
     text-transform: initial;
@@ -488,6 +555,24 @@ a.router-link-exact-active.router-link-active .v-tooltip span button {
     .kitchenFinderSection .v-tabs__content .body-1 {
         font-size: 13px !important;
         margin-bottom: 10px;
+    }
+    .kitchenFinderSection .v-tabs__content .dealsWrap .wrap {
+        width: 22.6%;
+        display: inline-block;
+        margin-right: 3%;
+        margin-bottom: 15px;
+        border-radius: 50%;
+        text-align: center;
+    }
+    .kitchenFinderSection .v-tabs__content .dealsWrap .wrap .body-1 {
+        font-size: 12px !important;
+        margin-bottom: 0px;
+    }
+    .kitchenFinderSection .v-tabs__content .dealsWrap .wrap:nth-child(5n+5) {
+        margin-right: 3%;
+    }
+    .kitchenFinderSection .v-tabs__content .dealsWrap .wrap:nth-child(4n+4) {
+        margin-right: 0px;
     }
 }
 

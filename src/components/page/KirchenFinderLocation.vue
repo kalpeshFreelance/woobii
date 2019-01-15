@@ -2,7 +2,7 @@
   <v-content class="mainWrapper white">
     <section class="kitchenFinderSectionTop">
       <v-container class="grey lighten-3 py-2">
-        <v-layout>
+        <v-layout row wrap>
           <v-flex xs12 md5>
             <v-form>
               <v-text-field
@@ -193,27 +193,14 @@
                             <span class="title">Angebote</span>
                           </span>
                         </div>
-                      </v-flex>
-                      <v-flex xs12>
-                        <v-flex d-flex md2 v-if="churchesData.offers">
-                          <v-card
-                            flat
-                            color="white"
-                            class="grey lighten-4"
-                            v-for="offer in churchesData.offers"
-                          >
-                            <v-card-title>
-                              <div>
-                                <span>{{ offer.offer_name }}</span>
-                              </div>
-                            </v-card-title>
-                            <v-img
-                              v-if="offer.offer_img"
+                        <div class="dealsWrap px-2"   v-if="churchesData.offers">
+                          <div class="wrap " v-for="offer in churchesData.offers">
+                            <h4 class="body-1">{{ offer.offer_name }}</h4>
+                            <v-img v-if="offer.offer_img"
                               :lazy-src="'http://dev.woobii.com/admin/'+offer.offer_img"
-                              :src="'http://dev.woobii.com/admin/'+offer.offer_img"
-                            />
-                          </v-card>
-                        </v-flex>
+                              :src="'http://dev.woobii.com/admin/'+offer.offer_img" class="imgDeal"></v-img>
+                          </div>
+                        </div>
                       </v-flex>
                     </v-layout>
                   </v-card-text>

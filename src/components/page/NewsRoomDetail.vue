@@ -4,7 +4,7 @@
       <v-btn fab dark small color="primary" @click.stop="drawer = !drawer" class="btnFilter">
         <v-icon dark>filter_list</v-icon>
       </v-btn>
-      <v-navigation-drawer v-model="drawer" absolute temporary>
+      <v-navigation-drawer v-model="drawer" fixed temporary>
         <v-card flat color="white" class="mobileFilterWarp">
           <v-card-text>
             <v-form>
