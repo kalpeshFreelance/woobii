@@ -5,13 +5,28 @@
         <v-layout row wrap>
           <v-flex xs12 md5>
             <v-form>
-              <v-text-field
+              <v-autocomplete
+                :loading="searchLoading"
+                :items="churcheTitle"
+                item-text="title"
+                item-value="link"
+                :search-input.sync="search"
+                @input="pageRedirect"
+                cache-items
+                flat
+                hide-no-data
+                hide-details
+                label="Gemeindename oder Stichwort einfugen"
+                append-icon="search"
+                solo
+              ></v-autocomplete>
+              <!-- <v-text-field
                 flat
                 solo
                 class
                 placeholder="Gemeindename oder Stichwort einfugen"
                 append-icon="search"
-              ></v-text-field>
+              ></v-text-field> -->
             </v-form>
           </v-flex>
           <v-flex xs12 md2>
@@ -60,21 +75,21 @@
               <br>
               <span class="caption">Besucher</span>
             </p>
-            <p class="caption mb-0">
+            <!--  <p class="caption mb-0">
               <v-rating
                 v-model="rating"
                 readonly
                 dense
                 background-color="grey darken-4"
                 color="grey darken-4"
-              ></v-rating>
-              <!-- <v-icon class="black--text">star</v-icon>
+            ></v-rating>-->
+            <!-- <v-icon class="black--text">star</v-icon>
               <v-icon class="black--text">star</v-icon>
               <v-icon class="black--text">star</v-icon>
               <v-icon class="black--text">star_half</v-icon>
-              <v-icon class="black--text">star_border</v-icon>-->
-              40 Besucherbewertungen
-            </p>
+            <v-icon class="black--text">star_border</v-icon>-->
+            <!-- 40 Besucherbewertungen
+            </p>-->
           </v-flex>
           <v-flex xs12 md8>
             <v-img
@@ -96,7 +111,7 @@
               <v-tab href="#tab-4">Social Media Wall</v-tab>
               <v-tab href="#tab-5">Events</v-tab>
               <v-tab href="#tab-6">Jobs</v-tab>
-              <v-tab href="#tab-7">Bewertungen</v-tab>
+              <!-- <v-tab href="#tab-7">Bewertungen</v-tab> -->
               <v-tab-item id="tab-1">
                 <v-card flat>
                   <v-card-text class="px-0">
@@ -113,7 +128,7 @@
                             <br>
                             <span class="title">Über uns</span>
                           </span>
-                        </div>                        
+                        </div>
                         <div v-html="churchesData[0].about_us"></div>
                         <!-- <p class="body-1 font-weight-bold">
                           <v-icon small class="black--text mr-1">expand_more</v-icon>Weiterlesen
@@ -193,12 +208,15 @@
                             <span class="title">Angebote</span>
                           </span>
                         </div>
-                        <div class="dealsWrap px-2"   v-if="churchesData.offers">
-                          <div class="wrap " v-for="offer in churchesData.offers">
+                        <div class="dealsWrap px-2" v-if="churchesData.offers">
+                          <div class="wrap" v-for="offer in churchesData.offers">
                             <h4 class="body-1">{{ offer.offer_name }}</h4>
-                            <v-img v-if="offer.offer_img"
+                            <v-img
+                              v-if="offer.offer_img"
                               :lazy-src="'http://dev.woobii.com/admin/'+offer.offer_img"
-                              :src="'http://dev.woobii.com/admin/'+offer.offer_img" class="imgDeal"></v-img>
+                              :src="'http://dev.woobii.com/admin/'+offer.offer_img"
+                              class="imgDeal"
+                            ></v-img>
                           </div>
                         </div>
                       </v-flex>
@@ -480,7 +498,7 @@
                             <br>
                             <span class="title">Bewertungen</span>
                           </span>
-                        </div> -->
+                        </div>-->
                         <p
                           class="body-1 font-weight-bold"
                         >Deine Meinung zahlt. Teile deine Erfahrung damit andere fie passende Gemeinde finden.</p>
@@ -663,14 +681,57 @@ export default {
       isMobile: false,
       drawer: null,
       churchesData: [],
-      active_tab: "tab-1"
+      active_tab: "tab-1",
+      searchLoading: false,
+      churcheTitle: [],
+      search: null
     };
+  },
+  watch: {
+    search(val) {
+      if(val.length >= 3){
+        val && val !== this.select && this.querySelections(val);
+      }else{
+         this.churcheTitle = [];
+      } 
+    }
   },
   mounted() {
     this.churchdata(this.$route.params.slug);
   },
   beforeDestroy() {},
   methods: {
+    pageRedirect: function(event){
+        this.$router.push("/Kirchenfinder/"+ event);
+        this.churchdata(this.$route.params.slug);
+    },
+    querySelections(v) {
+      var self = this;
+      this.searchLoading = true;
+      // Simulated ajax query
+      axios
+        .get("/churcheview/churchebyname?t=" + v)
+        .then(function(response) {
+          if (response.data.status == true) {
+            console.log(response.data.churche);
+            self.churcheTitle = response.data.churche;
+            self.searchLoading = false;
+          }
+        })
+        .catch(function(error) {
+          if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          } else if (error.request) {
+            console.log(error.request);
+          } else {
+            console.log("Error", error.message);
+          }
+        });
+    },
     churchdata: function(slug) {
       var e = this;
       axios
@@ -712,4 +773,5 @@ export default {
 .progess-custom {
   margin: 0px;
 }
+
 </style>
