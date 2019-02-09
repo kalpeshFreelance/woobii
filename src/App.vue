@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-progress-linear v-model="value" :height="height" class="ma-0" :active="show" color="#FB6E30" :indeterminate="query" :query="true"></v-progress-linear>
+    <!-- <v-progress-linear v-model="value" :height="height" class="ma-0" :active="show" color="#FB6E30" :indeterminate="query" :query="true"></v-progress-linear> -->
     <Header/>
     <router-view/>
     <Footer/>

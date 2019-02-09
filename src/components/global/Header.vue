@@ -665,9 +665,7 @@ export default {
       axios
         .get("/adminglobal/getallmuncipalitytype")
         .then(function(response) {
-          console.log(response.data);
           if (response.data.status == true) {
-            console.log(response.data.allmuncipalitytype);
             e.GemeindetypeList = response.data.allmuncipalitytype;
           }
         })

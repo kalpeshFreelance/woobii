@@ -26,7 +26,7 @@
                 class
                 placeholder="Gemeindename oder Stichwort einfugen"
                 append-icon="search"
-              ></v-text-field> -->
+              ></v-text-field>-->
             </v-form>
           </v-flex>
           <v-flex xs12 md2>
@@ -133,9 +133,65 @@
                         <!-- <p class="body-1 font-weight-bold">
                           <v-icon small class="black--text mr-1">expand_more</v-icon>Weiterlesen
                         </p>-->
-                        <p class="headline">GLAUBE.at empfiehlt folgende Gemeinden:</p>
+                        <p class="headline" style="margin-top: 15px;">GLAUBE.at empfiehlt folgende Gemeinden:</p>
                         <v-layout row wrap>
-                          <v-flex d-flex xs12 md6>
+                          <v-flex d-flex xs12 md6 v-for="churche in churchesData.featuredChurch">
+                            <v-card flat color="white" class="kFinderWrap">
+                              <a :href="'/Kirchenfinder/'+churche.slug" class="caption black--text">
+                                <v-img
+                                  v-if="churche.bannerimage"
+                                  :lazy-src="'http://dev.woobii.com/admin/'+churche.bannerimage"
+                                  :src="'http://dev.woobii.com/admin/'+churche.bannerimage"
+                                  class="kitchenImage"
+                                />
+                                <v-img
+                                  v-else
+                                  :src="require(`@/assets/woobii-banner.jpg`)"
+                                  :lazy-src="require(`@/assets/woobii-banner.jpg`)"
+                                />
+                              </a>
+                              <v-card-text class="pa-0">
+                                <a
+                                  :href="'/Kirchenfinder/'+churche.slug"
+                                  class="caption black--text"
+                                >
+                                  <h4 class="body-1 my-2">{{ churche.title }}</h4>
+                                </a>
+                                <div>
+                                  <v-chip
+                                    small
+                                    label
+                                    dark
+                                    class="white--text my-1"
+                                    v-for="tag in splitTag(churche.tags)"
+                                  >{{tag}}</v-chip>
+                                </div>
+                                <div class="my-2">
+                                  <v-rating
+                                    v-model="churche.rating"
+                                    readonly
+                                    dense
+                                    small
+                                    background-color="grey darken-4"
+                                    color="grey darken-4"
+                                  ></v-rating>
+                                  <!-- <v-icon small class="black--text">star</v-icon>
+                      <v-icon small class="black--text">star</v-icon>
+                      <v-icon small class="black--text">star</v-icon>
+                      <v-icon small class="black--text">star_half</v-icon>
+                                  <v-icon small class="black--text">star_border</v-icon>-->
+                                  <span class="body-1 font-weight-bold ml-2">{{churche.rating}}</span>
+                                </div>
+                                <a
+                                  :href="'/Kirchenfinder/'+churche.slug"
+                                  class="caption black--text"
+                                >
+                                  <v-icon small class="black--text">chevron_right</v-icon>Zur Gemeinde
+                                </a>
+                              </v-card-text>
+                            </v-card>
+                          </v-flex>
+                          <!-- <v-flex d-flex xs12 md6>
                             <v-card flat color="white" class="kFinderWrap">
                               <v-img src="https://cdn.vuetifyjs.com/images/cards/desert.jpg"></v-img>
                               <v-card-text class="pa-0">
@@ -184,7 +240,7 @@
                                 </a>
                               </v-card-text>
                             </v-card>
-                          </v-flex>
+                          </v-flex> -->
                         </v-layout>
                       </v-flex>
                     </v-layout>
@@ -216,7 +272,9 @@
                               :lazy-src="'http://dev.woobii.com/admin/'+offer.offer_img"
                               :src="'http://dev.woobii.com/admin/'+offer.offer_img"
                               class="imgDeal"
-                            ></v-img>
+                            >
+                              <span class="backgroundColor"></span>
+                            </v-img>
                           </div>
                         </div>
                       </v-flex>
@@ -617,7 +675,7 @@
             </v-btn>
             <v-btn flat block class="grey lighten-4 ma-0 mb-4 py-2">
               <v-rating
-                v-model="rating"
+                v-model="churchesData[0].rating"
                 readonly
                 dense
                 small
@@ -689,11 +747,11 @@ export default {
   },
   watch: {
     search(val) {
-      if(val.length >= 3){
+      if (val.length >= 3) {
         val && val !== this.select && this.querySelections(val);
-      }else{
-         this.churcheTitle = [];
-      } 
+      } else {
+        this.churcheTitle = [];
+      }
     }
   },
   mounted() {
@@ -701,9 +759,14 @@ export default {
   },
   beforeDestroy() {},
   methods: {
-    pageRedirect: function(event){
-        this.$router.push("/Kirchenfinder/"+ event);
-        this.churchdata(this.$route.params.slug);
+    pageRedirect: function(event) {
+      this.$router.push("/Kirchenfinder/" + event);
+      this.churchdata(this.$route.params.slug);
+    },
+    splitTag: function(value) {
+      if (!value) return "";
+      value = value.split(",");
+      return value;
     },
     querySelections(v) {
       var self = this;
@@ -773,5 +836,4 @@ export default {
 .progess-custom {
   margin: 0px;
 }
-
 </style>

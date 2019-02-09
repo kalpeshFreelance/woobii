@@ -436,17 +436,15 @@ a.router-link-exact-active.router-link-active .v-tooltip span button {
     display: inline-block;
     margin-right: 3%;
     border-radius: 50%;
-    -moz-transition: all 150ms ease-in-out;
-    -o-transition: all 150ms ease-in-out;
-    -ms-transition: all 150ms ease-in-out;
-    transition: all 150ms ease-in-out;
     position: relative;
 }
 .kitchenFinderSection .kitchenFinderFilter .dealsWrap .imgDeal:nth-child(4n+1) {
     margin-right: 0%;
 }
 
-
+/* .kitchenFinderSection .kitchenFinderFilter .dealsWrap .imgDeal .v-image__image {
+    background-color: #0B324F;
+} */
 .kitchenFinderSection .kitchenFinderFilter .dealsWrap .imgDeal label {
     position: absolute;
     top: 0;
@@ -461,59 +459,23 @@ a.router-link-exact-active.router-link-active .v-tooltip span button {
     height: 0;
     width: 0;
 }
-.kitchenFinderSection .kitchenFinderFilter .dealsWrap .imgDeal .checkmark {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    height: 20px;
-    width: 20px;
-    margin-top: -10px;
-    margin-left: -10px;
-    background-color: #FFF;
-    opacity: 0;
-    border-radius: 50%;
-    z-index: 100;
-}
-.kitchenFinderSection .kitchenFinderFilter .dealsWrap .imgDeal .whiteColor {
+.kitchenFinderSection .kitchenFinderFilter .dealsWrap .imgDeal .backgroundColor {
     position: absolute;
     top: 0;
     left: 50;
     height: 100%;
     width: 100%;
-    background-color: #FFF;
-    opacity: 0;
-    z-index: 99;
-}
-.kitchenFinderSection .kitchenFinderFilter .dealsWrap .imgDeal:hover input ~ .checkmark {
-    opacity: 0.75;
-}
-.kitchenFinderSection .kitchenFinderFilter .dealsWrap .imgDeal input:checked ~ .checkmark {
-    background-color: #fa6e2f;
+    background-color: #0B324F;
     opacity: 1;
+    z-index: -2;
+    -moz-transition: all 150ms ease-in-out;
+    -o-transition: all 150ms ease-in-out;
+    -ms-transition: all 150ms ease-in-out;
+    transition: all 150ms ease-in-out;
 }
-.kitchenFinderSection .kitchenFinderFilter .dealsWrap .imgDeal:hover input ~ .whiteColor,
-.kitchenFinderSection .kitchenFinderFilter .dealsWrap .imgDeal input:checked ~ .whiteColor {
-    opacity: 0.75;
-}
-.kitchenFinderSection .kitchenFinderFilter .dealsWrap .imgDeal .checkmark:after {
-content: "";
-position: absolute;
-display: none;
-}
-
-.kitchenFinderSection .kitchenFinderFilter .dealsWrap .imgDeal input:checked ~ .checkmark:after {
-display: block;
-}
-
-.kitchenFinderSection .kitchenFinderFilter .dealsWrap .imgDeal .checkmark:after {
-    left: 8px;
-    top: 4px;
-    width: 5px;
-    height: 10px;
-    border: solid white;
-    border-width: 0 2px 3px 0;
-    -webkit-transform: rotate(45deg);
-    transform: rotate(45deg);
+.kitchenFinderSection .kitchenFinderFilter .dealsWrap .imgDeal:hover input ~ .backgroundColor,
+.kitchenFinderSection .kitchenFinderFilter .dealsWrap .imgDeal input:checked ~ .backgroundColor {
+    background-color: #fa6e2f;
 }
 @media screen and (max-width: 992px) {
     .kitchenFinderSection .kitchenFinderFilter {
@@ -584,6 +546,21 @@ display: block;
     width: 90%;
     border-radius: 50%;
     margin: auto;
+    position: relative;
+    -moz-transition: all 150ms ease-in-out;
+    -o-transition: all 150ms ease-in-out;
+    -ms-transition: all 150ms ease-in-out;
+    transition: all 150ms ease-in-out;
+}
+.kitchenFinderSection .v-tabs__content .dealsWrap .wrap .imgDeal .backgroundColor {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #0B324F;
+    opacity: 1;
+    z-index: -2;
     -moz-transition: all 150ms ease-in-out;
     -o-transition: all 150ms ease-in-out;
     -ms-transition: all 150ms ease-in-out;

@@ -39,15 +39,14 @@
                 @input="mapCenterloation"
                 placeholder="Nur Top Gemeinden (Empfehlung)"
               ></v-select>
-              <!-- <v-select
-                    :items="GemeindetypeList"
-                    item-text="type"
-                    item-value="id"
-                    label="Gemeindetyp"
-                    v-model="gemeindetyp"
-                    @input="mapCenterloation"
-                    placeholder="Bitte auswählen"
-              ></v-select>-->
+              <v-select
+                :items="GemeindetypeList"
+                item-text="type"
+                label="Gemeindetyp"
+                v-model="gemeindetyp"
+                @input="mapCenterloation"
+                placeholder="Bitte auswählen"
+              ></v-select>
               <v-select
                 :items="communitySize"
                 label="Gemeindegröße"
@@ -62,13 +61,34 @@
                 v-model="sprache"
                 @input="mapCenterloation"
               ></v-select>
-              <v-select
+              <v-combobox
                 :items="rateing"
                 label="Bewertung"
                 v-model="bewertung"
                 @input="mapCenterloation"
                 placeholder="Bitte auswählen"
-              ></v-select>
+              >
+                <template slot="selection" slot-scope="data">
+                  <v-rating
+                    v-model="data.item"
+                    readonly
+                    dense
+                    small
+                    background-color="grey darken-4"
+                    color="grey darken-4"
+                  ></v-rating>
+                </template>
+                <template slot="item" slot-scope="data">
+                  <v-rating
+                    v-model="data.item"
+                    readonly
+                    dense
+                    small
+                    background-color="grey darken-4"
+                    color="grey darken-4"
+                  ></v-rating>
+                </template>
+              </v-combobox>
               <!-- <v-select
                     :items="GemeindetypeList"
                     item-text="type"
@@ -102,8 +122,7 @@
                     v-model="offerData"
                     :value="offer.dealId"
                   >
-                  <span class="checkmark"></span>
-                  <span class="whiteColor"></span>
+                  <span class="backgroundColor"></span>
                 </label>
               </v-img>
             </div>
@@ -190,15 +209,14 @@
                     @input="mapCenterloation"
                     placeholder="Nur Top Gemeinden (Empfehlung)"
                   ></v-select>
-                  <!-- <v-select
+                  <v-select
                     :items="GemeindetypeList"
                     item-text="type"
-                    item-value="id"
                     label="Gemeindetyp"
                     v-model="gemeindetyp"
                     @input="mapCenterloation"
                     placeholder="Bitte auswählen"
-                  ></v-select>-->
+                  ></v-select>
                   <v-select
                     :items="communitySize"
                     label="Gemeindegröße"
@@ -213,13 +231,41 @@
                     v-model="sprache"
                     @input="mapCenterloation"
                   ></v-select>
-                  <v-select
+                  <!-- <v-select
                     :items="rateing"
                     label="Bewertung"
                     v-model="bewertung"
                     @input="mapCenterloation"
                     placeholder="Bitte auswählen"
-                  ></v-select>
+                  ></v-select>-->
+                  <v-combobox
+                    :items="rateing"
+                    label="Bewertung"
+                    v-model="bewertung"
+                    @input="mapCenterloation"
+                    placeholder="Bitte auswählen"
+                  >
+                    <template slot="selection" slot-scope="data">
+                      <v-rating
+                        v-model="data.item"
+                        readonly
+                        dense
+                        small
+                        background-color="grey darken-4"
+                        color="grey darken-4"
+                      ></v-rating>
+                    </template>
+                    <template slot="item" slot-scope="data">
+                      <v-rating
+                        v-model="data.item"
+                        readonly
+                        dense
+                        small
+                        background-color="grey darken-4"
+                        color="grey darken-4"
+                      ></v-rating>
+                    </template>
+                  </v-combobox>
                   <!-- <v-select
                     :items="GemeindetypeList"
                     item-text="type"
@@ -237,26 +283,23 @@
                     :src="'http://dev.woobii.com/admin/'+offer.dealImg"
                     v-bind:class="[isActive ? activeClass : errorClass]"
                     :id="`img-`+index"
-                    @click="offerImage"
+                    @click="offerImage"v-model="offerData"
                   ><v-icon color="green darken-4">check_circle</v-icon></v-img>-->
-                  <v-img
-                    v-if="offers"
-                    v-for="(offer, index) in offers"
-                    :src="'http://dev.woobii.com/admin/'+offer.dealImg"
-                    class="imgDeal"
-                  >
-                    <label>
-                      <input
-                        type="checkbox"
-                        name="offer[]"
-                        @input="mapCenterloation"
-                        v-model="offerData"
-                        :value="offer.dealId"
-                      >
-                      <span class="checkmark"></span>
-                      <span class="whiteColor"></span>
-                    </label>
-                  </v-img>
+                  <v-tooltip v-if="offers"
+                    v-for="(offer, index) in offers" bottom>
+                    <v-img slot="activator" :src="'http://dev.woobii.com/admin/'+offer.dealImg" class="imgDeal">
+                      <label>
+                        <input
+                          type="checkbox"
+                          name="offer[]"
+                          @input="mapCenterloation"
+                          :value="offer.dealId"
+                        >
+                        <span class="backgroundColor"></span>
+                      </label>
+                    </v-img>
+                    <span>{{offer.deal}}</span>
+                  </v-tooltip>
                 </div>
               </v-card-text>
             </v-card>
@@ -481,48 +524,17 @@ export default {
       isMobile: false,
       drawer: null,
       center: {
-        lat: 48.116667,
-        lng: 14.866667
+        lat: 51.15168,
+        lng: 13.80822
       },
       page: 1,
       totalcount: 0,
       userPosition: null,
       zoom: 10,
       radius: 10000,
-      items: [
-        { title: "Home", icon: "dashboard" },
-        { title: "About", icon: "question_answer" }
-      ],
       rateing: [1, 2, 3, 4, 5],
-      rateings: [
-        {
-          rate: "1",
-          text:
-            '<v-icon small class="black--text">star</v-icon><v-icon small class="black--text">star_half</v-icon><v-icon small class="black--text">star_border</v-icon>'
-        },
-        {
-          rate: "2",
-          text:
-            '<v-rating value="2" readonly dense small background-color="grey darken-4" color="grey darken-4"></v-rating>'
-        },
-        {
-          rate: "3",
-          text:
-            '<v-rating value="3" readonly dense small background-color="grey darken-4" color="grey darken-4"></v-rating>'
-        },
-        {
-          rate: "4",
-          text:
-            '<v-rating value="4" readonly dense small background-color="grey darken-4" color="grey darken-4"></v-rating>'
-        },
-        {
-          rate: "5",
-          text:
-            '<v-rating value="5" readonly dense small background-color="grey darken-4" color="grey darken-4"></v-rating>'
-        }
-      ],
       selectCity: 0,
-      land: 14,
+      land: 0,
       markers: [],
       offers: [],
       churchesList: [],
@@ -577,7 +589,7 @@ export default {
   },
   methods: {
     pageRedirect: function(event) {
-      this.$router.push("/Kirchenfinder/"+ event);
+      this.$router.push("/Kirchenfinder/" + event);
     },
     querySelections(v) {
       var self = this;
@@ -587,7 +599,6 @@ export default {
         .get("/churcheview/churchebyname?t=" + v)
         .then(function(response) {
           if (response.data.status == true) {
-            console.log(response.data.churche);
             self.churcheTitle = response.data.churche;
             self.searchLoading = false;
           }
@@ -624,7 +635,6 @@ export default {
       axios
         .get("/churcheview/offers")
         .then(function(response) {
-          console.log(response.data);
           if (response.data.status == true) {
             e.offers = response.data.offer;
           }
@@ -652,7 +662,6 @@ export default {
       axios
         .get("/adminglobal/getallmuncipalitytype")
         .then(function(response) {
-          console.log(response.data);
           if (response.data.status == true) {
             e.GemeindetypeList = response.data.allmuncipalitytype;
           }
@@ -691,7 +700,13 @@ export default {
       e.page = 1;
       e.selectCity = 0;
       e.countryflag = true;
-      e.churchlist(0, 0, e.land);
+      let all = false;
+      if (this.selectCity == 0 && this.land == 0) {
+        all = false;
+      } else {
+        all = true;
+      }
+      e.churchlist(0, 0, e.land, all);
 
       axios
         .get("/adminglobal/getallcity/?id=" + city)
@@ -720,21 +735,39 @@ export default {
         });
     },
     mapCenterloation: function(event) {
+      console.log(event);
       var e = this;
-      var cityData = e.OrtList.filter(col => {
-        return col.id.match(event);
-      });
+      var cityData = "";
+      if (Number.isInteger(parseInt(event))) {
+        cityData = e.OrtList.filter(col => {
+          return col.id.match(event);
+        });
+      } else {
+        console.log(event);
+        if (event.isArray) {
+          if (event.target.name == "offer[]") {
+            var index = e.offerData.indexOf(event.target.value);
+            if (index > -1) {
+              e.offerData.splice(index, 1);
+            } else {
+              e.offerData.push(event.target.value);
+            }
+          }
+        } else {
+          e.churchlist(0, e.selectCity, e.land, false);
+        }
+      }
       if (cityData.length == 1) {
         e.center.lat = parseFloat(cityData[0].lat);
         e.center.lng = parseFloat(cityData[0].lng);
         e.selectCity = cityData[0].id;
         e.page = 1;
-        e.churchlist(0, e.selectCity, e.land);
+        e.churchlist(0, e.selectCity, e.land, false);
       } else {
         if (!Number.isInteger(parseInt(event))) {
-          e.churchlist(0, e.selectCity, e.land);
+          e.churchlist(0, e.selectCity, e.land, false);
         } else {
-          e.churchlist(0, e.selectCity, e.land);
+          e.churchlist(0, e.selectCity, e.land, false);
 
           //e.center.lat = parseFloat("48.116667");
           //e.center.lng = parseFloat("14.866667");
@@ -769,7 +802,7 @@ export default {
         });
     },
 
-    churchlist: function(pageNum = 0, city = 0, country = 14) {
+    churchlist: function(pageNum = 0, city = 0, country = 14, all = true) {
       var e = this;
       var strQuery = "";
       if (e.topGemeinden) {
@@ -778,7 +811,7 @@ export default {
       if (e.gemeindetyp) {
         strQuery += "&gemeindetyp=" + e.gemeindetyp;
       }
-      if (e.gemeindetyp) {
+      if (e.gemeindegrobe) {
         strQuery += "&gemeindegrobe=" + e.gemeindegrobe;
       }
       if (e.sprache) {
@@ -794,6 +827,8 @@ export default {
         .get(
           "/churcheview/churchelist?p=" +
             pageNum +
+            "&all=" +
+            all +
             "&city=" +
             city +
             "&country=" +
@@ -810,6 +845,7 @@ export default {
                   response.data.churches.communitycount) *
                   100
               );
+              e.markers = [];
               for (var prop in response.data.churches.community) {
                 e.markers.push({
                   lat: parseFloat(response.data.churches.community[prop].lat),
@@ -818,6 +854,7 @@ export default {
               }
             } else {
               e.totalcount = 0;
+              e.markers = [];
             }
           }
           // console.log(response.status);
@@ -848,13 +885,22 @@ export default {
       if (this.countryflag == true) {
         this.selectCity = 0;
       }
-      this.churchlist(pageNum - 1, this.selectCity);
+      let all = false;
+      if (this.selectCity == 0 && this.land == 0) {
+        all = false;
+      } else {
+        all = true;
+      }
+      this.churchlist(pageNum - 1, this.selectCity, this.land, all);
     }
   }
 };
 </script>
-<style scoped>
+<style>
 .progess-custom {
   margin: 0px;
+}
+.v-responsive.v-image.imgDeal {
+    margin-right: 5px !important;
 }
 </style>
