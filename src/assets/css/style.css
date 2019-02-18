@@ -532,18 +532,18 @@ a.router-link-exact-active.router-link-active .v-tooltip span button {
     text-transform: initial;
 }
 .kitchenFinderSection .v-tabs__content .dealsWrap .wrap {
-    width: 17.6%;
+    width: 11.6%;
     display: inline-block;
-    margin-right: 3%;
+    margin-right: 2.4%;
     margin-bottom: 15px;
     border-radius: 50%;
     text-align: center;
 }
-.kitchenFinderSection .v-tabs__content .dealsWrap .wrap:nth-child(5n+5) {
+.kitchenFinderSection .v-tabs__content .dealsWrap .wrap:nth-child(7n+7) {
     margin-right: 0%;
 }
 .kitchenFinderSection .v-tabs__content .dealsWrap .wrap .imgDeal {
-    width: 90%;
+    width: 100%;
     border-radius: 50%;
     margin: auto;
     position: relative;
@@ -652,7 +652,57 @@ a.router-link-exact-active.router-link-active .v-tooltip span button {
 .mobileFilterWarp .v-text-field .v-input__prepend-inner {
     margin-top: 0px;
 }
+.mobileFilterWarp .dealsWrap h4.body-1 {
+    font-size: 14px !important;
+    color: #000;
+    margin-bottom: 10px;
+}
+.mobileFilterWarp .dealsWrap .imgDeal {
+    width: 18%;
+    display: inline-block;
+    margin-right: 3%;
+    border-radius: 50%;
+    position: relative;
+}
+.mobileFilterWarp .dealsWrap .imgDeal:nth-child(5n+1) {
+    margin-right: 0%;
+}
 
+/* .mobileFilterWarp .dealsWrap .imgDeal .v-image__image {
+    background-color: #0B324F;
+} */
+.mobileFilterWarp .dealsWrap .imgDeal label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+.mobileFilterWarp .dealsWrap .imgDeal input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+.mobileFilterWarp .dealsWrap .imgDeal .backgroundColor {
+    position: absolute;
+    top: 0;
+    left: 50;
+    height: 100%;
+    width: 100%;
+    background-color: #0B324F;
+    opacity: 1;
+    z-index: -2;
+    -moz-transition: all 150ms ease-in-out;
+    -o-transition: all 150ms ease-in-out;
+    -ms-transition: all 150ms ease-in-out;
+    transition: all 150ms ease-in-out;
+}
+.mobileFilterWarp .dealsWrap .imgDeal:hover input ~ .backgroundColor,
+.mobileFilterWarp .dealsWrap .imgDeal input:checked ~ .backgroundColor {
+    background-color: #fa6e2f;
+}
 
 /* =========== Dialog =========== */
 .v-overlay--active:before {

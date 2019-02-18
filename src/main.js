@@ -15,6 +15,7 @@ import 'material-design-icons-iconfont/dist/material-design-icons.css'
 import '@fortawesome/fontawesome-free/css/all.css'
 import Nprogress from 'nprogress'
 import Toasted from 'vue-toasted'
+var SocialSharing = require('vue-social-sharing')
 
 Vue.config.productionTip = false
 
@@ -23,6 +24,7 @@ Vue.use(axios)
 Vue.use(VeeValidate)
 Vue.use(require('vue-moment'))
 Vue.use(Toasted)
+Vue.use(SocialSharing)
 
 /*Vue.use(VueGoogleMaps, {
   load: {

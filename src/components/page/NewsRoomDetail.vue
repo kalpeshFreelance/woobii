@@ -53,13 +53,15 @@
               <v-card-text>
                 <v-form>
                   <v-text-field placeholder="Placeholder" append-icon="search"></v-text-field>
-                  <v-select :items="GemeindetypeList"
-                item-text="type"
-                item-value="id"
-                label="Gemeindetyp:"
-                placeholder="Bitte auswählen"></v-select>
-                  <v-select  label="Ressort:" placeholder="Bitte auswählen"></v-select>
-                  <v-select  label="Subressort:" placeholder="Stichwort einfügen"></v-select>
+                  <v-select
+                    :items="GemeindetypeList"
+                    item-text="type"
+                    item-value="id"
+                    label="Gemeindetyp:"
+                    placeholder="Bitte auswählen"
+                  ></v-select>
+                  <v-select label="Ressort:" placeholder="Bitte auswählen"></v-select>
+                  <v-select label="Subressort:" placeholder="Stichwort einfügen"></v-select>
                   <v-select label="Themen:" placeholder="Themen..."></v-select>
                   <v-select label="People:" placeholder="People..."></v-select>
                   <v-select
@@ -83,13 +85,13 @@
                 <v-tab-item>
                   <v-card flat>
                     <v-card-text class="px-0">
-                      <p class="caption mb-1">{{ newsroomData[0].date | moment("DD.MM.YYYY")}}</p>
-                      <p class="caption mb-1" v-html="newsroomData[0].description"></p>
+                      <p class="caption mb-1">{{ newsroomData.text[0].date | moment("DD.MM.YYYY")}}</p>
+                      <p class="caption mb-1" v-html="newsroomData.text[0].short_desc"></p>
                       <div class="grey lighten-3 my-3 pa-2">
                         <v-img
-                          v-if="newsroomData[0].bannerimage"
-                          :lazy-src="'http://dev.woobii.com/admin/'+newsroomData[0].bannerimage"
-                          :src="'http://dev.woobii.com/admin/'+newsroomData[0].bannerimage"
+                          v-if="newsroomData.attachment.image[0].attachment"
+                          :lazy-src="'http://dev.woobii.com/admin/'+newsroomData.attachment.image[0].attachment"
+                          :src="'http://dev.woobii.com/admin/'+newsroomData.attachment.image[0].attachment"
                           class="mb-2"
                         />
                         <v-img
@@ -100,32 +102,44 @@
                         />
                         <p
                           class="caption font-weight-bold text-xs-center mb-1 orangeText"
-                        >Contrary to popular belief, Lorem Ipsum is not simply random text.</p>
+                        >{{newsroomData.attachment.image[0].description}}</p>
                         <p
                           class="caption font-weight-bold text-xs-center mb-1"
                         >There are many variations of passages</p>
                       </div>
-                      <div class="grey lighten-3 my-3 pa-2">
+                      <div
+                        class="grey lighten-3 my-3 pa-2"
+                        v-if="newsroomData.attachment.image.length != 0 || newsroomData.attachment.document.length != 0 "
+                      >
                         <span
                           class="caption font-weight-bold"
                         >Zu dieser Presseinformation bieten wir:</span>
-                        <v-btn small outline color="black" class="my-0">
-                          <v-icon small dark class="mr-1">camera_alt</v-icon>2 Bider
+                        <v-btn
+                          small
+                          outline
+                          color="black"
+                          class="my-0"
+                          v-if="newsroomData.attachment.image.length > 0"
+                        >
+                          <v-icon small dark class="mr-1">camera_alt</v-icon>
+                          {{newsroomData.attachment.image.length}} Bider
                         </v-btn>
-                        <v-btn small outline color="black" class="my-0">
-                          <v-icon small dark class="mr-1">description</v-icon>1 Dokument
+                        <v-btn
+                          small
+                          outline
+                          color="black"
+                          class="my-0"
+                          v-if="newsroomData.attachment.document.length > 0"
+                        >
+                          <v-icon small dark class="mr-1">description</v-icon>
+                          {{newsroomData.attachment.document.length}} Dokument
                         </v-btn>
                       </div>
                       <div class="grey lighten-3 my-3 pa-2">
                         <span class="body-2 font-weight-bold mb-0 mr-2">Presseinformation</span>
                         <span class="caption font-weight-bold mb-0">(2035 Zeichen)</span>
                       </div>
-                      <p
-                        class="caption font-weight-bold mb-1"
-                      >There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.</p>
-                      <p
-                        class="caption mb-1"
-                      >There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.</p>
+                      <p class="caption mb-1" v-html="newsroomData.text[0].description"></p>
                       <div class="topBottonBorder mt-3 py-3">
                         <v-btn small outline color="black" class="ma-0">
                           <v-icon small dark class="mr-1">print</v-icon>Seite drucken
@@ -142,7 +156,7 @@
                     <v-card-text class="px-0">Bilder Text</v-card-text>
                   </v-card>
                 </v-tab-item>
-                <v-tab-item>
+                <v-tab-item v-if="newsroomData.attachment.document">
                   <v-card flat>
                     <v-card-text class="px-0">Dokument Text</v-card-text>
                   </v-card>
@@ -173,32 +187,51 @@
                 <v-icon small dark class="mr-2">folder</v-icon>Sofort downloaden
               </v-btn>
               <v-divider class="my-3"></v-divider>
+              <div v-if="newsroomData.attachment.image">
               <h2 class="subheading font-weight-bold mb-3">
                 <v-icon small class="black--text mr-2">camera_alt</v-icon>Bilder
                 <v-icon class="right black--text ml-2">keyboard_arrow_right</v-icon>
               </h2>
-              <v-img src="https://cdn.vuetifyjs.com/images/cards/desert.jpg" class="mb-2"></v-img>
-              <v-img src="https://cdn.vuetifyjs.com/images/cards/desert.jpg" class="mb-2"></v-img>
+               <v-img
+                v-for="image in newsroomData.attachment.image"
+                :lazy-src="'http://dev.woobii.com/admin/'+image.attachment"
+                :src="'http://dev.woobii.com/admin/'+image.attachment"
+                class="mb-2"
+              />
               <v-divider class="my-3"></v-divider>
-              <h2 class="subheading font-weight-bold mb-3">
-                <v-icon small class="black--text mr-2">edit</v-icon>Bilder
-                <v-icon class="right black--text ml-2">keyboard_arrow_right</v-icon>
-              </h2>
-              <p class="caption mb-2">demo- 152769333-1527673223</p>
-              <router-link to="/" class="caption mb-2">
-                <p>.docs | 1.25 MB
-                  <v-icon small class="right black--text ml-2">edit</v-icon>
-                </p>
-              </router-link>
+              </div>
+              <div v-if="newsroomData.attachment.document">
+                <h2 class="subheading font-weight-bold mb-3">
+                  <v-icon small class="black--text mr-2">edit</v-icon>Bilder
+                  <v-icon class="right black--text ml-2">keyboard_arrow_right</v-icon>
+                </h2>
+                <router-link
+                  to="/"
+                  class="caption mb-2"
+                  v-for="document in newsroomData.attachment.document"
+                >
+                  <p class="caption mb-2">
+                    {{ document.attachment | documentName }} | 1.25 MB
+                    <v-icon small class="right black--text ml-2">edit</v-icon>
+                  </p>
+                </router-link>
+              </div>
               <v-divider class="my-3"></v-divider>
               <h2 class="subheading font-weight-bold mb-2">Pressekontakt</h2>
-              <v-img src="https://cdn.vuetifyjs.com/images/cards/desert.jpg" class="mb-2"></v-img>
+              <v-img
+                v-if="newsroomData.publisher[0].image"
+                :lazy-src="'http://dev.woobii.com/admin/'+newsroomData.publisher[0].image"
+                :src="'http://dev.woobii.com/admin/'+newsroomData.publisher[0].image"
+                class="mb-2"
+              />
               <p class="caption mb-1">
-                <strong>Lucian Wilkinson</strong>
-                <br>Uliam eum et elit officia in
+                <strong>{{newsroomData.publisher[0].name}}</strong>
+                <br>
+                {{newsroomData.publisher[0].designation}}
               </p>
-              <p class="caption mb-1">Sit rerum harum qui maxime soluta dolorem</p>
-              <p class="caption mb-1">Telefonnummer: +291-97-4116196</p>
+              <p class="caption mb-1" v-html="newsroomData.publisher[0].address"></p>
+              <p class="caption mb-1">Telefonnummer: {{newsroomData.publisher[0].contact}}</p>
+              <p class="caption mb-1">{{newsroomData.publisher[0].email}}</p>
             </v-card>
           </v-flex>
         </v-layout>
@@ -222,6 +255,40 @@ export default {
       LandList: [],
       land: ""
     };
+  },
+  filters: {
+    documentName: function(val) {
+      let doc = val.split("/");
+      return doc.pop();
+    },
+    // prettyBytes: function(num) {
+    //   // jacked from: https://github.com/sindresorhus/pretty-bytes
+    //   if (typeof num !== "number" || isNaN(num)) {
+    //     throw new TypeError("Expected a number");
+    //   }
+
+    //   var exponent;
+    //   var unit;
+    //   var neg = num < 0;
+    //   var units = ["B", "kB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
+
+    //   if (neg) {
+    //     num = -num;
+    //   }
+
+    //   if (num < 1) {
+    //     return (neg ? "-" : "") + num + " B";
+    //   }
+
+    //   exponent = Math.min(
+    //     Math.floor(Math.log(num) / Math.log(1000)),
+    //     units.length - 1
+    //   );
+    //   num = (num / Math.pow(1000, exponent)).toFixed(2) * 1;
+    //   unit = units[exponent];
+
+    //   return (neg ? "-" : "") + num + " " + unit;
+    // }
   },
   mounted() {
     this.newsroomdata(this.$route.params.slug);

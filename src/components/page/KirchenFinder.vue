@@ -108,23 +108,21 @@
                     :id="`img-`+index"
                     @click="offerImage"
               ><v-icon color="green darken-4">check_circle</v-icon></v-img>-->
-              <v-img
-                v-if="offers"
-                v-for="(offer, index) in offers"
-                :src="'http://dev.woobii.com/admin/'+offer.dealImg"
-                class="imgDeal"
-              >
-                <label>
-                  <input
-                    type="checkbox"
-                    name="offer[]"
-                    @input="mapCenterloation"
-                    v-model="offerData"
-                    :value="offer.dealId"
-                  >
-                  <span class="backgroundColor"></span>
-                </label>
-              </v-img>
+              <v-tooltip v-if="offers"
+                v-for="(offer, index) in offers" bottom>
+                <v-img slot="activator" :src="'http://dev.woobii.com/admin/'+offer.dealImg" class="imgDeal">
+                  <label>
+                    <input
+                      type="checkbox"
+                      name="offer[]"
+                      @input="mapCenterloation"
+                      :value="offer.dealId"
+                    >
+                    <span class="backgroundColor"></span>
+                  </label>
+                </v-img>
+                <span>{{offer.deal}}</span>
+              </v-tooltip>
             </div>
           </v-card-text>
         </v-card>
@@ -524,8 +522,8 @@ export default {
       isMobile: false,
       drawer: null,
       center: {
-        lat: 51.15168,
-        lng: 13.80822
+        lat: 52.52,
+        lng: 13.40
       },
       page: 1,
       totalcount: 0,

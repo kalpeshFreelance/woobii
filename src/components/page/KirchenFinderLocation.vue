@@ -133,7 +133,10 @@
                         <!-- <p class="body-1 font-weight-bold">
                           <v-icon small class="black--text mr-1">expand_more</v-icon>Weiterlesen
                         </p>-->
-                        <p class="headline" style="margin-top: 15px;">GLAUBE.at empfiehlt folgende Gemeinden:</p>
+                        <p
+                          class="headline"
+                          style="margin-top: 15px;"
+                        >GLAUBE.at empfiehlt folgende Gemeinden:</p>
                         <v-layout row wrap>
                           <v-flex d-flex xs12 md6 v-for="churche in churchesData.featuredChurch">
                             <v-card flat color="white" class="kFinderWrap">
@@ -240,7 +243,7 @@
                                 </a>
                               </v-card-text>
                             </v-card>
-                          </v-flex> -->
+                          </v-flex>-->
                         </v-layout>
                       </v-flex>
                     </v-layout>
@@ -266,15 +269,19 @@
                         </div>
                         <div class="dealsWrap px-2" v-if="churchesData.offers">
                           <div class="wrap" v-for="offer in churchesData.offers">
-                            <h4 class="body-1">{{ offer.offer_name }}</h4>
-                            <v-img
-                              v-if="offer.offer_img"
-                              :lazy-src="'http://dev.woobii.com/admin/'+offer.offer_img"
-                              :src="'http://dev.woobii.com/admin/'+offer.offer_img"
-                              class="imgDeal"
-                            >
-                              <span class="backgroundColor"></span>
-                            </v-img>
+                            <v-tooltip top>
+                              <!-- <h4 class="body-1">{{ offer.offer_name }}</h4> -->
+                              <v-img
+                                slot="activator"
+                                v-if="offer.offer_img"
+                                :lazy-src="'http://dev.woobii.com/admin/'+offer.offer_img"
+                                :src="'http://dev.woobii.com/admin/'+offer.offer_img"
+                                class="imgDeal"
+                              >
+                                <span class="backgroundColor"></span>
+                              </v-img>
+                              <span>{{ offer.offer_name }}</span>
+                            </v-tooltip>
                           </div>
                         </div>
                       </v-flex>
@@ -670,9 +677,51 @@
             </v-tabs>
           </v-flex>
           <v-flex xs12 md4 class="tabRight">
-            <v-btn flat block class="colorGreen ma-0 mb-3 py-2">
+            <v-btn flat block class="colorGreen ma-0 mb-3 py-2" @click="sharedialog = true">
               <v-icon class="mr-2">share</v-icon>Kirchengemeinde empfehlen
             </v-btn>
+            <v-dialog v-model="sharedialog" max-width="290" dark>
+              <v-card>
+                <v-card-title class="mr-2">
+                  <v-icon class="mr-2">share</v-icon>Kirchengemeinde empfehlen
+                </v-card-title>
+                <v-card-text class="mt-0">
+                  <social-sharing
+                    :url="socialUrl"
+                    :title="socialTitle"
+                    :description="socialDescription"
+                    :quote="socialQuote"
+                    hashtags="Woobii"
+                    twitter-user="woobii"
+                    inline-template
+                  >
+                    <div class="socialBox">
+                      <network network="email">
+                        <v-icon class>email</v-icon>Email
+                      </network>
+                      <network network="facebook">
+                        <v-icon class>fab fa-facebook</v-icon>Facebook
+                      </network>
+                      <network network="twitter">
+                        <v-icon class>fab fa-twitter-square</v-icon>Twitter
+                      </network>
+                      <network network="googleplus">
+                        <v-icon class>fab fa-google-plus-square</v-icon>Google +
+                      </network>
+                      <network network="linkedin">
+                        <v-icon class>fab fa-linkedin</v-icon>LinkedIn
+                      </network>
+                      <network network="pinterest">
+                        <v-icon class>fab fa-pinterest-square</v-icon>Pinterest
+                      </network>
+                      <network network="skype">
+                        <v-icon class>fab fa-skype</v-icon>Skype
+                      </network>
+                    </div>
+                  </social-sharing>
+                </v-card-text>
+              </v-card>
+            </v-dialog>
             <v-btn flat block class="grey lighten-4 ma-0 mb-4 py-2">
               <v-rating
                 v-model="churchesData[0].rating"
@@ -742,7 +791,13 @@ export default {
       active_tab: "tab-1",
       searchLoading: false,
       churcheTitle: [],
-      search: null
+      search: null,
+      sharedialog: false,
+      socialUrl:
+        "http://dev.woobii.com/Kirchenfinder/" + this.$route.params.slug,
+      socialTitle: "Woobii",
+      socialDescription: "Woobii",
+      socialQuote: "Woobii"
     };
   },
   watch: {
@@ -778,6 +833,9 @@ export default {
           if (response.data.status == true) {
             console.log(response.data.churche);
             self.churcheTitle = response.data.churche;
+            self.socialTitle = churchesData[0].title;
+            self.socialDescription = churchesData[0].title;
+            self.socialQuote = churchesData[0].title;
             self.searchLoading = false;
           }
         })
@@ -832,8 +890,20 @@ export default {
   }
 };
 </script>
-<style scoped>
-.progess-custom {
-  margin: 0px;
+<style>
+.socialBox {
+  text-align: center;
+  margin: auto;
+}
+.socialBox i {
+  font-size: 20px;
+  line-height: 16px;
+  margin-right: 5px;
+}
+.socialBox span {
+  margin-right: 20px;
+  margin-bottom: 10px;
+  display: inline-block;
+  cursor: pointer;
 }
 </style>
