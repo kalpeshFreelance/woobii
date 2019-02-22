@@ -16,6 +16,7 @@ import '@fortawesome/fontawesome-free/css/all.css'
 import Nprogress from 'nprogress'
 import Toasted from 'vue-toasted'
 var SocialSharing = require('vue-social-sharing')
+import VueSilentbox from 'vue-silentbox'
 
 Vue.config.productionTip = false
 
@@ -25,6 +26,7 @@ Vue.use(VeeValidate)
 Vue.use(require('vue-moment'))
 Vue.use(Toasted)
 Vue.use(SocialSharing)
+Vue.use(VueSilentbox);
 
 /*Vue.use(VueGoogleMaps, {
   load: {

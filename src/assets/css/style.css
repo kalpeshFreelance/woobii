@@ -316,14 +316,45 @@ a.router-link-exact-active.router-link-active .v-tooltip span button {
     text-transform: inherit;
 }
 .newsRoomSection .newsDetail .v-tabs__wrapper {
-    border-bottom: 1px solid #ddd;
+    position: relative;
+    bottom: -1px;
+    z-index: 99;
 }
 .newsRoomSection .newsDetail .topBottonBorder {
     border-top: 1px solid #ddd;
     border-bottom: 1px solid #ddd;
 }
+.newsRoomSection .newsDetail .v-tabs__items {
+    border-top: 1px solid #ddd;
+    z-index: 1;
+}
 .newsRoomSection .newsDetail .orangeText {
     color: #fa6e2f;
+}
+.newsRoomSection .newsDetail .tabsTextFeilds .v-input__control .v-text-field__details {
+    display: none;
+}
+.newsRoomSection .newsDetail .tabsTextFeilds .v-text-field {
+    width: 75px;
+    display: -webkit-inline-box;
+}
+.newsRoomSection .newsDetail .tabsTextFeilds .v-input__slot {
+    min-height: 35px;
+    border: 1px solid rgba(0,0,0,.54);
+}
+.newsRoomSection .newsDetail .tabsTextFeilds .v-input__slot:hover {
+    border: 1px solid rgba(0,0,0,1);
+}
+.newsRoomSection .newsDetail .tabsTextFeilds .v-input__slot input {
+    margin-top: 0px;
+}
+.newsRoomSection .newsDetail button.hoverCustom:hover {
+    background-color: #fa6e2f !important;
+    border-color: #fa6e2f !important;
+    color: #FFF;
+}
+.newsRoomSection .newsDetail .tabsDocument .v-card__text {
+    text-align: center;
 }
 
 /* ----- News Room Right ----- */
@@ -344,6 +375,9 @@ a.router-link-exact-active.router-link-active .v-tooltip span button {
 }
 .newsRoomSection .newsRight button.textLeft .v-btn__content {
     justify-content: left;
+}
+.newsRoomSection .newsRight .bilder-imgCaption .v-icon {
+    margin-top: 2px;
 }
 
 

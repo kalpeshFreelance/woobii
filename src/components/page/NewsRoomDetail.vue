@@ -78,11 +78,11 @@
           </v-flex>
           <v-flex xs12 md6 class="newsDetail">
             <v-card flat color="white">
-              <v-tabs slider-color="deep-orange accent-3">
-                <v-tab>Text</v-tab>
-                <v-tab>Bilder</v-tab>
-                <v-tab>Dokument</v-tab>
-                <v-tab-item>
+              <v-tabs v-model="active" slider-color="deep-orange accent-3">
+                <v-tab key="1">Text</v-tab>
+                <v-tab key="2">Bilder</v-tab>
+                <v-tab key="3">Dokument</v-tab>
+                <v-tab-item key="1">
                   <v-card flat>
                     <v-card-text class="px-0">
                       <p class="caption mb-1">{{ newsroomData.text[0].date | moment("DD.MM.YYYY")}}</p>
@@ -119,6 +119,7 @@
                           outline
                           color="black"
                           class="my-0"
+                          @click="next(1)"
                           v-if="newsroomData.attachment.image.length > 0"
                         >
                           <v-icon small dark class="mr-1">camera_alt</v-icon>
@@ -129,6 +130,7 @@
                           outline
                           color="black"
                           class="my-0"
+                          @click="next(2)"
                           v-if="newsroomData.attachment.document.length > 0"
                         >
                           <v-icon small dark class="mr-1">description</v-icon>
@@ -137,7 +139,7 @@
                       </div>
                       <div class="grey lighten-3 my-3 pa-2">
                         <span class="body-2 font-weight-bold mb-0 mr-2">Presseinformation</span>
-                        <span class="caption font-weight-bold mb-0">(2035 Zeichen)</span>
+                        <span class="caption font-weight-bold mb-0">({{ contentLength() }} Zeichen)</span>
                       </div>
                       <p class="caption mb-1" v-html="newsroomData.text[0].description"></p>
                       <div class="topBottonBorder mt-3 py-3">
@@ -151,15 +153,131 @@
                     </v-card-text>
                   </v-card>
                 </v-tab-item>
-                <v-tab-item>
-                  <v-card flat>
-                    <v-card-text class="px-0">Bilder Text</v-card-text>
-                  </v-card>
+                <v-tab-item key="2">
+                  <v-layout row wrap class="mt-2">
+                    <v-flex xs12>
+                      <h3 class="body-1">{{ newsroomData.attachment.image[0].description }}</h3>
+                    </v-flex>
+                    <v-flex xs12 class="py-0">
+                      <v-img
+                        v-if="newsroomData.attachment.image[imageIndex].attachment"
+                        :lazy-src="'http://dev.woobii.com/admin/'+newsroomData.attachment.image[imageIndex].attachment"
+                        :src="'http://dev.woobii.com/admin/'+newsroomData.attachment.image[imageIndex].attachment"
+                        class="mb-2"
+                      />
+                    </v-flex>
+                    <v-flex xs12>
+                      <div
+                        class="body-1"
+                      >Neuzugang in der Geschäftsführung von ATP-Berlin: Niklas Veelken.</div>
+                      <div
+                        class="caption font-italic font-weight-light grey--text my-3"
+                      >Credits: ATP/Rauschmeir</div>
+                      <v-layout row wrap>
+                        <v-flex xs1></v-flex>
+                        <v-flex xs5></v-flex>
+                        <v-flex xs3>Maße</v-flex>
+                        <v-flex xs3>Größe</v-flex>
+                      </v-layout>
+                      <v-divider></v-divider>
+                      <v-layout row wrap>
+                        <v-flex xs1>
+                          <v-radio></v-radio>
+                        </v-flex>
+                        <v-flex xs5>Original</v-flex>
+                        <v-flex xs3 class="grey--text">2480 x 3100</v-flex>
+                        <v-flex xs3 class="grey--text">703.96 KB</v-flex>
+                      </v-layout>
+                      <v-divider></v-divider>
+                      <v-layout row wrap>
+                        <v-flex xs1>
+                          <v-radio></v-radio>
+                        </v-flex>
+                        <v-flex xs5>Medium</v-flex>
+                        <v-flex xs3 class="grey--text">1200 x 1500</v-flex>
+                        <v-flex xs3 class="grey--text">227.84 KB</v-flex>
+                      </v-layout>
+                      <v-divider></v-divider>
+                      <v-layout row wrap>
+                        <v-flex xs1>
+                          <v-radio></v-radio>
+                        </v-flex>
+                        <v-flex xs5>Klein</v-flex>
+                        <v-flex xs3 class="grey--text">600 x 750</v-flex>
+                        <v-flex xs3 class="grey--text">69.6 KB</v-flex>
+                      </v-layout>
+                      <v-divider></v-divider>
+                      <v-layout row wrap class="tabsTextFeilds">
+                        <v-flex xs1>
+                          <v-radio></v-radio>
+                        </v-flex>
+                        <v-flex xs5>Benutzerdefiniert</v-flex>
+                        <v-flex xs6>
+                          <v-text-field v-model="custwidth" label="" single-line outline class="mr-2"></v-text-field>X
+                          <v-text-field v-model="custheight" label="" single-line outline class="ml-1"></v-text-field>
+                        </v-flex>
+                      </v-layout>
+                      <v-divider></v-divider>
+                      <v-layout row wrap>
+                        <v-flex xs6>
+                          <v-btn large depressed outline block class="mb-2 textLeft hoverCustom">
+                            <v-icon small dark class="mr-2">file_download</v-icon>Sofort downloaden
+                          </v-btn>
+                        </v-flex>
+                        <v-flex xs6>
+                          <v-btn large depressed outline block class="mb-2 textLeft hoverCustom">
+                            <v-icon small dark class="mr-2">folder</v-icon>In die Lightbox legen
+                          </v-btn>
+                        </v-flex>
+                      </v-layout>
+                      <v-layout row wrap>
+                        <v-flex xs4 v-for="image in newsroomData.attachment.image">
+                          <v-img                            
+                            :lazy-src="'http://dev.woobii.com/admin/'+image.attachment"
+                            :src="'http://dev.woobii.com/admin/'+image.attachment"
+                          />
+                          <h2
+                            class="bilder-imgCaption grey lighten-2 body-1 font-weight-bold px-2 py-1 mb-3"
+                          >1160 X 1120
+                            <v-icon small class="right red--text mr-2">camera_alt</v-icon>
+                          </h2>
+                        </v-flex>
+                      </v-layout>
+                    </v-flex>
+                  </v-layout>
                 </v-tab-item>
-                <v-tab-item v-if="newsroomData.attachment.document">
-                  <v-card flat>
-                    <v-card-text class="px-0">Dokument Text</v-card-text>
-                  </v-card>
+                <v-tab-item key="3" v-if="newsroomData.attachment.document">
+                  <v-layout row wrap class="mt-2 tabsDocument">
+                    <v-flex xs12>
+                      <h3 class="body-1 mb-3">{{ newsroomData.attachment.image[0].description }}</h3>
+                    </v-flex>
+                    <v-flex d-flex xs12 md3>
+                      <v-card light tile flat style="border:1px solid #CCC;">
+                        <v-card-text>
+                          <v-icon light size="60">description</v-icon>
+                        </v-card-text>
+                      </v-card>
+                    </v-flex>
+                    <v-flex xs12 md9>
+                      <v-layout row wrap>
+                        <v-flex xs6>.pdf</v-flex>
+                        <v-flex xs6>137.01 KB</v-flex>
+                      </v-layout>
+                      <v-divider></v-divider>
+                      <v-layout row wrap>
+                        <v-flex xs12 md6>
+                          <v-btn depressed outline block class="mb-2 textLeft hoverCustom">
+                            <v-icon small dark class="mr-2">file_download</v-icon>Sofort downloaden
+                          </v-btn>
+                        </v-flex>
+                        <v-flex xs12 md6>
+                          <v-btn depressed outline block class="mb-2 textLeft hoverCustom">
+                            <v-icon small dark class="mr-2">folder</v-icon>In die Lightbox legen
+                          </v-btn>
+                        </v-flex>
+                      </v-layout>
+                    </v-flex>
+                  </v-layout>
                 </v-tab-item>
               </v-tabs>
             </v-card>
@@ -187,35 +305,48 @@
                 <v-icon small dark class="mr-2">folder</v-icon>Sofort downloaden
               </v-btn>
               <v-divider class="my-3"></v-divider>
-              <div v-if="newsroomData.attachment.image">
-              <h2 class="subheading font-weight-bold mb-3">
-                <v-icon small class="black--text mr-2">camera_alt</v-icon>Bilder
-                <v-icon class="right black--text ml-2">keyboard_arrow_right</v-icon>
-              </h2>
-               <v-img
-                v-for="image in newsroomData.attachment.image"
-                :lazy-src="'http://dev.woobii.com/admin/'+image.attachment"
-                :src="'http://dev.woobii.com/admin/'+image.attachment"
-                class="mb-2"
-              />
-              <v-divider class="my-3"></v-divider>
+              <div v-if="newsroomData.attachment.image && active == 0">
+                <a @click="next(1)">
+                  <h2 class="subheading font-weight-bold mb-3">
+                    <v-icon small class="black--text mr-2">camera_alt</v-icon>Bilder
+                    <v-icon class="right black--text ml-2">keyboard_arrow_right</v-icon>
+                  </h2>
+                </a>         
+              <silentbox-group>
+                <div v-for="imageValue in newsroomData.attachment.image">
+                   <silentbox-item :src="'http://dev.woobii.com/admin/'+imageValue.attachment" :description="imageValue.description">
+                  <v-img
+                    :lazy-src="'http://dev.woobii.com/admin/'+imageValue.attachment"
+                    :src="'http://dev.woobii.com/admin/'+imageValue.attachment"
+                  />
+                  </silentbox-item>
+                  <a @click="next(1)">
+                  <h2
+                    class="bilder-imgCaption grey lighten-2 body-1 font-weight-bold px-2 py-1 mb-3"
+                  >1160 X 1120
+                    <v-icon small class="right red--text mr-2">camera_alt</v-icon>
+                  </h2>
+                  </a>
+                </div>
+              </silentbox-group>
+                <v-divider class="my-3"></v-divider>
               </div>
-              <div v-if="newsroomData.attachment.document">
-                <h2 class="subheading font-weight-bold mb-3">
-                  <v-icon small class="black--text mr-2">edit</v-icon>Bilder
-                  <v-icon class="right black--text ml-2">keyboard_arrow_right</v-icon>
-                </h2>
-                <router-link
-                  to="/"
-                  class="caption mb-2"
-                  v-for="document in newsroomData.attachment.document"
-                >
+              <div v-if="newsroomData.attachment.document  && active == 0">
+                <a @click="next(2)">
+                  <h2 class="subheading font-weight-bold mb-3">
+                    <v-icon small class="black--text mr-2">edit</v-icon>Dokument
+                    <v-icon class="right black--text ml-2">keyboard_arrow_right</v-icon>
+                  </h2>
+                </a>
+                <a @click="next(2)" class="caption mb-2"
+                  v-for="document in newsroomData.attachment.document">
                   <p class="caption mb-2">
                     {{ document.attachment | documentName }} | 1.25 MB
                     <v-icon small class="right black--text ml-2">edit</v-icon>
                   </p>
-                </router-link>
+                </a>
               </div>
+              <div v-if="active == 0">
               <v-divider class="my-3"></v-divider>
               <h2 class="subheading font-weight-bold mb-2">Pressekontakt</h2>
               <v-img
@@ -232,6 +363,7 @@
               <p class="caption mb-1" v-html="newsroomData.publisher[0].address"></p>
               <p class="caption mb-1">Telefonnummer: {{newsroomData.publisher[0].contact}}</p>
               <p class="caption mb-1">{{newsroomData.publisher[0].email}}</p>
+              </div>
             </v-card>
           </v-flex>
         </v-layout>
@@ -253,14 +385,19 @@ export default {
       newsroomData: {},
       GemeindetypeList: [],
       LandList: [],
-      land: ""
+      land: "",
+      active: 0,
+      imageGallery: [],
+      custwidth: '',
+      custheight: '',
+      imageIndex: 0
     };
   },
   filters: {
     documentName: function(val) {
       let doc = val.split("/");
       return doc.pop();
-    },
+    }
     // prettyBytes: function(num) {
     //   // jacked from: https://github.com/sindresorhus/pretty-bytes
     //   if (typeof num !== "number" || isNaN(num)) {
@@ -297,14 +434,28 @@ export default {
   },
   beforeDestroy() {},
   methods: {
+    next: function(e) {
+      const active = e;
+      this.active = active <= 2 ? active : 0;
+    },
+    contentLength(){
+      var content = this.newsroomData.text[0].description;
+      content = content.toString();
+      return (content.replace(/<[^>]*>/g, '')).length;
+    },
+    discardSelected() {
+      var dataImage = this.newsroomData.attachment.image
+      dataImage.splice(this.imageIndex, 1); 
+      return dataImage
+    },
     newsroomdata: function(slug) {
       var e = this;
       axios
         .get("/churcheview/newsroom?s=" + slug)
         .then(function(response) {
           if (response.data.status == true) {
-            console.log(response.data.newsroom);
             e.newsroomData = response.data.newsroom;
+            e.imageGallery = e.newsroomData.attachment.image;
           }
           // console.log(response.data);
           // console.log(response.status);
