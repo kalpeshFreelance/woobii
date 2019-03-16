@@ -108,9 +108,12 @@
                     :id="`img-`+index"
                     @click="offerImage"
               ><v-icon color="green darken-4">check_circle</v-icon></v-img>-->
-              <v-tooltip v-if="offers"
-                v-for="(offer, index) in offers" bottom>
-                <v-img slot="activator" :src="'http://dev.woobii.com/admin/'+offer.dealImg" class="imgDeal">
+              <v-tooltip v-if="offers" v-for="(offer, index) in offers" bottom>
+                <v-img
+                  slot="activator"
+                  :src="'http://dev.woobii.com/admin/'+offer.dealImg"
+                  class="imgDeal"
+                >
                   <label>
                     <input
                       type="checkbox"
@@ -283,9 +286,12 @@
                     :id="`img-`+index"
                     @click="offerImage"v-model="offerData"
                   ><v-icon color="green darken-4">check_circle</v-icon></v-img>-->
-                  <v-tooltip v-if="offers"
-                    v-for="(offer, index) in offers" bottom>
-                    <v-img slot="activator" :src="'http://dev.woobii.com/admin/'+offer.dealImg" class="imgDeal">
+                  <v-tooltip v-if="offers" v-for="(offer, index) in offers" bottom>
+                    <v-img
+                      slot="activator"
+                      :src="'http://dev.woobii.com/admin/'+offer.dealImg"
+                      class="imgDeal"
+                    >
                       <label>
                         <input
                           type="checkbox"
@@ -523,7 +529,7 @@ export default {
       drawer: null,
       center: {
         lat: 52.52,
-        lng: 13.40
+        lng: 13.4
       },
       page: 1,
       totalcount: 0,
@@ -733,7 +739,6 @@ export default {
         });
     },
     mapCenterloation: function(event) {
-      console.log(event);
       var e = this;
       var cityData = "";
       if (Number.isInteger(parseInt(event))) {
@@ -741,7 +746,6 @@ export default {
           return col.id.match(event);
         });
       } else {
-        console.log(event);
         if (event.isArray) {
           if (event.target.name == "offer[]") {
             var index = e.offerData.indexOf(event.target.value);
@@ -761,6 +765,7 @@ export default {
         e.selectCity = cityData[0].id;
         e.page = 1;
         e.churchlist(0, e.selectCity, e.land, false);
+        e.markerCount(e.center.lat, e.center.lng, e.markers);
       } else {
         if (!Number.isInteger(parseInt(event))) {
           e.churchlist(0, e.selectCity, e.land, false);
@@ -850,6 +855,7 @@ export default {
                   lng: parseFloat(response.data.churches.community[prop].lng)
                 });
               }
+              e.markerCount(e.center.lat, e.center.lng, e.markers);
             } else {
               e.totalcount = 0;
               e.markers = [];
@@ -890,6 +896,22 @@ export default {
         all = true;
       }
       this.churchlist(pageNum - 1, this.selectCity, this.land, all);
+    },
+    markerCount: function(lat, lng, marker) {
+      console.log('In side marker count');
+      var loc1 = lat+','+lng; //Marker Radius Co-ords
+      var loc2 = new google.maps.LatLng(marker[0].lat, marker[0].lng); //Marker Co-ords
+
+      var diff = google.maps.geometry.spherical.computeDistanceBetween(
+        loc1,
+        loc2
+      );
+
+      if (diff < circle.getRadius()) {
+        alert(loc2 + " Inside Radius");
+      } else {
+        alert(loc2 + " Outside Radius");
+      }
     }
   }
 };
@@ -899,6 +921,6 @@ export default {
   margin: 0px;
 }
 .v-responsive.v-image.imgDeal {
-    margin-right: 5px !important;
+  margin-right: 5px !important;
 }
 </style>

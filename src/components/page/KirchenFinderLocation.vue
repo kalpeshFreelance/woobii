@@ -793,8 +793,7 @@ export default {
       churcheTitle: [],
       search: null,
       sharedialog: false,
-      socialUrl:
-        "http://dev.woobii.com/Kirchenfinder/" + this.$route.params.slug,
+      socialUrl: "http://dev.woobii.com/Kirchenfinder/" + this.$route.params.slug,
       socialTitle: "Woobii",
       socialDescription: "Woobii",
       socialQuote: "Woobii"

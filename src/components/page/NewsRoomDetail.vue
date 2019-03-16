@@ -180,47 +180,68 @@
                         <v-flex xs3>Größe</v-flex>
                       </v-layout>
                       <v-divider></v-divider>
-                      <v-layout row wrap>
-                        <v-flex xs1>
-                          <v-radio></v-radio>
-                        </v-flex>
-                        <v-flex xs5>Original</v-flex>
-                        <v-flex xs3 class="grey--text">2480 x 3100</v-flex>
-                        <v-flex xs3 class="grey--text">703.96 KB</v-flex>
-                      </v-layout>
+                      <v-radio-group :mandatory="false" v-model="radioGroup">
+                        <v-layout row wrap>
+                          <v-flex xs1>
+                            <v-radio key="original" color="blue darken-1" value="original"></v-radio>
+                          </v-flex>
+                          <v-flex xs5>Original</v-flex>
+                          <v-flex xs3 class="grey--text">2480 x 3100</v-flex>
+                          <v-flex xs3 class="grey--text">703.96 KB</v-flex>
+                        </v-layout>
+                        <v-divider></v-divider>
+                        <v-layout row wrap>
+                          <v-flex xs1>
+                            <v-radio color="blue darken-1" key="medium" value="medium"></v-radio>
+                          </v-flex>
+                          <v-flex xs5>Medium</v-flex>
+                          <v-flex xs3 class="grey--text">1200 x 1500</v-flex>
+                          <v-flex xs3 class="grey--text">227.84 KB</v-flex>
+                        </v-layout>
+                        <v-divider></v-divider>
+                        <v-layout row wrap>
+                          <v-flex xs1>
+                            <v-radio color="blue darken-1" key="klein" value="klein"></v-radio>
+                          </v-flex>
+                          <v-flex xs5>Klein</v-flex>
+                          <v-flex xs3 class="grey--text">600 x 750</v-flex>
+                          <v-flex xs3 class="grey--text">69.6 KB</v-flex>
+                        </v-layout>
+                        <v-divider></v-divider>
+                        <v-layout row wrap class="tabsTextFeilds">
+                          <v-flex xs1>
+                            <v-radio color="blue darken-1" value="radio-4"></v-radio>
+                          </v-flex>
+                          <v-flex xs5>Benutzerdefiniert</v-flex>
+                          <v-flex xs6>
+                            <v-text-field
+                              v-model="custwidth"
+                              label
+                              single-line
+                              outline
+                              class="mr-2"
+                            ></v-text-field>X
+                            <v-text-field
+                              v-model="custheight"
+                              label
+                              single-line
+                              outline
+                              class="ml-1"
+                            ></v-text-field>
+                          </v-flex>
+                        </v-layout>
+                      </v-radio-group>
                       <v-divider></v-divider>
                       <v-layout row wrap>
-                        <v-flex xs1>
-                          <v-radio></v-radio>
-                        </v-flex>
-                        <v-flex xs5>Medium</v-flex>
-                        <v-flex xs3 class="grey--text">1200 x 1500</v-flex>
-                        <v-flex xs3 class="grey--text">227.84 KB</v-flex>
-                      </v-layout>
-                      <v-divider></v-divider>
-                      <v-layout row wrap>
-                        <v-flex xs1>
-                          <v-radio></v-radio>
-                        </v-flex>
-                        <v-flex xs5>Klein</v-flex>
-                        <v-flex xs3 class="grey--text">600 x 750</v-flex>
-                        <v-flex xs3 class="grey--text">69.6 KB</v-flex>
-                      </v-layout>
-                      <v-divider></v-divider>
-                      <v-layout row wrap class="tabsTextFeilds">
-                        <v-flex xs1>
-                          <v-radio></v-radio>
-                        </v-flex>
-                        <v-flex xs5>Benutzerdefiniert</v-flex>
                         <v-flex xs6>
-                          <v-text-field v-model="custwidth" label="" single-line outline class="mr-2"></v-text-field>X
-                          <v-text-field v-model="custheight" label="" single-line outline class="ml-1"></v-text-field>
-                        </v-flex>
-                      </v-layout>
-                      <v-divider></v-divider>
-                      <v-layout row wrap>
-                        <v-flex xs6>
-                          <v-btn large depressed outline block class="mb-2 textLeft hoverCustom">
+                          <v-btn
+                            large
+                            @click="currentImageDownload"
+                            depressed
+                            outline
+                            block
+                            class="mb-2 textLeft hoverCustom"
+                          >
                             <v-icon small dark class="mr-2">file_download</v-icon>Sofort downloaden
                           </v-btn>
                         </v-flex>
@@ -232,7 +253,7 @@
                       </v-layout>
                       <v-layout row wrap>
                         <v-flex xs4 v-for="image in newsroomData.attachment.image">
-                          <v-img                            
+                          <v-img
                             :lazy-src="'http://dev.woobii.com/admin/'+image.attachment"
                             :src="'http://dev.woobii.com/admin/'+image.attachment"
                           />
@@ -266,7 +287,12 @@
                       <v-divider></v-divider>
                       <v-layout row wrap>
                         <v-flex xs12 md6>
-                          <v-btn depressed outline block class="mb-2 textLeft hoverCustom">
+                          <v-btn
+                            @click="downloadFile('document', '0')"
+                            outline
+                            block
+                            class="mb-2 textLeft hoverCustom"
+                          >
                             <v-icon small dark class="mr-2">file_download</v-icon>Sofort downloaden
                           </v-btn>
                         </v-flex>
@@ -298,10 +324,16 @@
               </v-btn>
               <v-divider class="my-3"></v-divider>
               <p class="caption mb-2">Alie Inhalte dieser Meldung als .zip:</p>
-              <v-btn depressed dark block color="grey darken-4 mb-2 hoverCustom">
+              <v-btn
+                depressed
+                dark
+                block
+                @click="downloadzip"
+                color="grey darken-4 mb-2 hoverCustom"
+              >
                 <v-icon small dark class="mr-2">file_download</v-icon>Sofort downloaden
               </v-btn>
-              <v-btn depressed dark block color="grey darken-4 hoverCustom">
+              <v-btn depressed dark block @click="whishlistzip" color="grey darken-4 hoverCustom">
                 <v-icon small dark class="mr-2">folder</v-icon>Sofort downloaden
               </v-btn>
               <v-divider class="my-3"></v-divider>
@@ -311,24 +343,27 @@
                     <v-icon small class="black--text mr-2">camera_alt</v-icon>Bilder
                     <v-icon class="right black--text ml-2">keyboard_arrow_right</v-icon>
                   </h2>
-                </a>         
-              <silentbox-group>
-                <div v-for="imageValue in newsroomData.attachment.image">
-                   <silentbox-item :src="'http://dev.woobii.com/admin/'+imageValue.attachment" :description="imageValue.description">
-                  <v-img
-                    :lazy-src="'http://dev.woobii.com/admin/'+imageValue.attachment"
-                    :src="'http://dev.woobii.com/admin/'+imageValue.attachment"
-                  />
-                  </silentbox-item>
-                  <a @click="next(1)">
-                  <h2
-                    class="bilder-imgCaption grey lighten-2 body-1 font-weight-bold px-2 py-1 mb-3"
-                  >1160 X 1120
-                    <v-icon small class="right red--text mr-2">camera_alt</v-icon>
-                  </h2>
-                  </a>
-                </div>
-              </silentbox-group>
+                </a>
+                <silentbox-group>
+                  <div v-for="imageValue in newsroomData.attachment.image">
+                    <silentbox-item
+                      :src="'http://dev.woobii.com/admin/'+imageValue.attachment"
+                      :description="imageValue.description"
+                    >
+                      <v-img
+                        :lazy-src="'http://dev.woobii.com/admin/'+imageValue.attachment"
+                        :src="'http://dev.woobii.com/admin/'+imageValue.attachment"
+                      />
+                    </silentbox-item>
+                    <a @click="next(1)">
+                      <h2
+                        class="bilder-imgCaption grey lighten-2 body-1 font-weight-bold px-2 py-1 mb-3"
+                      >1160 X 1120
+                        <v-icon small class="right red--text mr-2">camera_alt</v-icon>
+                      </h2>
+                    </a>
+                  </div>
+                </silentbox-group>
                 <v-divider class="my-3"></v-divider>
               </div>
               <div v-if="newsroomData.attachment.document  && active == 0">
@@ -338,8 +373,11 @@
                     <v-icon class="right black--text ml-2">keyboard_arrow_right</v-icon>
                   </h2>
                 </a>
-                <a @click="next(2)" class="caption mb-2"
-                  v-for="document in newsroomData.attachment.document">
+                <a
+                  @click="next(2)"
+                  class="caption mb-2"
+                  v-for="document in newsroomData.attachment.document"
+                >
                   <p class="caption mb-2">
                     {{ document.attachment | documentName }} | 1.25 MB
                     <v-icon small class="right black--text ml-2">edit</v-icon>
@@ -347,22 +385,22 @@
                 </a>
               </div>
               <div v-if="active == 0">
-              <v-divider class="my-3"></v-divider>
-              <h2 class="subheading font-weight-bold mb-2">Pressekontakt</h2>
-              <v-img
-                v-if="newsroomData.publisher[0].image"
-                :lazy-src="'http://dev.woobii.com/admin/'+newsroomData.publisher[0].image"
-                :src="'http://dev.woobii.com/admin/'+newsroomData.publisher[0].image"
-                class="mb-2"
-              />
-              <p class="caption mb-1">
-                <strong>{{newsroomData.publisher[0].name}}</strong>
-                <br>
-                {{newsroomData.publisher[0].designation}}
-              </p>
-              <p class="caption mb-1" v-html="newsroomData.publisher[0].address"></p>
-              <p class="caption mb-1">Telefonnummer: {{newsroomData.publisher[0].contact}}</p>
-              <p class="caption mb-1">{{newsroomData.publisher[0].email}}</p>
+                <v-divider class="my-3"></v-divider>
+                <h2 class="subheading font-weight-bold mb-2">Pressekontakt</h2>
+                <v-img
+                  v-if="newsroomData.publisher[0].image"
+                  :lazy-src="'http://dev.woobii.com/admin/'+newsroomData.publisher[0].image"
+                  :src="'http://dev.woobii.com/admin/'+newsroomData.publisher[0].image"
+                  class="mb-2"
+                />
+                <p class="caption mb-1">
+                  <strong>{{newsroomData.publisher[0].name}}</strong>
+                  <br>
+                  {{newsroomData.publisher[0].designation}}
+                </p>
+                <p class="caption mb-1" v-html="newsroomData.publisher[0].address"></p>
+                <p class="caption mb-1">Telefonnummer: {{newsroomData.publisher[0].contact}}</p>
+                <p class="caption mb-1">{{newsroomData.publisher[0].email}}</p>
               </div>
             </v-card>
           </v-flex>
@@ -374,6 +412,8 @@
 
 <script>
 import axios from "axios";
+var JSZip = require("jszip");
+import JSZipUtils from "jszip-utils";
 
 export default {
   name: "App",
@@ -388,9 +428,16 @@ export default {
       land: "",
       active: 0,
       imageGallery: [],
-      custwidth: '',
-      custheight: '',
-      imageIndex: 0
+      custwidth: "",
+      custheight: "",
+      imageIndex: 0,
+      radioGroup: "original",
+      items: [
+        { title: 'Click Me' },
+        { title: 'Click Me' },
+        { title: 'Click Me' },
+        { title: 'Click Me 2' }
+      ]
     };
   },
   filters: {
@@ -398,34 +445,6 @@ export default {
       let doc = val.split("/");
       return doc.pop();
     }
-    // prettyBytes: function(num) {
-    //   // jacked from: https://github.com/sindresorhus/pretty-bytes
-    //   if (typeof num !== "number" || isNaN(num)) {
-    //     throw new TypeError("Expected a number");
-    //   }
-
-    //   var exponent;
-    //   var unit;
-    //   var neg = num < 0;
-    //   var units = ["B", "kB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
-
-    //   if (neg) {
-    //     num = -num;
-    //   }
-
-    //   if (num < 1) {
-    //     return (neg ? "-" : "") + num + " B";
-    //   }
-
-    //   exponent = Math.min(
-    //     Math.floor(Math.log(num) / Math.log(1000)),
-    //     units.length - 1
-    //   );
-    //   num = (num / Math.pow(1000, exponent)).toFixed(2) * 1;
-    //   unit = units[exponent];
-
-    //   return (neg ? "-" : "") + num + " " + unit;
-    // }
   },
   mounted() {
     this.newsroomdata(this.$route.params.slug);
@@ -434,19 +453,98 @@ export default {
   },
   beforeDestroy() {},
   methods: {
+    whishlistzip: function() {},
+    whishlis: function() {},
+    downloadzip: function() {
+      let url = axios.defaults.baseURL;
+      var e = this;
+      var zip = new JSZip();
+      var img = zip.folder("images");
+      var doc = zip.folder("document");
+      console.log(this.newsroomData.attachment);
+      if (this.newsroomData.attachment.image.length >= 1) {
+        for (var imageindex in this.newsroomData.attachment.image) {
+          const filename = this.newsroomData.attachment.image[
+            imageindex
+          ].attachment.split("/");
+          let fpath =
+            url + this.newsroomData.attachment.image[imageindex].attachment;
+          img.file(filename.pop(), fpath);
+          // JSZipUtils.getBinaryContent(fpath, function(err, data) {
+          //   console.log(err);
+          //   img.file(filename.pop(), data);
+          // });
+        }
+      }
+      if (this.newsroomData.attachment.document.length >= 1) {
+        for (var documentindex in this.newsroomData.attachment.document) {
+          const filename = this.newsroomData.attachment.document[
+            documentindex
+          ].attachment.split("/");
+          let fpath =
+            url +
+            this.newsroomData.attachment.document[documentindex].attachment;
+          doc.file(filename.pop(), fpath);
+          // JSZipUtils.getBinaryContent(fpath, function(err, data) {
+          //   console.log(err);
+          //   doc.file(filename.pop(), data, { binary: true });
+          // });
+        }
+      }
+
+      zip.generateAsync({ type: "blob" }).then(function(content) {
+        // see FileSaver.js
+        saveAs(content, "woobii-download.zip");
+      });
+
+      // img.file("smile.gif", imgData, {base64: true});
+      // zip.generateAsync({type:"blob"})
+      // .then(function(content) {
+      //     // see FileSaver.js
+      //     saveAs(content, "example.zip");
+      // });
+    },
+    currentImageDownload: function() {
+      this.imageIndex;
+      this.radioGroup;
+      this.downloadFile("image", this.imageIndex);
+    },
+    forceFileDownload(response) {
+      const filename = response.split("/");
+      const link = document.createElement("a");
+      //link.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+      link.href = response;
+      link.style.display = "none";
+      link.setAttribute("download", filename.pop()); //or any other extension
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    },
+    downloadFile: function(fileType, fileNo) {
+      let url = axios.defaults.baseURL;
+      console.log(axios.defaults);
+      console.log("File Type: " + fileType);
+      console.log("File No: " + fileNo);
+      console.log(
+        url + this.newsroomData.attachment[fileType][fileNo].attachment
+      );
+      this.forceFileDownload(
+        url + this.newsroomData.attachment[fileType][fileNo].attachment
+      );
+    },
     next: function(e) {
       const active = e;
       this.active = active <= 2 ? active : 0;
     },
-    contentLength(){
+    contentLength() {
       var content = this.newsroomData.text[0].description;
       content = content.toString();
-      return (content.replace(/<[^>]*>/g, '')).length;
+      return content.replace(/<[^>]*>/g, "").length;
     },
     discardSelected() {
-      var dataImage = this.newsroomData.attachment.image
-      dataImage.splice(this.imageIndex, 1); 
-      return dataImage
+      var dataImage = this.newsroomData.attachment.image;
+      dataImage.splice(this.imageIndex, 1);
+      return dataImage;
     },
     newsroomdata: function(slug) {
       var e = this;

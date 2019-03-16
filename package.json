@@ -12,6 +12,8 @@
     "@fortawesome/fontawesome-free": "^5.4.2",
     "axios": "^0.18.0",
     "firebase": "^5.7.0",
+    "jszip": "^3.2.0",
+    "jszip-utils": "0.0.2",
     "material-design-icons-iconfont": "^3.0.3",
     "nprogress": "^0.2.0",
     "roboto-fontface": "*",
