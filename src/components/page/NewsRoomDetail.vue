@@ -38,9 +38,73 @@
             <v-btn flat class="white black--text ma-0 px-0 btnTab">Kirchen</v-btn>
           </v-flex>
           <v-flex xs6>
-            <v-btn flat class="grey lighten-2 ma-0 right black--text">
-              <v-icon class="mr-2">folder</v-icon>0 Lightbox
-            </v-btn>
+            <v-menu
+              close-on-content-click="false"
+              close-on-content="false"
+              transition="slide-y-transition"
+              class="right"
+              offset-y
+              left
+              nudge-top="-15"
+              :nudge-width="180"
+              text-xs-center
+              attach="#fooAnchor"
+            >
+              <template>
+                <v-btn flat class="grey lighten-2 ma-0 black--text" slot="activator" id="fooAnchor">
+                  <v-icon class="mr-2">folder</v-icon>
+                  {{whishlistcount}} Lightbox
+                </v-btn>
+              </template>
+              <v-card>
+                <v-container fluid grid-list-lg class="dropContainer">
+                  <v-layout row wrap>
+                    <v-flex md12>
+                      <v-card class="dropCard" v-if="whishlistdata.length == 0">
+                        <v-card-title class="p-0">
+                          <div>
+                            <div>0 Dateien in der Lightbox</div>
+                          </div>
+                        </v-card-title>
+                      </v-card>
+                      <v-card
+                        v-if="whishlistdata.length != 0"
+                        v-for="(data, index) in whishlistdata"
+                        class="dark--text mb-3 dropCard"
+                      >
+                        <v-layout>
+                          <v-flex xs4>
+                            <v-img
+                              v-if="data.attachment_type == 'image'"
+                              :src="'http://dev.woobii.com/admin/'+data.attachment"
+                              height="80px"
+                              contain
+                            ></v-img>
+                            <v-icon v-if="data.attachment_type != 'image'" light size="80">description</v-icon>
+                          </v-flex>
+                          <v-flex xs8>
+                            <v-card-title primary-title class="p-0">
+                              <div>
+                                <v-btn small icon class="dropClose" @click="deletewhishlist(index)">
+                                  <v-icon>close</v-icon>
+                                </v-btn>
+                                <div>.jpg
+                                  <br>2126 x 1462
+                                  <br>385.63 KB
+                                </div>
+                              </div>
+                            </v-card-title>
+                          </v-flex>
+                        </v-layout>
+                        <v-divider light></v-divider>
+                      </v-card>
+                      <v-btn v-if="whishlistdata.length != 0" outline @click="whishlistdata = []; whishlistcount = 0;" color="#fa6e2f">Empty</v-btn>
+                      <v-btn v-if="whishlistdata.length != 0" @click="whishlistzipdownload" class="theme--dark" color="#fa6e2f">Download</v-btn>
+                    </v-flex>
+                  </v-layout>
+                </v-container>
+              </v-card>
+            </v-menu>
           </v-flex>
         </v-layout>
       </v-container>
@@ -246,7 +310,14 @@
                           </v-btn>
                         </v-flex>
                         <v-flex xs6>
-                          <v-btn large depressed outline block class="mb-2 textLeft hoverCustom">
+                          <v-btn
+                            @click="currentImageWhishlist"
+                            large
+                            depressed
+                            outline
+                            block
+                            class="mb-2 textLeft hoverCustom"
+                          >
                             <v-icon small dark class="mr-2">folder</v-icon>In die Lightbox legen
                           </v-btn>
                         </v-flex>
@@ -297,7 +368,13 @@
                           </v-btn>
                         </v-flex>
                         <v-flex xs12 md6>
-                          <v-btn depressed outline block class="mb-2 textLeft hoverCustom">
+                          <v-btn
+                            @click="whishlistFile('document', '0')"
+                            depressed
+                            outline
+                            block
+                            class="mb-2 textLeft hoverCustom"
+                          >
                             <v-icon small dark class="mr-2">folder</v-icon>In die Lightbox legen
                           </v-btn>
                         </v-flex>
@@ -431,13 +508,9 @@ export default {
       custwidth: "",
       custheight: "",
       imageIndex: 0,
-      radioGroup: "original",
-      items: [
-        { title: 'Click Me' },
-        { title: 'Click Me' },
-        { title: 'Click Me' },
-        { title: 'Click Me 2' }
-      ]
+      whishlistdata: [],
+      whishlistcount: 0,
+      radioGroup: "original"
     };
   },
   filters: {
@@ -453,15 +526,117 @@ export default {
   },
   beforeDestroy() {},
   methods: {
-    whishlistzip: function() {},
-    whishlis: function() {},
+    whishlistzipdownload: function(){
+      let url = axios.defaults.baseURL;
+      var zip = new JSZip();
+      var img = zip.folder("whishlist");
+      if (this.whishlistdata.length >= 1) {
+        for (var imageindex in this.whishlistdata) {
+          const filename = this.whishlistdata[
+            imageindex
+          ].attachment.split("/");
+          let fpath =
+            url + this.newsroomData.attachment.image[imageindex].attachment;
+          img.file(filename.pop(), fpath);
+        }
+      }
+      zip.generateAsync({ type: "blob" }).then(function(content) {
+        // see FileSaver.js
+        saveAs(content, "woobii-download.zip");
+      });
+    },
+    deletewhishlist: function(index) {
+      this.whishlistdata.splice(index, 1);
+      this.whishlistcount = this.whishlistdata.length;
+    },
+    whishlistzip: function() {
+      if (this.newsroomData.attachment.image.length != 0) {
+        if (this.whishlistdata.length == 0) {
+          this.newsroomData.attachment.image.forEach(element => {
+            this.whishlistdata.push(element);
+            this.whishlistcount = this.whishlistdata.length;
+          });
+        } else {
+          this.newsroomData.attachment.image.forEach(element => {
+            if (
+              this.whishlistdata.find(e =>
+                e.attachment_type == "image"
+                  ? e.attachment === element.image.attachment
+                  : -2
+              ) == ""
+            ) {
+              this.whishlistdata.push(element);
+              this.whishlistcount = this.whishlistdata.length;
+            }
+          });
+        }
+      }
+      if (this.newsroomData.attachment.document.length != 0) {
+        if (this.whishlistdata.length == 0) {
+          this.newsroomData.attachment.document.forEach(element => {
+            this.whishlistdata.push(element);
+            this.whishlistcount = this.whishlistdata.length;
+          });
+        } else {
+          this.newsroomData.attachment.document.forEach(element => {
+            if (
+              this.whishlistdata.find(e =>
+                e.attachment_type == "document"
+                  ? e.attachment === element.document.attachment
+                  : "2"
+              ) == ""
+            ) {
+              this.whishlistdata.push(element);
+              this.whishlistcount = this.whishlistdata.length;
+            }
+          });
+        }
+      }
+    },
+    whishlistFile: function(fileType, fileNo) {
+      if (this.whishlistdata.length == 0) {
+        this.whishlistdata.push(this.newsroomData.attachment[fileType][fileNo]);
+        this.whishlistcount = this.whishlistdata.length;
+      } else {
+        if (
+          this.whishlistdata.find(e =>
+            e.attachment_type == fileType
+              ? e.attachment ===
+                this.newsroomData.attachment[fileType][fileNo].attachment
+              : ""
+          ) == ""
+        ) {
+          this.whishlistdata.push(
+            this.newsroomData.attachment[fileType][fileNo]
+          );
+          this.whishlistcount = this.whishlistdata.length;
+        }
+      }
+    },
+    currentImageWhishlist: function() {
+      if (this.whishlistdata.length == 0) {
+        this.whishlistdata.push(this.newsroomData.attachment.image[0]);
+        this.whishlistcount = this.whishlistdata.length;
+      } else {
+        if (
+          this.whishlistdata.find(e =>
+            e.attachment_type == "image"
+              ? e.attachment ===
+                this.newsroomData.attachment.image[0].attachment
+              : ""
+          ) == ""
+        ) {
+          this.whishlistdata.push(this.newsroomData.attachment.image[0]);
+          this.whishlistcount = this.whishlistdata.length;
+        }
+      }
+    },
     downloadzip: function() {
       let url = axios.defaults.baseURL;
       var e = this;
       var zip = new JSZip();
       var img = zip.folder("images");
       var doc = zip.folder("document");
-      console.log(this.newsroomData.attachment);
       if (this.newsroomData.attachment.image.length >= 1) {
         for (var imageindex in this.newsroomData.attachment.image) {
           const filename = this.newsroomData.attachment.image[
@@ -496,13 +671,6 @@ export default {
         // see FileSaver.js
         saveAs(content, "woobii-download.zip");
       });
-
-      // img.file("smile.gif", imgData, {base64: true});
-      // zip.generateAsync({type:"blob"})
-      // .then(function(content) {
-      //     // see FileSaver.js
-      //     saveAs(content, "example.zip");
-      // });
     },
     currentImageDownload: function() {
       this.imageIndex;
@@ -522,12 +690,6 @@ export default {
     },
     downloadFile: function(fileType, fileNo) {
       let url = axios.defaults.baseURL;
-      console.log(axios.defaults);
-      console.log("File Type: " + fileType);
-      console.log("File No: " + fileNo);
-      console.log(
-        url + this.newsroomData.attachment[fileType][fileNo].attachment
-      );
       this.forceFileDownload(
         url + this.newsroomData.attachment[fileType][fileNo].attachment
       );

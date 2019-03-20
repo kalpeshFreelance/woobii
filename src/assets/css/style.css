@@ -815,3 +815,30 @@ a.router-link-exact-active.router-link-active .v-tooltip span button {
         padding-top: 8px!important;
     }
 }
+
+
+
+
+.dropContainer {
+    padding: 10px;
+}
+.dropCard {
+    box-shadow: none;
+}
+.dropCard .v-card__title {
+    padding: 0px 10px !important;
+}
+.dropCard:nth-last-child(1) {
+    margin-bottom: 0px !important;
+}
+.dropClose {
+    position: absolute !important;
+    top: 0px;
+    right: 0px;
+    width: 22px !important;
+    height: 22px !important;
+    padding-top: 2px;
+}
+.dropClose .material-icons {
+    font-size: 18px;
+}

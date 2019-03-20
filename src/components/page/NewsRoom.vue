@@ -9,25 +9,52 @@
           <v-card-text>
             <v-form>
               <v-text-field placeholder="Placeholder" append-icon="search" class="searchInput"></v-text-field>
-              <v-select
+              <v-autocomplete
                 :items="GemeindetypeList"
                 item-text="type"
                 item-value="id"
                 label="Gemeindetyp:"
                 placeholder="Bitte auswählen"
-              ></v-select>
-              <v-select label="Ressort:" placeholder="Bitte auswählen"></v-select>
-              <v-select label="Subressort:" placeholder="Stichwort einfügen"></v-select>
-              <v-select label="Themen:" placeholder="Themen..."></v-select>
-              <v-select label="People:" placeholder="People..."></v-select>
-              <v-select
+                @input="searchfilter"
+                v-model="gemeindetyp"
+              ></v-autocomplete>
+              <v-autocomplete
+                label="Ressort:"
+                placeholder="Bitte auswählen"
+                :items="category"
+                item-text="category"
+                item-value="category"
+                @input="searchfilter"
+                v-model="scategory"
+              ></v-autocomplete>
+              <v-autocomplete
+                label="Subressort:"
+                placeholder="Stichwort einfügen"
+                :items="subcategory"
+                item-text="subcategory"
+                item-value="subcategory"
+                @input="searchfilter"
+                v-model="ssubcategory"
+              ></v-autocomplete>
+              <v-autocomplete label="Themen:" placeholder="Themen..."></v-autocomplete>
+              <v-autocomplete
+                label="People:"
+                placeholder="People..."
+                :items="publisher"
+                item-text="title"
+                item-value="pid"
+                @input="searchfilter"
+                v-model="spublisher"
+              ></v-autocomplete>
+              <v-autocomplete
                 label="Land:"
                 placeholder="Land..."
                 :items="LandList"
                 item-text="name"
-                v-model="land"
                 item-value="id"
-              ></v-select>
+                @input="searchfilter"
+                v-model="sland"
+              ></v-autocomplete>
             </v-form>
           </v-card-text>
         </v-card>
@@ -53,25 +80,52 @@
               <v-card-text>
                 <v-form>
                   <v-text-field placeholder="Placeholder" append-icon="search" class="searchInput"></v-text-field>
-                  <v-select
+                  <v-autocomplete
                     :items="GemeindetypeList"
                     item-text="type"
                     item-value="id"
                     label="Gemeindetyp:"
                     placeholder="Bitte auswählen"
-                  ></v-select>
-                  <v-select label="Ressort:" placeholder="Bitte auswählen"></v-select>
-                  <v-select label="Subressort:" placeholder="Stichwort einfügen"></v-select>
-                  <v-select label="Themen:" placeholder="Themen..."></v-select>
-                  <v-select label="People:" placeholder="People..."></v-select>
-                  <v-select
+                    @input="searchfilter"
+                    v-model="gemeindetyp"
+                  ></v-autocomplete>
+                  <v-autocomplete
+                    label="Ressort:"
+                    placeholder="Bitte auswählen"
+                    :items="category"
+                    item-text="category"
+                    item-value="category"
+                                        @input="searchfilter"
+                    v-model="scategory"
+                  ></v-autocomplete>
+                  <v-autocomplete
+                    label="Subressort:"
+                    placeholder="Stichwort einfügen"
+                    :items="subcategory"
+                    item-text="subcategory"
+                    item-value="subcategory"
+                    @input="searchfilter"
+                    v-model="ssubcategory"
+                  ></v-autocomplete>
+                  <v-autocomplete label="Themen:" placeholder="Themen..."></v-autocomplete>
+                  <v-autocomplete
+                    label="People:"
+                    placeholder="People..."
+                    :items="publisher"
+                    item-text="title"
+                    item-value="pid"
+                    @input="searchfilter"
+                    v-model="spublisher"
+                  ></v-autocomplete>
+                  <v-autocomplete
                     label="Land:"
                     placeholder="Land..."
                     :items="LandList"
                     item-text="name"
-                    v-model="land"
-                    item-value="id"
-                  ></v-select>
+                    @input="searchfilter"
+                    v-model="sland"
+                    item-value="id"                    
+                  ></v-autocomplete>
                 </v-form>
               </v-card-text>
             </v-card>
@@ -105,49 +159,15 @@
                   </v-card-title>
                 </v-card>
               </v-flex>
-              <!-- <v-flex d-flex xs12 md4>
-                <v-card flat color="grey lighten-4">
-                  <v-img src="https://cdn.vuetifyjs.com/images/cards/desert.jpg"></v-img>
-                  <v-card-title>
-                    <h4 class="caption text-uppercase mb-2">
-                      <span class="font-weight-black">Evangeelische Kirch</span> | Kunstliche Intelligenz
-                    </h4>
-                    <h4
-                      class="caption text-uppercase font-weight-black mb-2"
-                    >Evangelischer Bund: Umfrage zu künstlicher Intelligenz und Religion</h4>
-                    <h4 class="caption">epdO | 30.05.2018</h4>
-                  </v-card-title>
-                </v-card>
-              </v-flex>
-              <v-flex d-flex xs12 md4>
-                <v-card flat color="grey lighten-4">
-                  <v-img src="https://cdn.vuetifyjs.com/images/cards/desert.jpg"></v-img>
-                  <v-card-title>
-                    <h4 class="caption text-uppercase mb-2">
-                      <span class="font-weight-black">Evangeelische Kirch</span> | Kunstliche Intelligenz
-                    </h4>
-                    <h4
-                      class="caption text-uppercase font-weight-black mb-2"
-                    >Evangelischer Bund: Umfrage zu künstlicher Intelligenz und Religion</h4>
-                    <h4 class="caption">epdO | 30.05.2018</h4>
-                  </v-card-title>
-                </v-card>
-              </v-flex>
-              <v-flex d-flex xs12 md4>
-                <v-card flat color="grey lighten-4">
-                  <v-img src="https://cdn.vuetifyjs.com/images/cards/desert.jpg"></v-img>
-                  <v-card-title>
-                    <h4 class="caption text-uppercase mb-2">
-                      <span class="font-weight-black">Evangeelische Kirch</span> | Kunstliche Intelligenz
-                    </h4>
-                    <h4
-                      class="caption text-uppercase font-weight-black mb-2"
-                    >Evangelischer Bund: Umfrage zu künstlicher Intelligenz und Religion</h4>
-                    <h4 class="caption">epdO | 30.05.2018</h4>
-                  </v-card-title>
-                </v-card>
-              </v-flex>-->
             </v-layout>
+            <div class="text-xs-center">
+              <v-pagination
+                v-model="page"
+                :length="Math.floor(totalcount/30)"
+                :total-visible="7"
+                @input="onPageChange"
+              ></v-pagination>
+            </div>
           </v-flex>
         </v-layout>
       </v-container>
@@ -168,16 +188,44 @@ export default {
       newsroomList: {},
       GemeindetypeList: [],
       LandList: [],
-      land: ""
+      category: [],
+      subcategory: [],
+      publisher: [],
+      land: "",
+      page: 1,
+      totalcount: 0,
+      sland: "",
+      spublisher: "",
+      ssubcategory: "",
+      scategory: "",
+      gemeindetyp: ""
     };
   },
   mounted() {
     this.newsroomlist();
     this.listofmuncipalty();
     this.listofcountry();
+    this.listofcategory();
+    this.listofsubcategory();
+    this.listofpublisher();
   },
   beforeDestroy() {},
   methods: {
+    onPageChange: function(pageNum) {
+      if (this.countryflag == true) {
+        this.selectCity = 0;
+      }
+      let all = false;
+      if (this.selectCity == 0 && this.land == 0) {
+        all = false;
+      } else {
+        all = true;
+      }
+      this.newsroomlist(pageNum - 1, all);
+    },
+    searchfilter: function(pageNum = 1) {
+      this.newsroomlist(pageNum - 1);
+    },
     listofmuncipalty: function() {
       var e = this;
       axios
@@ -205,10 +253,30 @@ export default {
           }
         });
     },
-    newsroomlist: function() {
+    newsroomlist: function(pageNum = 0, all = true) {
       var e = this;
+      var strQuery = "";
+      if (e.gemeindetyp) {
+        strQuery += "&gemeindetyp=" + e.gemeindetyp;
+      }
+      if (e.gemeindegrobe) {
+        strQuery += "&sland=" + e.sland;
+      }
+      if (e.scategory) {
+        strQuery += "&scategory=" + e.scategory;
+      }
+      if (e.ssubcategory) {
+        strQuery += "&ssubcategory=" + e.ssubcategory;
+      }
+      if (e.spublisher) {
+        strQuery += "&spublisher=" + e.spublisher;
+      }
+
       axios
-        .get("/churcheview/newsroomlist")
+        .get("/churcheview/newsroomlist?p=" +
+            pageNum +
+            "&all=" +all+
+            strQuery)
         .then(function(response) {
           if (response.data.status == true) {
             e.newsroomList = response.data.newsroom;
@@ -245,6 +313,87 @@ export default {
         .then(function(response) {
           if (response.data.status == true) {
             e.LandList = response.data.countries.country;
+          }
+        })
+        .catch(function(error) {
+          if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          } else if (error.request) {
+            // The request was made but no response was received
+            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+            // http.ClientRequest in node.js
+            console.log(error.request);
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            console.log("Error", error.message);
+          }
+        });
+    },
+    listofcategory: function() {
+      var e = this;
+      axios
+        .get("/churcheview/newsroomcategory")
+        .then(function(response) {
+          if (response.data.status == true) {
+            e.category = response.data.catgory;
+          }
+        })
+        .catch(function(error) {
+          if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          } else if (error.request) {
+            // The request was made but no response was received
+            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+            // http.ClientRequest in node.js
+            console.log(error.request);
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            console.log("Error", error.message);
+          }
+        });
+    },
+    listofsubcategory: function() {
+      var e = this;
+      axios
+        .get("/churcheview/newsroomsubcategory")
+        .then(function(response) {
+          if (response.data.status == true) {
+            e.subcategory = response.data.subcatgory;
+          }
+        })
+        .catch(function(error) {
+          if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          } else if (error.request) {
+            // The request was made but no response was received
+            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+            // http.ClientRequest in node.js
+            console.log(error.request);
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            console.log("Error", error.message);
+          }
+        });
+    },
+    listofpublisher: function() {
+      var e = this;
+      axios
+        .get("/churcheview/newsroompublisher")
+        .then(function(response) {
+          if (response.data.status == true) {
+            e.publisher = response.data.publisher;
           }
         })
         .catch(function(error) {
