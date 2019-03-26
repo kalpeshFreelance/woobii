@@ -25,6 +25,7 @@
     "vue-silentbox": "^0.1.2",
     "vue-social-sharing": "^2.3.4",
     "vue-toasted": "^1.1.26",
+    "vue-wysiwyg": "^1.7.2",
     "vue2-google-maps": "^0.10.5",
     "vuetify": "^1.2.0",
     "vuex": "^3.0.1"

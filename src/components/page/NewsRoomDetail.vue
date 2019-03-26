@@ -80,7 +80,11 @@
                               height="80px"
                               contain
                             ></v-img>
-                            <v-icon v-if="data.attachment_type != 'image'" light size="80">description</v-icon>
+                            <v-icon
+                              v-if="data.attachment_type != 'image'"
+                              light
+                              size="80"
+                            >description</v-icon>
                           </v-flex>
                           <v-flex xs8>
                             <v-card-title primary-title class="p-0">
@@ -88,7 +92,8 @@
                                 <v-btn small icon class="dropClose" @click="deletewhishlist(index)">
                                   <v-icon>close</v-icon>
                                 </v-btn>
-                                <div>.jpg
+                                <div>
+                                  .jpg
                                   <br>2126 x 1462
                                   <br>385.63 KB
                                 </div>
@@ -98,8 +103,18 @@
                         </v-layout>
                         <v-divider light></v-divider>
                       </v-card>
-                      <v-btn v-if="whishlistdata.length != 0" outline @click="whishlistdata = []; whishlistcount = 0;" color="#fa6e2f">Empty</v-btn>
-                      <v-btn v-if="whishlistdata.length != 0" @click="whishlistzipdownload" class="theme--dark" color="#fa6e2f">Download</v-btn>
+                      <v-btn
+                        v-if="whishlistdata.length != 0"
+                        outline
+                        @click="whishlistdata = []; whishlistcount = 0;"
+                        color="#fa6e2f"
+                      >Empty</v-btn>
+                      <v-btn
+                        v-if="whishlistdata.length != 0"
+                        @click="whishlistzipdownload"
+                        class="theme--dark"
+                        color="#fa6e2f"
+                      >Download</v-btn>
                     </v-flex>
                   </v-layout>
                 </v-container>
@@ -330,7 +345,8 @@
                           />
                           <h2
                             class="bilder-imgCaption grey lighten-2 body-1 font-weight-bold px-2 py-1 mb-3"
-                          >1160 X 1120
+                          >
+                            1160 X 1120
                             <v-icon small class="right red--text mr-2">camera_alt</v-icon>
                           </h2>
                         </v-flex>
@@ -435,7 +451,8 @@
                     <a @click="next(1)">
                       <h2
                         class="bilder-imgCaption grey lighten-2 body-1 font-weight-bold px-2 py-1 mb-3"
-                      >1160 X 1120
+                      >
+                        1160 X 1120
                         <v-icon small class="right red--text mr-2">camera_alt</v-icon>
                       </h2>
                     </a>
@@ -526,15 +543,13 @@ export default {
   },
   beforeDestroy() {},
   methods: {
-    whishlistzipdownload: function(){
+    whishlistzipdownload: function() {
       let url = axios.defaults.baseURL;
       var zip = new JSZip();
       var img = zip.folder("whishlist");
       if (this.whishlistdata.length >= 1) {
         for (var imageindex in this.whishlistdata) {
-          const filename = this.whishlistdata[
-            imageindex
-          ].attachment.split("/");
+          const filename = this.whishlistdata[imageindex].attachment.split("/");
           let fpath =
             url + this.newsroomData.attachment.image[imageindex].attachment;
           img.file(filename.pop(), fpath);

@@ -16,6 +16,7 @@ import '@fortawesome/fontawesome-free/css/all.css'
 import Nprogress from 'nprogress'
 import Toasted from 'vue-toasted'
 import VueSilentbox from 'vue-silentbox'
+import wysiwyg from 'vue-wysiwyg'
 var SocialSharing = require('vue-social-sharing')
 
 Vue.config.productionTip = false
@@ -27,6 +28,13 @@ Vue.use(require('vue-moment'))
 Vue.use(Toasted)
 Vue.use(SocialSharing)
 Vue.use(VueSilentbox)
+Vue.use(wysiwyg, {
+  hideModules: { "code": true },
+  image: {
+    uploadURL: "http://dev.woobii.com/admin/uploads/newsroom/",
+    dropzoneOptions: {}
+  }
+})
 
 /*Vue.use(VueGoogleMaps, {
   load: {

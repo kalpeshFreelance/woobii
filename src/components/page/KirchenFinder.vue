@@ -152,11 +152,8 @@
             </v-form>
           </v-flex>
           <v-flex xs12 md2>
-            <v-btn
-              small
-              flat
-              class="grey lighten-3 right ma-0 black--text btnSuche"
-            >Erweiterte Suche
+            <v-btn small flat class="grey lighten-3 right ma-0 black--text btnSuche">
+              Erweiterte Suche
               <v-icon class="ml-1">expand_more</v-icon>
             </v-btn>
           </v-flex>
@@ -315,19 +312,22 @@
                   <v-card-text class="pa-3">
                     <v-layout row wrap>
                       <v-flex d-flex xs12 md4>
-                        <p class="caption mb-0">Anzahl an Gemeinden
+                        <p class="caption mb-0">
+                          Anzahl an Gemeinden
                           <br>im gewählten Bereich
                         </p>
                         <span class="display-1 font-weight-bold my-0">{{totalcount}}</span>
                       </v-flex>
                       <v-flex d-flex xs12 md4>
-                        <p class="caption mb-0">Anzahl an Gemeinden
+                        <p class="caption mb-0">
+                          Anzahl an Gemeinden
                           <br>mit lhrer Vorauswahl
                         </p>
                         <span class="display-1 font-weight-bold my-0">32</span>
                       </v-flex>
                       <v-flex d-flex xs12 md4>
-                        <p class="caption mb-0">Top Gemeinden
+                        <p class="caption mb-0">
+                          Top Gemeinden
                           <br>in lhrer Vorauswahl
                         </p>
                         <span class="display-1 font-weight-bold my-0">{{topTotalChurches}}%</span>
@@ -832,8 +832,8 @@ export default {
       this.churchlist(pageNum - 1, this.selectCity, this.land, all);
     },
     markerCount: function(lat, lng, marker) {
-      console.log('In side marker count');
-      var loc1 = lat+','+lng; //Marker Radius Co-ords
+      console.log("In side marker count");
+      var loc1 = lat + "," + lng; //Marker Radius Co-ords
       var loc2 = new google.maps.LatLng(marker[0].lat, marker[0].lng); //Marker Co-ords
 
       var diff = google.maps.geometry.spherical.computeDistanceBetween(

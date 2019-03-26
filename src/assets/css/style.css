@@ -4,6 +4,7 @@
     font-weight: 400;
     src: url('../fonts/LinotypeUnivers-BasicRegular.otf');
 }
+@import "~vue-wysiwyg/dist/vueWysiwyg.css";
 body {
     width: 1098px;
     margin: auto;
@@ -755,7 +756,7 @@ a.router-link-exact-active.router-link-active .v-tooltip span button {
     font-size: 65px !important;
     opacity: 0.4;
 }
-.v-dialog__content .v-card {
+.v-dialog__content .transparentDialog {
     background-color: rgba(0,0,0,0.35);
     box-shadow: none;
     position: relative;
@@ -841,4 +842,58 @@ a.router-link-exact-active.router-link-active .v-tooltip span button {
 }
 .dropClose .material-icons {
     font-size: 18px;
+}
+
+
+/* Edit Dialog */
+
+.editDialog .cartBorder {
+    border-width: 1px;
+    border-style: solid;
+    border-color: #bdbdbd!important;
+}
+.editDialog .cartBorder .v-toolbar__content {
+    padding: 0 16px;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-color: #bdbdbd!important;
+}
+.editDialog .cartBorder .v-toolbar__content .v-toolbar__title {
+    font-size: 18px;
+    font-weight: 600;
+}
+.editDialog .cartBorder .feildLabel {
+    padding-top: 13px!important;
+    font-size: 13px!important;
+}
+.editDialog .cartBorder .v-text-field.v-text-field--solo .v-input__control {
+    min-height: 34px;
+}
+.editDialog .cartBorder .v-input__slot {
+    box-shadow: none!important;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #bdbdbd!important;
+}
+.editDialog .cartBorder .v-textarea.v-text-field--enclosed .v-text-field__slot textarea {
+    margin-top: 2px;
+}
+.editDialog .cartBorder .v-text-field.v-text-field--enclosed .v-text-field__details {
+    display: none;
+}
+.editDialog .v-input--selection-controls__input {
+    margin-right: 5px;
+}
+.editDialog .v-input--selection-controls.v-input .v-label {
+    font-size: 13px !important;
+}
+
+
+
+/* 3rd Tab Editor */
+.tab3rd-edit-panel .v-textarea.v-text-field--enclosed .v-text-field__slot textarea {
+    margin-top: 0px;
+}
+.tab3rd-edit-panel .v-btn {
+ height: 36px !important;
 }

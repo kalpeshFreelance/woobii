@@ -30,7 +30,7 @@
             flat
             class="hover-orange"
           >KOSTENLOS ANMELDEN</v-btn>
-          <v-card dark>
+          <v-card dark class="transparentDialog">
             <v-card-text>
               <v-container grid-list-md>
                 <v-icon small class="mr-2 lockIcon">lock</v-icon>
@@ -172,7 +172,7 @@
         </v-dialog>
         <v-dialog v-model="dialoglog" max-width="600px">
           <v-btn slot="activator" v-show="logout == false" flat class="hover-orange">Einloggen</v-btn>
-          <v-card dark>
+          <v-card dark class="transparentDialog">
             <v-card-text>
               <v-container grid-list-md>
                 <v-icon small class="mr-2 lockIcon">lock</v-icon>
@@ -232,7 +232,7 @@
           </v-card>
         </v-dialog>
         <v-dialog v-model="password" max-width="600px">
-          <v-card dark>
+          <v-card dark class="transparentDialog">
             <v-card-text>
               <v-container grid-list-md>
                 <v-icon small class="mr-2 lockIcon">lock</v-icon>

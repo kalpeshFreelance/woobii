@@ -94,8 +94,9 @@
                     placeholder="Bitte auswählen"
                     :items="category"
                     item-text="category"
-                    item-value="category"
-                                        @input="searchfilter"
+                    item-value="id"
+                    @change="categorySelected"
+                    @input="searchfilter"
                     v-model="scategory"
                   ></v-autocomplete>
                   <v-autocomplete
@@ -103,7 +104,7 @@
                     placeholder="Stichwort einfügen"
                     :items="subcategory"
                     item-text="subcategory"
-                    item-value="subcategory"
+                    item-value="id"
                     @input="searchfilter"
                     v-model="ssubcategory"
                   ></v-autocomplete>
@@ -211,6 +212,9 @@ export default {
   },
   beforeDestroy() {},
   methods: {
+    categorySelected: function(event){
+        this.listofsubcategory(event);
+    },
     onPageChange: function(pageNum) {
       if (this.countryflag == true) {
         this.selectCity = 0;
@@ -360,10 +364,10 @@ export default {
           }
         });
     },
-    listofsubcategory: function() {
+    listofsubcategory: function(cat = 1) {
       var e = this;
       axios
-        .get("/churcheview/newsroomsubcategory")
+        .get("/churcheview/newsroomsubcategory/?c="+cat)
         .then(function(response) {
           if (response.data.status == true) {
             e.subcategory = response.data.subcatgory;
