@@ -125,7 +125,7 @@
                     item-text="name"
                     @input="searchfilter"
                     v-model="sland"
-                    item-value="id"                    
+                    item-value="id"
                   ></v-autocomplete>
                 </v-form>
               </v-card-text>
@@ -164,8 +164,8 @@
             <div class="text-xs-center">
               <v-pagination
                 v-model="page"
-                :length="Math.floor(totalcount/30)"
-                :total-visible="7"
+                :length="totalcount"
+                :total-visible="5"
                 @input="onPageChange"
               ></v-pagination>
             </div>
@@ -212,23 +212,25 @@ export default {
   },
   beforeDestroy() {},
   methods: {
-    categorySelected: function(event){
-        this.listofsubcategory(event);
+    categorySelected: function(event) {
+      this.listofsubcategory(event);
     },
     onPageChange: function(pageNum) {
-      if (this.countryflag == true) {
-        this.selectCity = 0;
-      }
-      let all = false;
-      if (this.selectCity == 0 && this.land == 0) {
-        all = false;
-      } else {
-        all = true;
-      }
+      console.log(pageNum);
+      // if (this.countryflag == true) {
+      //   this.selectCity = 0;
+      // }
+      // let all = false;
+      // if (this.selectCity == 0 && this.land == 0) {
+      //   all = false;
+      // } else {
+      //
+      // }
+      let all = true;
       this.newsroomlist(pageNum - 1, all);
     },
     searchfilter: function(pageNum = 1) {
-      this.newsroomlist(pageNum - 1);
+      this.newsroomlist(0, true);
     },
     listofmuncipalty: function() {
       var e = this;
@@ -277,13 +279,31 @@ export default {
       }
 
       axios
-        .get("/churcheview/newsroomlist?p=" +
-            pageNum +
-            "&all=" +all+
-            strQuery)
+        .get(
+          "/churcheview/newsroomlist?p=" + pageNum + "&all=" + all + strQuery
+        )
         .then(function(response) {
           if (response.data.status == true) {
-            e.newsroomList = response.data.newsroom;
+            e.newsroomList = response.data.newsroom.newsroomList;
+
+            if (response.data.newsroom.newsroomcount > 0) {
+              if (response.data.newsroom.newsroomcount >= 12) {
+                let count = response.data.newsroom.newsroomcount;
+
+                let div = count / 12;
+                let mod = count % 12;
+
+                if (mod >= 0) {
+                  e.totalcount = div + 1;
+                } else {
+                  e.totalcount = div;
+                }
+              } else {
+                e.totalcount = 0;
+              }
+            } else {
+              e.totalcount = 0;
+            }
           }
           // console.log(response.data);
           // console.log(response.status);
@@ -367,7 +387,7 @@ export default {
     listofsubcategory: function(cat = 1) {
       var e = this;
       axios
-        .get("/churcheview/newsroomsubcategory/?c="+cat)
+        .get("/churcheview/newsroomsubcategory/?c=" + cat)
         .then(function(response) {
           if (response.data.status == true) {
             e.subcategory = response.data.subcatgory;
