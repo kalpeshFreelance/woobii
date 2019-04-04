@@ -168,9 +168,9 @@
                       <p class="caption mb-1" v-html="newsroomData.text[0].short_desc"></p>
                       <div class="grey lighten-3 my-3 pa-2">
                         <v-img
-                          v-if="newsroomData.attachment.image[0].attachment"
-                          :lazy-src="'http://dev.woobii.com/admin/'+newsroomData.attachment.image[0].attachment"
-                          :src="'http://dev.woobii.com/admin/'+newsroomData.attachment.image[0].attachment"
+                          v-if="newsroomData.text[0].bannerimage"
+                          :lazy-src="'http://dev.woobii.com/admin/'+newsroomData.text[0].bannerimage"
+                          :src="'http://dev.woobii.com/admin/'+newsroomData.text[0].bannerimage"
                           class="mb-2"
                         />
                         <v-img
@@ -181,10 +181,10 @@
                         />
                         <p
                           class="caption font-weight-bold text-xs-center mb-1 orangeText"
-                        >{{newsroomData.attachment.image[0].description}}</p>
+                        >{{newsroomData.text[0].short_desc}}</p>
                         <p
                           class="caption font-weight-bold text-xs-center mb-1"
-                        >There are many variations of passages</p>
+                        >{{newsroomData.text[0].banner_text}}</p>
                       </div>
                       <div
                         class="grey lighten-3 my-3 pa-2"

@@ -18,6 +18,7 @@ import Toasted from 'vue-toasted'
 import VueSilentbox from 'vue-silentbox'
 import wysiwyg from 'vue-wysiwyg'
 var SocialSharing = require('vue-social-sharing')
+import VImageInput from 'vuetify-image-input';
 
 Vue.config.productionTip = false
 
@@ -35,7 +36,7 @@ Vue.use(wysiwyg, {
     dropzoneOptions: {}
   }
 })
-
+Vue.component(VImageInput.name, VImageInput)
 /*Vue.use(VueGoogleMaps, {
   load: {
     // Google API key

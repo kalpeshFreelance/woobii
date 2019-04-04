@@ -8,6 +8,7 @@ import NewsRoomDetail from './components/page/NewsRoomDetail'
 import Solution from './components/page/Solution'
 import KitrchenFinder from './components/page/KirchenFinder'
 import KitrchenFinderLocation from './components/page/KirchenFinderLocation'
+import PageNotFound from './components/page/404'
 
 Vue.use(Router)
 
@@ -70,6 +71,11 @@ export default new Router({
            component: KitrchenFinderLocation
         }
       ] */
+    },
+    {
+      path: '*',
+      name: '404',
+      component: PageNotFound
     }
     /*{
       path: '/about',

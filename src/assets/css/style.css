@@ -794,7 +794,7 @@ a.router-link-exact-active.router-link-active .v-tooltip span button {
     .v-dialog h1.display-2 {
         font-size: 35px !important;
         text-align: center;
-    }
+    }    
 }
 
 
@@ -878,7 +878,8 @@ a.router-link-exact-active.router-link-active .v-tooltip span button {
 .editDialog .cartBorder .v-textarea.v-text-field--enclosed .v-text-field__slot textarea {
     margin-top: 2px;
 }
-.editDialog .cartBorder .v-text-field.v-text-field--enclosed .v-text-field__details {
+.editDialog .cartBorder .v-text-field .v-text-field__details,
+.editDialog .cartBorder .v-text-field .v-text-field__details {
     display: none;
 }
 .editDialog .v-input--selection-controls__input {
@@ -887,13 +888,59 @@ a.router-link-exact-active.router-link-active .v-tooltip span button {
 .editDialog .v-input--selection-controls.v-input .v-label {
     font-size: 13px !important;
 }
-
+.editDialog .btn-detai {
+    text-transform: inherit!important;
+    margin: 0px auto;
+    padding: 7px 5px 6px;
+    height: auto;
+    border-radius: 0px !important;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #bdbdbd!important;
+}
+.editDialog .v-card__actions .v-input {
+    margin-top: 0px !important;
+}
+.editDialog .v-card__actions .v-input__slot {
+    margin-bottom: 0px;
+}
+.editDialog .v-card__actions .v-input .v-messages {
+    display: none;
+}
+@media screen and (max-width: 768px) {
+    .editDialog {
+        padding: 0px !important;
+    }
+    .editDialog .cartBorder .feildLabel {
+        padding-top: 5px!important;
+        padding-bottom: 0px!important;
+    }
+    .editDialog .cartBorder .v-card__title {
+        font-size: 15px!important;
+    }
+    .editDialog .cartBorder .v-toolbar__content .v-toolbar__title {
+        font-size: 15px;
+    }
+    .editDialog .v-card__actions .v-btn {
+        margin-bottom: 10px;
+    }
+    .editDialog .v-card__actions .v-btn:nth-last-child(1) {
+        margin-left: 0px;
+    }
+}
 
 
 /* 3rd Tab Editor */
 .tab3rd-edit-panel .v-textarea.v-text-field--enclosed .v-text-field__slot textarea {
     margin-top: 0px;
 }
-.tab3rd-edit-panel .v-btn {
+.tab3rd-edit-panel .heightStyle {
  height: 36px !important;
+}
+.tab3rd-edit-panel .editIconBtn {
+    width:25px !important;
+    height:25px !important;
+    position:absolute;
+    top: 0;
+    right: 0;
 }

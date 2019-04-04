@@ -51,12 +51,66 @@
       <v-container fluid grid-list-xl>
         <v-layout row wrap justify-center class="kirchenTopDetails">
           <v-flex xs12 md4>
+            <v-dialog light v-model="editDialoglogo" max-width="440px">
+              <v-card class="editDialog pa-3">
+                <v-card-title class="subheading pd-1">Logo:</v-card-title>
+                <v-card-text class="py-0">
+                  <v-flex xs12>
+                    <v-image-input
+                      v-model="imageData"
+                      :image-quality="0.85"
+                      clearable
+                      image-format="jpeg"
+                    />
+                  </v-flex>
+                </v-card-text>
+                <v-card-actions>
+                  <v-btn
+                    depressed
+                    class="grey lighten-2"
+                    @click="imageData = ''; editDialoglogo = false"
+                  >Cancel</v-btn>
+                  <v-btn depressed dark color="orange darken-1" @click="saveLogo">Save</v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
             <v-img
               v-if="churchesData[0].logo"
-              :src="'http://dev.woobii.com/admin/'+churchesData[0].logo"
+              v-bind:src="'http://dev.woobii.com/admin/'+churchesData[0].logo"
               max-width="175"
               class="mb-3"
-            ></v-img>
+              srcset
+              lazy-src
+            >
+              <v-btn
+                fab
+                class="right"
+                dark
+                color="darken-1"
+                @click="editDialoglogo = true"
+                style="height: 25px;width: 25px;"
+              >
+                <v-icon style="font-size:12px">edit</v-icon>
+              </v-btn>
+            </v-img>
+            <v-img
+              v-else
+              :src="require(`@/assets/woobii-banner.jpg`)"
+              :lazy-src="require(`@/assets/woobii-banner.jpg`)"
+              max-width="175"
+              class="mb-3"
+            >
+              <v-btn
+                fab
+                class="right"
+                dark
+                color="darken-1"
+                @click="editDialoglogo = true"
+                style="height: 25px;width: 25px;"
+              >
+                <v-icon style="font-size:12px">edit</v-icon>
+              </v-btn>
+            </v-img>
             <p class="headline mb-2">{{ churchesData[0].title }}</p>
             <p class="subheading mb-2">
               FKÖ
@@ -116,17 +170,16 @@
                     <v-layout row wrap>
                       <v-flex xs12>
                         <span class="headline">Über uns</span>
-                          <v-btn
-                            fab
-                            small
-                            class="right"
-                            dark
-                            @click="editDialogdesc = true"
-                            style="height: 20px; padding: 0px; width: 20px;"
-                          >
-                            <v-icon style="font-size:12px">edit</v-icon>
-                          </v-btn>
-
+                        <v-btn
+                          fab
+                          small
+                          class="right"
+                          dark
+                          @click="editDialogdesc = true"
+                          style="height: 20px; padding: 0px; width: 20px;"
+                        >
+                          <v-icon style="font-size:12px">edit</v-icon>
+                        </v-btn>
                         <v-dialog light v-model="editDialogdesc" max-width="650px">
                           <v-card class="editDialog pa-3">
                             <v-card-title class="subheading pd-1">Über uns:</v-card-title>
@@ -141,282 +194,12 @@
                                 class="grey lighten-2"
                                 @click="editDialogdesc = false"
                               >Cancel</v-btn>
-                              <v-btn depressed dark color="orange darken-1">Save</v-btn>
-                            </v-card-actions>
-                          </v-card>
-                        </v-dialog>
-                        <v-dialog light v-model="editDialog" max-width="800px">
-                          <v-card class="editDialog pa-3">
-                            <v-card-title
-                              class="subheading"
-                            >Bitte Fullen Sie zur Verffentlichung lher News folgende Felder aus:</v-card-title>
-                            <v-card-text class="py-0">
-                              <v-container grid-list-md class="pa-0">
-                                <v-layout row wrap>
-                                  <v-flex xs12>
-                                    <v-card
-                                      light
-                                      color="grey lighten-4"
-                                      tile
-                                      flat
-                                      class="cartBorder"
-                                    >
-                                      <v-toolbar color="grey lighten-2" light flat height="45px">
-                                        <v-toolbar-title>News</v-toolbar-title>
-                                        <v-spacer></v-spacer>
-                                        <v-btn icon>
-                                          <v-icon>expand_more</v-icon>
-                                        </v-btn>
-                                      </v-toolbar>
-                                      <v-card-text>
-                                        <v-layout row wrap>
-                                          <v-flex xs3 class="feildLabel">Newstitel</v-flex>
-                                          <v-flex xs9>
-                                            <v-text-field
-                                              v-model="newstitel"
-                                              name="newstitel"
-                                              required
-                                              solo
-                                            ></v-text-field>
-                                          </v-flex>
-                                          <v-flex xs3 class="feildLabel">Teaser</v-flex>
-                                          <v-flex xs9>
-                                            <v-text-field
-                                              v-model="teaser"
-                                              name="teaser"
-                                              required
-                                              solo
-                                            ></v-text-field>
-                                          </v-flex>
-                                          <v-flex xs3 class="feildLabel">Newsmeldung</v-flex>
-                                          <v-flex xs9>
-                                            <wysiwyg
-                                              v-model="newsmeldung"
-                                              name="newsmeldung"
-                                              required
-                                            />
-                                          </v-flex>
-                                          <v-flex xs3 class="feildLabel">Ressort</v-flex>
-                                          <v-flex xs9>
-                                            <v-autocomplete
-                                              placeholder="Ressort"
-                                              :items="category"
-                                              item-text="category"
-                                              item-value="id"
-                                              v-model="ressort"
-                                              @change="categorySelected"
-                                            ></v-autocomplete>
-                                            <!-- <v-select :items="scategory" placeholder="Ressort" solo></v-select> -->
-                                          </v-flex>
-                                          <v-flex xs3 class="feildLabel">Kategorie</v-flex>
-                                          <v-flex xs9>
-                                            <v-autocomplete
-                                              placeholder="Kategorie"
-                                              :items="subcategory"
-                                              item-text="subcategory"
-                                              item-value="id"
-                                              v-model="kategorie"
-                                            ></v-autocomplete>
-                                          </v-flex>
-                                          <v-flex xs3 class="feildLabel">Themen</v-flex>
-                                          <v-flex xs9>
-                                            <v-text-field placeholder="Placeholder" solo></v-text-field>
-                                          </v-flex>
-                                          <v-flex xs3 class="feildLabel">Veroffentlichung</v-flex>
-                                          <v-flex xs3>
-                                            <v-text-field placeholder="Placeholder" solo></v-text-field>
-                                          </v-flex>
-                                          <v-flex xs3 class="feildLabel">Inaktiv setzen (optional)</v-flex>
-                                          <v-flex xs3>
-                                            <v-text-field placeholder="Placeholder" solo></v-text-field>
-                                          </v-flex>
-                                        </v-layout>
-                                      </v-card-text>
-                                    </v-card>
-                                  </v-flex>
-                                  <v-flex d-flex xs6>
-                                    <v-layout row wrap>
-                                      <v-flex d-flex xs12>
-                                        <v-card
-                                          light
-                                          color="grey lighten-4"
-                                          tile
-                                          flat
-                                          class="cartBorder"
-                                        >
-                                          <v-toolbar
-                                            color="grey lighten-2"
-                                            light
-                                            flat
-                                            height="45px"
-                                          >
-                                            <v-toolbar-title>Biddatei hochladen</v-toolbar-title>
-                                            <v-spacer></v-spacer>
-                                            <v-btn icon>
-                                              <v-icon>expand_more</v-icon>
-                                            </v-btn>
-                                          </v-toolbar>
-                                          <v-card-text>
-                                            <v-layout row wrap>
-                                              <v-flex xs4 class="feildLabel">Datei</v-flex>
-                                              <v-flex xs8>
-                                                <!-- <v-text-field placeholder="Placeholder" solo></v-text-field> -->
-                                                <template>
-                                                  <v-text-field
-                                                    v-model="date"
-                                                    prepend-icon="event"
-                                                    readonly
-                                                    @click="datemodal = true"
-                                                  ></v-text-field>
-                                                </template>
-                                                <v-dialog
-                                                  ref="dialog"
-                                                  v-model="datemodal"
-                                                  :return-value.sync="date"
-                                                  persistent
-                                                  lazy
-                                                  full-width
-                                                  width="290px"
-                                                >
-                                                  <v-date-picker v-model="date" scrollable>
-                                                    <v-spacer></v-spacer>
-                                                    <v-btn
-                                                      flat
-                                                      color="primary"
-                                                      @click="datemodal = false"
-                                                    >Cancel</v-btn>
-                                                    <v-btn
-                                                      flat
-                                                      color="primary"
-                                                      @click="$refs.dialog.save(date)"
-                                                    >OK</v-btn>
-                                                  </v-date-picker>
-                                                </v-dialog>
-                                              </v-flex>
-                                            </v-layout>
-                                          </v-card-text>
-                                        </v-card>
-                                      </v-flex>
-                                      <v-flex d-flex xs12>
-                                        <v-card
-                                          light
-                                          color="grey lighten-4"
-                                          tile
-                                          flat
-                                          class="cartBorder"
-                                        >
-                                          <v-toolbar
-                                            color="grey lighten-2"
-                                            light
-                                            flat
-                                            height="45px"
-                                          >
-                                            <v-toolbar-title>Bildinformationen</v-toolbar-title>
-                                            <v-spacer></v-spacer>
-                                            <v-btn icon>
-                                              <v-icon>expand_more</v-icon>
-                                            </v-btn>
-                                          </v-toolbar>
-                                          <v-card-text>
-                                            <v-layout row wrap>
-                                              <v-flex xs4 class="feildLabel">Bildtitel</v-flex>
-                                              <v-flex xs8>
-                                                <v-text-field placeholder="Placeholder" solo></v-text-field>
-                                              </v-flex>
-                                              <v-flex xs4 class="feildLabel">Beschreibung</v-flex>
-                                              <v-flex xs8>
-                                                <v-textarea placeholder="Placeholder" solo></v-textarea>
-                                              </v-flex>
-                                              <v-flex xs4 class="feildLabel">Bildrechte</v-flex>
-                                              <v-flex xs8>
-                                                <v-text-field placeholder="Placeholder" solo></v-text-field>
-                                              </v-flex>
-                                              <v-flex xs4 class="feildLabel">Lizenz</v-flex>
-                                              <v-flex xs8>
-                                                <v-select
-                                                  :items="items"
-                                                  placeholder="Solo field"
-                                                  solo
-                                                ></v-select>
-                                              </v-flex>
-                                            </v-layout>
-                                          </v-card-text>
-                                        </v-card>
-                                      </v-flex>
-                                    </v-layout>
-                                  </v-flex>
-                                  <v-flex d-flex xs6>
-                                    <v-layout row wrap>
-                                      <v-flex xs12>
-                                        <v-card
-                                          light
-                                          color="grey lighten-4"
-                                          tile
-                                          flat
-                                          class="cartBorder"
-                                        >
-                                          <v-card-text>
-                                            <v-layout row wrap>
-                                              <v-flex xs4>
-                                                <v-img
-                                                  src="https://picsum.photos/510/300?random"
-                                                  aspect-ratio="1.2"
-                                                ></v-img>
-                                              </v-flex>
-                                              <v-flex xs8>
-                                                <ul class="caption">
-                                                  <li class="mb-2">Hochgeladen am: 20.08.2014</li>
-                                                  <li class="my-2">DateigroBe: 3802,63 KB</li>
-                                                  <li class="my-2">MaBe: 2912 x 1353 Pixel</li>
-                                                  <li class="mt-2">Dateityp: .jpg</li>
-                                                </ul>
-                                              </v-flex>
-                                            </v-layout>
-                                            <v-divider light class="my-3"></v-divider>
-                                            <v-img
-                                              src="https://picsum.photos/510/300?random"
-                                              aspect-ratio="1.7"
-                                            ></v-img>
-                                            <div
-                                              class="caption my-3"
-                                            >Das Build wird zusatzlich zum Original auch in diesen GroBen zum Download angeboten:</div>
-                                            <v-layout
-                                              row
-                                              wrap
-                                              class="caption"
-                                              style="border:1px solid #CCC;"
-                                            >
-                                              <v-flex
-                                                xs6
-                                                style="border:1px solid #CCC;border-top:none;border-left:none;"
-                                              >1200 x 557</v-flex>
-                                              <v-flex
-                                                xs6
-                                                style="border-bottom:1px solid #CCC;"
-                                              >56,5 KB</v-flex>
-                                              <v-flex
-                                                xs6
-                                                style="border-right:1px solid #CCC;"
-                                              >600 x 278</v-flex>
-                                              <v-flex xs6>23.2 KB</v-flex>
-                                            </v-layout>
-                                          </v-card-text>
-                                        </v-card>
-                                      </v-flex>
-                                    </v-layout>
-                                  </v-flex>
-                                </v-layout>
-                              </v-container>
-                            </v-card-text>
-                            <v-card-actions>
-                              <v-checkbox
-                                v-model="checkbox"
-                                label="Hauptnews auf GLAUBE.at (kostenpflichtig)"
-                                required
-                              ></v-checkbox>
-                              <v-btn depressed class="grey lighten-2">LOSCHEN</v-btn>
-                              <v-btn depressed class="grey lighten-2">SPEICHERN</v-btn>
-                              <v-btn depressed dark color="orange darken-1">VEROFFENTLICHUN</v-btn>
+                              <v-btn
+                                depressed
+                                dark
+                                @click="saveAboutUs"
+                                color="orange darken-1"
+                              >Save</v-btn>
                             </v-card-actions>
                           </v-card>
                         </v-dialog>
@@ -609,13 +392,13 @@
                                     flat
                                   ></v-textarea>
                                   <v-divider class="my-1"></v-divider>
-                                  <v-btn depressed outline round color="indigo">
+                                  <v-btn depressed outline round color="indigo" class="heightStyle">
                                     <v-icon>camera_alt</v-icon>
                                   </v-btn>
-                                  <v-btn depressed outline round color="indigo">
+                                  <v-btn depressed outline round color="indigo" class="heightStyle">
                                     <v-icon class="mr-1">videocam</v-icon>Video
                                   </v-btn>
-                                  <v-btn depressed dark color="orange darken-1">Veroffentlichen</v-btn>
+                                  <v-btn depressed dark color="orange darken-1" class="heightStyle">Veroffentlichen</v-btn>
                                 </v-card-text>
                               </v-card>
                             </v-flex>
@@ -633,7 +416,38 @@
                             <span class="title">Gemeindenews</span>
                           </span>
                         </div>
-
+                        <v-container grid-list-md class="pa-0 tab3rd-edit-panel">
+                          <v-layout row wrap>
+                            <v-flex v-for="(newsroom, index) in churchesData.newsroom" v-bind:class="[ index == 0 ? 'md12' : 'md6']">
+                              <v-img v-if="newsroom.bannerimage"
+                              :lazy-src="'http://dev.woobii.com/admin/'+newsroom.bannerimage+'?v='+ Math.random()"
+                              :src="'http://dev.woobii.com/admin/'+newsroom.bannerimage+'?v='+ Math.random()"
+                              gradient="to top right, rgba(0,0,0,0), rgba(0,0,0,.55)">
+                                <v-container fill-height fluid>
+                                  <v-layout px-2 column fill-height class="lightbox white--text">
+                                    <v-spacer></v-spacer>
+                                    <v-flex shrink>
+                                      <v-layout row wrap>
+                                        <v-flex xs12 sm6 md6 class="pa-3" style="background-color: rgba(255,255,255,.75);">
+                                          <h4 class="body-1 my-1 black--text">
+                                            <span class="font-weight-bold">{{ newsroom.category }}</span>
+                                            <span class="ml-2" style="color:#fa6e2f;">|</span>
+                                            {{ newsroom.subcategory }}
+                                          </h4>
+                                          <h4 class="body-1 my-1 black--text">{{ newsroom.title }}</h4>
+                                          <v-btn fab class="editIconBtn" dark color="orange darken-1"
+                                          @click="newsroomdetail(newsroom.newsid); editDialog = true">
+                                            <v-icon style="font-size:12px">edit</v-icon>
+                                          </v-btn>
+                                        </v-flex>
+                                      </v-layout>
+                                    </v-flex>
+                                  </v-layout>
+                                </v-container>
+                              </v-img>
+                            </v-flex>
+                          </v-layout>
+                        </v-container>
                         <v-layout row wrap v-show="churchesData.newsroom">
                           <v-flex
                             d-flex
@@ -641,34 +455,477 @@
                             v-bind:class="[ index == 0 ? 'md12' : 'md6']"
                           >
                             <v-card flat color="white" class="grey lighten-4">
-                              <v-img
+                              <!-- <v-img
                                 v-if="newsroom.bannerimage"
-                                :lazy-src="'http://dev.woobii.com/admin/'+newsroom.bannerimage"
-                                :src="'http://dev.woobii.com/admin/'+newsroom.bannerimage"
+                                :lazy-src="'http://dev.woobii.com/admin/'+newsroom.bannerimage+'?v='+ Math.random()"
+                                :src="'http://dev.woobii.com/admin/'+newsroom.bannerimage+'?v='+ Math.random()"
+                                gradient="to top right, rgba(0,0,0,0), rgba(0,0,0,.55)"
                               >
-                                <v-container fill-height fluid v-if="index == 0">
+                                <v-container fill-height fluid px-2 pt-0 v-if="index == 0">
                                   <v-layout fill-height>
-                                    <v-flex xs12 align-end flexbox>
-                                      <h4 class="body-1 my-2 white--text">
-                                        <span class="font-weight-bold">{{ newsroom.category }}</span>
-                                        <span class="ml-2" style="color:#fa6e2f;">|</span>
-                                        {{ newsroom.subcategory }}
-                                      </h4>
-                                      <h4 class="body-1 my-2 white--text">{{ newsroom.title }}</h4>
+                                    <v-flex xs12 flexbox>
+                                      <v-spacer></v-spacer>
+                                      <v-layout row wrap shrink>
+                                        
+                                        <v-flex xs6 style="background-color: rgba(255,255,255,.6);">
+                                          <h4 class="body-1 my-2 dark--text">
+                                            <span class="font-weight-bold">{{ newsroom.category }}</span>
+                                            <span class="ml-2" style="color:#fa6e2f;">|</span>
+                                            {{ newsroom.subcategory }}
+                                          </h4>
+                                          <h4 class="body-1 my-2 dark--text">{{ newsroom.title }}</h4>
+                                        </v-flex>
+                                        <v-flex xs6>
+                                          <v-btn
+                                            fab
+                                            class="right"
+                                            dark
+                                            color="orange darken-1"
+                                            @click="newsroomdetail(newsroom.newsid); editDialog = true"
+                                            style="height: 25px;width: 25px;"
+                                          >
+                                            <v-icon style="font-size:12px">edit</v-icon>
+                                          </v-btn>
+                                        </v-flex>
+                                      </v-layout>
                                     </v-flex>
                                   </v-layout>
                                 </v-container>
-                              </v-img>
-                              <v-card-text v-if="index != 0">
+                              </v-img> -->
+                              <!-- <v-card-text v-if="index != 0">
                                 <h4 class="body-1 my-2">
                                   <span class="font-weight-bold">{{ newsroom.category }}</span>
                                   <span class="ml-2" style="color:#fa6e2f;">|</span>
                                   {{ newsroom.subcategory }}
                                 </h4>
                                 <h4 class="body-1 my-2">{{ newsroom.title }}</h4>
-                              </v-card-text>
+                              </v-card-text> -->
                             </v-card>
                           </v-flex>
+                          <v-dialog light v-model="editDialog" max-width="800px">
+                            <v-card class="editDialog pa-3">
+                              <v-card-title
+                                class="subheading"
+                              >Bitte Fullen Sie zur Verffentlichung lher News folgende Felder aus:</v-card-title>
+                              <v-card-text class="py-0">
+                                <v-container grid-list-md class="pa-0">
+                                  <v-layout row wrap>
+                                    <v-flex xs12>
+                                      <v-card
+                                        light
+                                        color="grey lighten-4"
+                                        tile
+                                        flat
+                                        class="cartBorder"
+                                      >
+                                        <v-toolbar color="grey lighten-2" light flat height="45px">
+                                          <v-toolbar-title>News</v-toolbar-title>
+                                          <v-spacer></v-spacer>
+                                          <v-btn icon>
+                                            <v-icon>expand_more</v-icon>
+                                          </v-btn>
+                                        </v-toolbar>
+                                        <v-card-text>
+                                          <v-layout row wrap>
+                                            <v-flex xs12 sm3 md3 class="feildLabel">Newstitel</v-flex>
+                                            <v-flex xs12 sm9 md9>
+                                              <v-text-field
+                                                v-model="formnews.newstitle"
+                                                name="newstitle"
+                                                required
+                                                solo
+                                              ></v-text-field>
+                                            </v-flex>
+                                            <v-flex xs12 sm3 md3 class="feildLabel">Teaser</v-flex>
+                                            <v-flex xs12 sm9 md9>
+                                              <v-text-field
+                                                v-model="formnews.teaser"
+                                                name="teaser"
+                                                required
+                                                solo
+                                              ></v-text-field>
+                                            </v-flex>
+                                            <v-flex xs12 sm3 md3 class="feildLabel">Newsmeldung</v-flex>
+                                            <v-flex xs12 sm9 md9>
+                                              <wysiwyg
+                                                v-model="formnews.newsmeldung"
+                                                name="newsmeldung"
+                                                required
+                                              />
+                                            </v-flex>
+                                          </v-layout>
+                                          <v-layout row wrap>
+                                            <v-flex xs12 sm3 md3 class="feildLabel">Ressort</v-flex>
+                                            <v-flex xs12 sm9 md9>
+                                              <v-autocomplete
+                                                placeholder="Ressort"
+                                                :items="category"
+                                                item-text="category"
+                                                item-value="id"
+                                                v-model="formnews.ressort"
+                                                v-on:change="categorySelected"
+                                                solo
+                                              ></v-autocomplete>
+                                              <!-- <v-select :items="scategory" placeholder="Ressort" solo></v-select> -->
+                                            </v-flex>
+                                            <v-flex xs12 sm3 md3 class="feildLabel">Kategorie</v-flex>
+                                            <v-flex xs12 sm9 md9>
+                                              <v-autocomplete
+                                                placeholder="Kategorie"
+                                                :items="subcategory"
+                                                item-text="subcategory"
+                                                item-value="id"
+                                                v-model="formnews.kategorie"
+                                                solo
+                                              ></v-autocomplete>
+                                            </v-flex>
+                                            <v-flex xs12 sm3 md3 class="feildLabel">Themen</v-flex>
+                                            <v-flex xs12 sm9 md9>
+                                              <v-text-field
+                                                name="themen"
+                                                v-model="formnews.themen"
+                                                solo
+                                              ></v-text-field>
+                                            </v-flex>
+                                            <v-flex xs12 sm3 md3 class="feildLabel">Veroffentlichung</v-flex>
+                                            <v-flex xs12 sm3 md3>
+                                              <v-text-field
+                                                name="veroffentlichung"
+                                                v-model="formnews.veroffentlichung"
+                                                solo
+                                                readonly
+                                                @click="datemodal = true"
+                                                append-icon="event"
+                                              ></v-text-field>
+                                              <v-dialog
+                                                ref="dialog"
+                                                v-model="datemodal"
+                                                :return-value.sync="formnews.veroffentlichung"
+                                                persistent
+                                                lazy
+                                                full-width
+                                                width="290px"
+                                              >
+                                                <v-date-picker
+                                                  v-model="formnews.veroffentlichung"
+                                                  scrollable
+                                                >
+                                                  <v-spacer></v-spacer>
+                                                  <v-btn
+                                                    flat
+                                                    color="primary"
+                                                    @click="datemodal = false"
+                                                  >Cancel</v-btn>
+                                                  <v-btn
+                                                    flat
+                                                    color="primary"
+                                                    @click="$refs.dialog.save(formnews.veroffentlichung)"
+                                                  >OK</v-btn>
+                                                </v-date-picker>
+                                              </v-dialog>
+                                            </v-flex>
+                                            <v-flex
+                                              xs12
+                                              sm3
+                                              md3
+                                              class="feildLabel"
+                                            >Inaktiv setzen (optional)</v-flex>
+                                            <v-flex xs12 sm3 md3>
+                                              <v-text-field
+                                                name="inaktiv"
+                                                v-model="formnews.inaktiv"
+                                                solo
+                                                readonly
+                                                @click="datemodalI = true"
+                                                append-icon="event"
+                                              ></v-text-field>
+                                              <v-dialog
+                                                ref="dialogI"
+                                                v-model="datemodalI"
+                                                :return-value.sync="formnews.inaktiv"
+                                                persistent
+                                                lazy
+                                                full-width
+                                                width="290px"
+                                              >
+                                                <v-date-picker
+                                                  v-model="formnews.inaktiv"
+                                                  scrollable
+                                                >
+                                                  <v-spacer></v-spacer>
+                                                  <v-btn
+                                                    flat
+                                                    color="primary"
+                                                    @click="datemodalI = false"
+                                                  >Cancel</v-btn>
+                                                  <v-btn
+                                                    flat
+                                                    color="primary"
+                                                    @click="$refs.dialogI.save(formnews.inaktiv)"
+                                                  >OK</v-btn>
+                                                </v-date-picker>
+                                              </v-dialog>
+                                            </v-flex>
+                                          </v-layout>
+                                        </v-card-text>
+                                      </v-card>
+                                    </v-flex>
+                                    <v-flex d-flex xs12 sm6 md6>
+                                      <v-layout row wrap>
+                                        <v-flex d-flex xs12>
+                                          <v-card
+                                            light
+                                            color="grey lighten-4"
+                                            tile
+                                            flat
+                                            class="cartBorder"
+                                          >
+                                            <v-toolbar
+                                              color="grey lighten-2"
+                                              light
+                                              flat
+                                              height="45px"
+                                            >
+                                              <v-toolbar-title>Biddatei hochladen</v-toolbar-title>
+                                              <v-spacer></v-spacer>
+                                              <v-btn icon>
+                                                <v-icon>expand_more</v-icon>
+                                              </v-btn>
+                                            </v-toolbar>
+                                            <v-card-text>
+                                              <v-layout row wrap>
+                                                <v-flex xs12 sm3 md3 class="feildLabel">Datei</v-flex>
+                                                <v-flex xs12 sm9 md9>
+                                                  <v-layout row wrap>
+                                                    <v-flex xs7 style="padding-right:0px;">
+                                                      <v-text-field
+                                                        xs8
+                                                        sm8
+                                                        md8
+                                                        v-model="formnews.date"
+                                                        solo
+                                                      ></v-text-field>
+                                                    </v-flex>
+                                                    <v-flex xs5 style="padding-left:0px;">
+                                                      <v-btn
+                                                        small
+                                                        block
+                                                        depressed
+                                                        class="grey lighten-2 btn-detai"
+                                                        @click="editBannerDialog = true"
+                                                      >Durchsuchen</v-btn>
+                                                    </v-flex>
+                                                  </v-layout>
+                                                  <v-dialog
+                                                    light
+                                                    v-model="editBannerDialog"
+                                                    max-width="810px"
+                                                  >
+                                                    <v-card class="editDialog pa-3">
+                                                      <v-card-title class="subheading pd-1">Banner:</v-card-title>
+                                                      <v-card-text class="py-0">
+                                                        <v-flex xs12>
+                                                          <v-image-input
+                                                            v-model="imageBannerData"
+                                                            :image-quality="0.85"
+                                                            clearable
+                                                            :image-width="600"
+                                                            :image-height="278"
+                                                            image-format="jpeg"
+                                                          />
+                                                        </v-flex>
+                                                      </v-card-text>
+                                                      <v-card-actions>
+                                                        <v-btn
+                                                          depressed
+                                                          class="grey lighten-2"
+                                                          @click="imageBannerData = ''; editBannerDialog = false"
+                                                        >Cancel</v-btn>
+                                                        <v-btn
+                                                          depressed
+                                                          dark
+                                                          color="orange darken-1"
+                                                          @click="editBannerDialog = false; formnews.bannerimage=imageBannerData"
+                                                        >Save</v-btn>
+                                                      </v-card-actions>
+                                                    </v-card>
+                                                  </v-dialog>
+                                                </v-flex>
+                                                <v-flex xs12 sm6 md6></v-flex>
+                                              </v-layout>
+                                            </v-card-text>
+                                          </v-card>
+                                        </v-flex>
+                                        <v-flex d-flex xs12>
+                                          <v-card
+                                            light
+                                            color="grey lighten-4"
+                                            tile
+                                            flat
+                                            class="cartBorder"
+                                          >
+                                            <v-toolbar
+                                              color="grey lighten-2"
+                                              light
+                                              flat
+                                              height="45px"
+                                            >
+                                              <v-toolbar-title>Bildinformationen</v-toolbar-title>
+                                              <v-spacer></v-spacer>
+                                              <v-btn icon>
+                                                <v-icon>expand_more</v-icon>
+                                              </v-btn>
+                                            </v-toolbar>
+                                            <v-card-text>
+                                              <v-layout row wrap>
+                                                <v-flex xs12 sm4 md4 class="feildLabel">Bildtitel</v-flex>
+                                                <v-flex xs12 sm8 md8>
+                                                  <v-text-field
+                                                    name="bildtitel"
+                                                    v-model="formnews.bildtitel"
+                                                    solo
+                                                  ></v-text-field>
+                                                </v-flex>
+                                                <v-flex xs12 sm4 md4 class="feildLabel">Beschreibung</v-flex>
+                                                <v-flex xs12 sm8 md8>
+                                                  <v-textarea
+                                                    name="beschreibung"
+                                                    v-model="formnews.beschreibung"
+                                                    solo
+                                                  ></v-textarea>
+                                                </v-flex>
+                                                <v-flex xs12 sm4 md4 class="feildLabel">Bildrechte</v-flex>
+                                                <v-flex xs12 sm8 md8>
+                                                  <v-text-field
+                                                    name="bildrechte"
+                                                    v-model="formnews.bildrechte"
+                                                    solo
+                                                  ></v-text-field>
+                                                </v-flex>
+                                                <v-flex xs12 sm4 md4 class="feildLabel">Lizenz</v-flex>
+                                                <v-flex xs12 sm8 md8>
+                                                  <v-select
+                                                    :items="items"
+                                                    v-model="formnews.lizenz"
+                                                    solo
+                                                  ></v-select>
+                                                </v-flex>
+                                              </v-layout>
+                                            </v-card-text>
+                                          </v-card>
+                                        </v-flex>
+                                      </v-layout>
+                                    </v-flex>
+                                    <v-flex d-flex xs12 sm6 md6>
+                                      <v-layout row wrap>
+                                        <v-flex xs12>
+                                          <v-card
+                                            light
+                                            color="grey lighten-4"
+                                            tile
+                                            flat
+                                            class="cartBorder"
+                                          >
+                                            <v-card-text>
+                                              <v-layout row wrap>
+                                                <v-flex xs12 sm4 md4>
+                                                  <v-img
+                                                    src="https://picsum.photos/510/300?random"
+                                                    aspect-ratio="1.2"
+                                                  ></v-img>
+                                                </v-flex>
+                                                <v-flex xs12 sm8 md8>
+                                                  <ul class="caption">
+                                                    <li class="mb-2">Hochgeladen am: 20.08.2014</li>
+                                                    <li class="my-2">DateigroBe: 3802,63 KB</li>
+                                                    <li class="my-2">MaBe: 2912 x 1353 Pixel</li>
+                                                    <li class="mt-2">Dateityp: .jpg</li>
+                                                  </ul>
+                                                </v-flex>
+                                              </v-layout>
+                                              <v-divider light class="my-3"></v-divider>
+                                              <v-img
+                                                v-if="imageBannerData"
+                                                :lazy-src="imageBannerData"
+                                                :src="imageBannerData"
+                                              />
+                                              <v-img
+                                                v-else-if="formnews.bannerimage"
+                                                :lazy-src="'http://dev.woobii.com/admin/'+formnews.bannerimage"
+                                                :src="'http://dev.woobii.com/admin/'+formnews.bannerimage"
+                                              />
+                                              <v-img
+                                                v-else
+                                                :src="require(`@/assets/woobii-banner.jpg`)"
+                                                :lazy-src="require(`@/assets/woobii-banner.jpg`)"
+                                              />
+                                              <div
+                                                class="caption my-3"
+                                              >Das Build wird zusatzlich zum Original auch in diesen GroBen zum Download angeboten:</div>
+                                              <v-layout
+                                                row
+                                                wrap
+                                                class="caption"
+                                                style="border:1px solid #CCC;"
+                                              >
+                                                <v-flex
+                                                  xs6
+                                                  style="border:1px solid #CCC;border-top:none;border-left:none;"
+                                                >1200 x 557</v-flex>
+                                                <v-flex
+                                                  xs6
+                                                  style="border-bottom:1px solid #CCC;"
+                                                >56,5 KB</v-flex>
+                                                <v-flex
+                                                  xs6
+                                                  style="border-right:1px solid #CCC;"
+                                                >600 x 278</v-flex>
+                                                <v-flex xs6>23.2 KB</v-flex>
+                                              </v-layout>
+                                            </v-card-text>
+                                          </v-card>
+                                        </v-flex>
+                                      </v-layout>
+                                    </v-flex>
+                                  </v-layout>
+                                </v-container>
+                              </v-card-text>
+                              <v-card-actions class="pt-4">
+                                <v-container grid-list-md class="pa-0">
+                                  <v-layout row wrap>
+                                    <v-flex xs12 sm6 md6>
+                                      <v-checkbox
+                                        v-model="formnews.checkbox"
+                                        label="Hauptnews auf GLAUBE.at (kostenpflichtig)"
+                                        required
+                                      ></v-checkbox>
+                                    </v-flex>
+                                    <v-flex xs12 sm6 md6>
+                                      <v-btn
+                                        @click="editDialog = false"
+                                        depressed
+                                        small
+                                        class="grey lighten-2"
+                                      >LOSCHEN</v-btn>
+                                      <v-btn
+                                        @click="saveNewsroom"
+                                        depressed
+                                        small
+                                        class="grey lighten-2"
+                                      >SPEICHERN</v-btn>
+                                      <v-btn
+                                        depressed
+                                        small
+                                        dark
+                                        @click="saveNewsroom"
+                                        color="orange darken-1"
+                                      >VEROFFENTLICHUN</v-btn>
+                                    </v-flex>
+                                  </v-layout>
+                                </v-container>
+                              </v-card-actions>
+                            </v-card>
+                          </v-dialog>
                           <!-- <v-flex d-flex xs12 md6>
                             <v-card flat color="white" class="grey lighten-4">
                               <v-img
@@ -1100,11 +1357,18 @@
             </GmapMap>
           </v-flex>
         </v-layout>
+        <v-dialog v-model="dialogLoader" hide-overlay persistent width="300">
+          <v-card color="#FA6E2F" dark>
+            <v-card-text>
+              Please stand by
+              <v-progress-linear indeterminate color="white" class="mb-0"></v-progress-linear>
+            </v-card-text>
+          </v-card>
+        </v-dialog>
       </v-container>
     </section>
   </v-content>
 </template>
-
 <script>
 import axios from "axios";
 export default {
@@ -1121,6 +1385,7 @@ export default {
       churcheTitle: [],
       search: null,
       sharedialog: false,
+      imageData: "",
       socialUrl:
         "http://dev.woobii.com/Kirchenfinder/" + this.$route.params.slug,
       socialTitle: "Woobii",
@@ -1129,14 +1394,36 @@ export default {
       editDialog: false,
       editDialogdesc: false,
       editDialoglogo: false,
+      dialogLoader: false,
       datemodal: false,
+      datemodalI: false,
+      editBannerDialog: false,
+      imageBannerData: "",
       date: "",
       items: ["Test", "Test", "Test"],
       checkbox: "",
       newsmeldung: "",
       subcategory: "",
       category: "",
-      aboutus: ""
+      churcheid: "",
+      aboutus: "",
+      formnews: {
+        id: "",
+        newstitle: "",
+        teaser: "",
+        newsmeldung: "",
+        ressort: "",
+        kategorie: "",
+        themen: "",
+        veroffentlichung: "",
+        inaktiv: "",
+        date: "",
+        bildtitel: "",
+        beschreibung: "",
+        bildrechte: "",
+        lizenz: "",
+        bannerimage: ""
+      }
     };
   },
   watch: {
@@ -1155,6 +1442,194 @@ export default {
   },
   beforeDestroy() {},
   methods: {
+    imageBannerDataChange: function() {},
+    saveNewsroom: function() {
+      this.dialogLoader = true;
+      let e = this;
+      axios
+        .post("/churcheview/newsroomupdate", {
+          id: this.formnews.id,
+          newstitle: this.formnews.newstitle,
+          teaser: this.formnews.teaser,
+          newsmeldung: this.formnews.newsmeldung,
+          ressort: this.formnews.ressort,
+          kategorie: this.formnews.kategorie,
+          themen: this.formnews.themen,
+          veroffentlichung: this.formnews.veroffentlichung,
+          inaktiv: this.formnews.inaktiv,
+          date: this.formnews.date,
+          bildtitel: this.formnews.bildtitel,
+          beschreibung: this.formnews.beschreibung,
+          bildrechte: this.formnews.bildrechte,
+          lizenz: this.formnews.lizenz,
+          bannerimage: this.formnews.bannerimage
+        })
+        .then(function(response) {
+          console.log(response);
+          e.dialogLoader = false;
+          e.editDialog = false;
+          if (response.data.status == true) {
+            e.churchdata(e.$route.params.slug);
+            e.$toasted.success("Successfully Updated", {
+              position: "top-center",
+              duration: 2000
+            });
+          } else {
+            e.$toasted.error("Please try after sometime", {
+              position: "top-center",
+              duration: 2000
+            });
+          }
+        })
+        .catch(function(error) {
+          if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          } else if (error.request) {
+            // The request was made but no response was received
+            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+            // http.ClientRequest in node.js
+            console.log(error.request);
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            console.log("Error", error.message);
+          }
+        });
+    },
+    saveLogo: function() {
+      this.dialogLoader = true;
+      let e = this;
+      axios
+        .post("/churcheview/logoupdate", {
+          id: this.churcheid,
+          logo: this.imageData
+        })
+        .then(function(response) {
+          console.log(response);
+          e.dialogLoader = false;
+          e.editDialoglogo = false;
+          if (response.data.status == true) {
+            e.churchesData[0].logo = "";
+            e.churchdata(e.$route.params.slug);
+            e.$toasted.success("Successfully Updated", {
+              position: "top-center",
+              duration: 2000
+            });
+          } else {
+            e.$toasted.error("Please try after sometime", {
+              position: "top-center",
+              duration: 2000
+            });
+          }
+        })
+        .catch(function(error) {
+          if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          } else if (error.request) {
+            // The request was made but no response was received
+            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+            // http.ClientRequest in node.js
+            console.log(error.request);
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            console.log("Error", error.message);
+          }
+        });
+    },
+    saveAboutUs: function() {
+      this.dialogLoader = true;
+      let e = this;
+      axios
+        .post("/churcheview/aboutusupdate", {
+          id: this.churcheid,
+          aboutus: this.aboutus
+        })
+        .then(function(response) {
+          console.log(response);
+          e.dialogLoader = false;
+          e.editDialogdesc = false;
+          if (response.data.status == true) {
+            e.churchdata(e.$route.params.slug);
+            e.$toasted.success("Successfully Updated", {
+              position: "top-center",
+              duration: 2000
+            });
+          } else {
+            e.$toasted.error("Please try after sometime", {
+              position: "top-center",
+              duration: 2000
+            });
+          }
+        })
+        .catch(function(error) {
+          if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          } else if (error.request) {
+            // The request was made but no response was received
+            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+            // http.ClientRequest in node.js
+            console.log(error.request);
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            console.log("Error", error.message);
+          }
+        });
+    },
+    newsroomdetail: function(id) {
+      var self = this;
+      this.searchLoading = true;
+      // Simulated ajax query
+      axios
+        .get("/churcheview/newsroombyid?r=" + id)
+        .then(function(response) {
+          if (response.data.status == true) {
+            self.formnews.id = response.data.newsroom[0].newsroom_id;
+            self.formnews.newstitle = response.data.newsroom[0].nr_title;
+            self.formnews.teaser = response.data.newsroom[0].nr_short_desc;
+            self.formnews.newsmeldung =
+              response.data.newsroom[0].nr_description;
+            self.formnews.ressort = response.data.newsroom[0].nr_category;
+            self.listofsubcategory(self.formnews.ressort);
+            self.formnews.kategorie = response.data.newsroom[0].nr_subcategory;
+            self.formnews.themen = "";
+            self.formnews.veroffentlichung = "";
+            self.formnews.inaktiv = "";
+            self.formnews.bannerimage = response.data.newsroom[0].nr_banner;
+            self.formnews.date = response.data.newsroom[0].nr_banner
+              .split("/")
+              .pop();
+            self.formnews.bildtitel = "";
+            self.formnews.beschreibung =
+              response.data.newsroom[0].nr_banner_text;
+            self.formnews.bildrechte = "";
+            self.formnews.lizenz = "";
+          }
+        })
+        .catch(function(error) {
+          if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          } else if (error.request) {
+            console.log(error.request);
+          } else {
+            console.log("Error", error.message);
+          }
+        });
+    },
     categorySelected: function(event) {
       this.listofsubcategory(event);
     },
@@ -1175,7 +1650,6 @@ export default {
         .get("/churcheview/churchebyname?t=" + v)
         .then(function(response) {
           if (response.data.status == true) {
-            console.log(response.data.churche);
             self.churcheTitle = response.data.churche;
             self.socialTitle = churchesData[0].title;
             self.socialDescription = churchesData[0].title;
@@ -1203,8 +1677,10 @@ export default {
         .get("/churcheview/churche?s=" + slug)
         .then(function(response) {
           if (response.data.status == true) {
-            console.log(response.data.churche);
             e.churchesData = response.data.churche;
+            e.churcheid = e.churchesData[0].id;
+            e.churchesData[0].logo =
+              e.churchesData[0].logo + "?v=" + Math.random();
             e.aboutus = e.churchesData[0].about_us;
           }
           // console.log(response.data);
@@ -1304,5 +1780,8 @@ export default {
   margin-bottom: 10px;
   display: inline-block;
   cursor: pointer;
+}
+.editr--content {
+  background: #ffffff;
 }
 </style>
