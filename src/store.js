@@ -14,7 +14,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     user: '',
-    isUserSigninWithAuth0: false
+    isUserSigninWithAuth0: false,
+    userRole: '1',
   },
   mutations: {
     loginUser(state) {
@@ -22,6 +23,7 @@ export default new Vuex.Store({
     },
     loginUserSuccess(state, user) {
       state.user = user;
+      state.userRole = userRole;
       //localStorage.setItem('user', JSON.stringify(user));
       state.isUserSigninWithAuth0 = true
       //router.push("/default/dashboard/ecommerce");
@@ -49,6 +51,9 @@ export default new Vuex.Store({
     setUser: function (state, user) {
       state.user = user;
     },
+    setUserRole: function (state, userRole) {
+      state.userRole = userRole;
+    },
     setisUserSigninWithAuth0: function (state, setisUserSigninWithAuth0) {
       state.isUserSigninWithAuth0 = setisUserSigninWithAuth0;
     }
@@ -59,6 +64,7 @@ export default new Vuex.Store({
       firebase.auth().signInWithPopup(facebookAuthProvider).then((result) => {
         Nprogress.done();
         context.commit('setUser', result.user);
+        context.commit('setUserRole', result.userRole);
         context.commit('setisUserSigninWithAuth0', 1);
         // setTimeout(() => {
         //   context.commit('loginUserSuccess', result.user);
@@ -73,6 +79,7 @@ export default new Vuex.Store({
         Nprogress.done();
         setTimeout(() => {
           context.commit('loginUserSuccess', result.user);
+          context.commit('setUserRole', result.userRole);
         }, 500)
       }).catch(error => {
         context.commit('loginUserFailure', error);
@@ -86,6 +93,7 @@ export default new Vuex.Store({
         //   context.commit('loginUserSuccess', result.user);
         // }, 500)
         context.commit('setUser', result.user);
+        context.commit('setUserRole', result.userRole);
         context.commit('setisUserSigninWithAuth0', 1);
       }).catch(error => {
         context.commit('loginUserFailure', error);

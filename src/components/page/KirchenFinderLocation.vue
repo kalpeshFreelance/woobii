@@ -75,8 +75,8 @@
               </v-card>
             </v-dialog>
             <v-img
-              v-if="churchesData[0].logo"
-              v-bind:src="'http://dev.woobii.com/admin/'+churchesData[0].logo"
+              v-if="churcheslogo"
+              v-bind:src="'http://dev.woobii.com/admin/'+churcheslogo"
               max-width="175"
               class="mb-3"
               srcset
@@ -89,6 +89,7 @@
                 color="darken-1"
                 @click="editDialoglogo = true"
                 style="height: 25px;width: 25px;"
+                v-if="userRole != 1"
               >
                 <v-icon style="font-size:12px">edit</v-icon>
               </v-btn>
@@ -107,6 +108,7 @@
                 color="darken-1"
                 @click="editDialoglogo = true"
                 style="height: 25px;width: 25px;"
+                v-if="userRole != 1"
               >
                 <v-icon style="font-size:12px">edit</v-icon>
               </v-btn>
@@ -166,7 +168,7 @@
               <!-- <v-tab href="#tab-7">Bewertungen</v-tab> -->
               <v-tab-item id="tab-1">
                 <v-card flat>
-                  <v-card-text class="px-0">
+                  <v-card-text>
                     <v-layout row wrap>
                       <v-flex xs12>
                         <span class="headline">Über uns</span>
@@ -177,6 +179,7 @@
                           dark
                           @click="editDialogdesc = true"
                           style="height: 20px; padding: 0px; width: 20px;"
+                          v-if="userRole != 1"
                         >
                           <v-icon style="font-size:12px">edit</v-icon>
                         </v-btn>
@@ -337,7 +340,7 @@
               </v-tab-item>
               <v-tab-item id="tab-2">
                 <v-card flat>
-                  <v-card-text class="px-0">
+                  <v-card-text>
                     <v-layout row wrap>
                       <v-flex xs12>
                         <p class="headline">Angebote</p>
@@ -376,7 +379,7 @@
               </v-tab-item>
               <v-tab-item id="tab-3">
                 <v-card flat>
-                  <v-card-text class="px-0">
+                  <v-card-text>
                     <v-layout row wrap>
                       <v-flex xs12>
                         <p class="headline">Gemeindenews</p>
@@ -436,7 +439,7 @@
                                           </h4>
                                           <h4 class="body-1 my-1 black--text">{{ newsroom.title }}</h4>
                                           <v-btn fab class="editIconBtn" dark color="orange darken-1"
-                                          @click="newsroomdetail(newsroom.newsid); editDialog = true">
+                                          @click="newsroomdetail(newsroom.newsid); editDialog = true" v-if="userRole != 1">
                                             <v-icon style="font-size:12px">edit</v-icon>
                                           </v-btn>
                                         </v-flex>
@@ -966,7 +969,7 @@
               </v-tab-item>
               <v-tab-item id="tab-4">
                 <v-card flat>
-                  <v-card-text class="px-0">
+                  <v-card-text>
                     <v-layout row wrap>
                       <v-flex xs12>
                         <p class="headline">Social Media Wall</p>
@@ -985,7 +988,7 @@
               </v-tab-item>
               <v-tab-item id="tab-5">
                 <v-card flat>
-                  <v-card-text class="px-0">
+                  <v-card-text>
                     <v-layout row wrap>
                       <v-flex xs12>
                         <p class="headline">Events</p>
@@ -1063,7 +1066,7 @@
               </v-tab-item>
               <v-tab-item id="tab-6">
                 <v-card flat>
-                  <v-card-text class="px-0">
+                  <v-card-text>
                     <v-layout row wrap>
                       <v-flex xs12>
                         <p class="headline">Jobs</p>
@@ -1137,7 +1140,7 @@
               </v-tab-item>
               <v-tab-item id="tab-7">
                 <v-card flat>
-                  <v-card-text class="px-0">
+                  <v-card-text>
                     <v-layout row wrap>
                       <v-flex xs12>
                         <p class="headline">Bewertungen</p>
@@ -1309,7 +1312,7 @@
             </v-dialog>
             <v-btn flat block class="grey lighten-4 ma-0 mb-4 py-2">
               <v-rating
-                v-model="churchesData[0].rating"
+                v-model="rating"
                 readonly
                 dense
                 small
@@ -1375,7 +1378,9 @@ export default {
   name: "KitrchenFinderLocation",
   data() {
     return {
-      rating: 3,
+      userRole: '',
+      churcheslogo: "",
+      rating: 0,
       // baseUrl: process.env.BASE_URL
       isMobile: false,
       drawer: null,
@@ -1422,7 +1427,7 @@ export default {
         beschreibung: "",
         bildrechte: "",
         lizenz: "",
-        bannerimage: ""
+        bannerimage: "",
       }
     };
   },
@@ -1439,6 +1444,12 @@ export default {
     this.churchdata(this.$route.params.slug);
     this.listofcategory();
     this.listofsubcategory();
+    this.userRole = this.userRoleCall; 
+  },
+  computed: {
+    userRoleCall(){
+      return this.$store.state.userRole;
+    }
   },
   beforeDestroy() {},
   methods: {
@@ -1465,7 +1476,7 @@ export default {
           bannerimage: this.formnews.bannerimage
         })
         .then(function(response) {
-          console.log(response);
+          //console.log(response);
           e.dialogLoader = false;
           e.editDialog = false;
           if (response.data.status == true) {
@@ -1512,7 +1523,7 @@ export default {
           e.dialogLoader = false;
           e.editDialoglogo = false;
           if (response.data.status == true) {
-            e.churchesData[0].logo = "";
+            e.churcheslogo = "";
             e.churchdata(e.$route.params.slug);
             e.$toasted.success("Successfully Updated", {
               position: "top-center",
@@ -1679,9 +1690,10 @@ export default {
           if (response.data.status == true) {
             e.churchesData = response.data.churche;
             e.churcheid = e.churchesData[0].id;
-            e.churchesData[0].logo =
+            e.churcheslogo =
               e.churchesData[0].logo + "?v=" + Math.random();
             e.aboutus = e.churchesData[0].about_us;
+            e.rating = e.churchesData[0].rating;
           }
           // console.log(response.data);
           // console.log(response.status);

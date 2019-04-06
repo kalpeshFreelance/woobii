@@ -485,6 +485,7 @@ export default {
   },
   computed: {
     socailuser() {
+      console.log(this.$store.state.user);
       return this.$store.state.user;
     },
     socailFlag() {
@@ -517,8 +518,8 @@ export default {
       this.logout = false;
     },
     loginsubmit() {
-      console.log("DATA 2 ", this.form2);
-      console.log("Login");
+      //console.log("DATA 2 ", this.form2);
+      //console.log("Login");
       var e = this;
       e.dialogLoader = true;
       axios
@@ -527,7 +528,7 @@ export default {
           password: this.form2.loginpassword
         })
         .then(function(response) {
-          console.log(response);
+          //console.log(response);
           e.dialogLoader = false;
           if (response.data.status == true) {
             localStorage.setItem("token", response.data.token);
@@ -565,14 +566,14 @@ export default {
         });
     },
     forgotsubmit() {
-      console.log("DATA 3 ", this.form3);
-      console.log("Forget");
+     // console.log("DATA 3 ", this.form3);
+     // console.log("Forget");
       axios
         .post("/churcheview/forgotusername", {
           email: this.form3.forgotemail
         })
         .then(function(response) {
-          console.log(response);
+          //console.log(response);
           if (response.data.status == true) {
             e.LandList = response.data.countries.country;
           }
@@ -597,8 +598,8 @@ export default {
     },
     regsubmit() {
       var e = this;
-      console.log("DATA", this.form1);
-      console.log("Registration");
+      //console.log("DATA", this.form1);
+      //console.log("Registration");
       e.dialogLoader = true;
       axios
         .post("/churcheview/registration", {
@@ -612,7 +613,7 @@ export default {
           social_name: this.form1.social_name
         })
         .then(function(response) {
-          console.log(response.data);
+          //console.log(response.data);
           e.dialogLoader = false;
           if (response.data.status == true) {
             localStorage.setItem("token", response.data.token);
