@@ -10,6 +10,14 @@
             <v-form>
               <v-text-field placeholder="Placeholder" append-icon="search" class="searchInput"></v-text-field>
               <v-select
+                label="Land:"
+                placeholder="Land..."
+                :items="LandList"
+                item-text="name"
+                v-model="land"
+                item-value="id"
+              ></v-select>
+              <v-select
                 :items="GemeindetypeList"
                 item-text="type"
                 item-value="id"
@@ -20,14 +28,7 @@
               <v-select label="Subressort:" placeholder="Stichwort einfügen"></v-select>
               <v-select label="Themen:" placeholder="Themen..."></v-select>
               <v-select label="People:" placeholder="People..."></v-select>
-              <v-select
-                label="Land:"
-                placeholder="Land..."
-                :items="LandList"
-                item-text="name"
-                v-model="land"
-                item-value="id"
-              ></v-select>
+              
             </v-form>
           </v-card-text>
         </v-card>
@@ -132,6 +133,14 @@
               <v-card-text>
                 <v-form>
                   <v-text-field placeholder="Placeholder" append-icon="search"></v-text-field>
+                   <v-select
+                    label="Land:"
+                    placeholder="Land..."
+                    :items="LandList"
+                    item-text="name"
+                    v-model="land"
+                    item-value="id"
+                  ></v-select>
                   <v-select
                     :items="GemeindetypeList"
                     item-text="type"
@@ -143,14 +152,6 @@
                   <v-select label="Subressort:" placeholder="Stichwort einfügen"></v-select>
                   <v-select label="Themen:" placeholder="Themen..."></v-select>
                   <v-select label="People:" placeholder="People..."></v-select>
-                  <v-select
-                    label="Land:"
-                    placeholder="Land..."
-                    :items="LandList"
-                    item-text="name"
-                    v-model="land"
-                    item-value="id"
-                  ></v-select>
                 </v-form>
               </v-card-text>
             </v-card>
@@ -159,8 +160,8 @@
             <v-card flat color="white">
               <v-tabs v-model="active" slider-color="deep-orange accent-3">
                 <v-tab key="1">Text</v-tab>
-                <v-tab key="2">Bilder</v-tab>
-                <v-tab key="3">Dokument</v-tab>
+                <v-tab key="2" v-if="newsroomData.attachment.image.length > 0">Bilder</v-tab>
+                <v-tab key="3" v-if="newsroomData.attachment.document.length > 0">Dokument</v-tab>
                 <v-tab-item key="1">
                   <v-card flat>
                     <v-card-text class="px-0">
@@ -233,7 +234,7 @@
                   </v-card>
                 </v-tab-item>
                 <v-tab-item key="2">
-                  <v-layout row wrap class="mt-2">
+                  <v-layout row wrap class="mt-2"  v-if="newsroomData.attachment.image.length > 0">
                     <v-flex xs12>
                       <h3 class="body-1">{{ newsroomData.attachment.image[0].description }}</h3>
                     </v-flex>
@@ -356,7 +357,7 @@
                 </v-tab-item>
                 <v-tab-item key="3" v-if="newsroomData.attachment.document">
                   <v-layout row wrap class="mt-2 tabsDocument">
-                    <v-flex xs12>
+                    <v-flex xs12 v-if="newsroomData.attachment.image.length > 0">
                       <h3 class="body-1 mb-3">{{ newsroomData.attachment.image[0].description }}</h3>
                     </v-flex>
                     <v-flex d-flex xs12 md3>
@@ -430,7 +431,7 @@
                 <v-icon small dark class="mr-2">folder</v-icon>Sofort downloaden
               </v-btn>
               <v-divider class="my-3"></v-divider>
-              <div v-if="newsroomData.attachment.image && active == 0">
+              <div v-if="newsroomData.attachment.image.length > 0 && active == 0">
                 <a @click="next(1)">
                   <h2 class="subheading font-weight-bold mb-3">
                     <v-icon small class="black--text mr-2">camera_alt</v-icon>Bilder
@@ -730,7 +731,9 @@ export default {
         .then(function(response) {
           if (response.data.status == true) {
             e.newsroomData = response.data.newsroom;
-            e.imageGallery = e.newsroomData.attachment.image;
+            if(e.newsroomData.attachment.image){
+              e.imageGallery = e.newsroomData.attachment.image;
+            }
           }
           // console.log(response.data);
           // console.log(response.status);

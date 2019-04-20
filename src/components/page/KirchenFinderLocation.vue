@@ -89,7 +89,7 @@
                 color="darken-1"
                 @click="editDialoglogo = true"
                 style="height: 25px;width: 25px;"
-                v-if="userRole != 1"
+                v-if="userRoleCall != 1"
               >
                 <v-icon style="font-size:12px">edit</v-icon>
               </v-btn>
@@ -108,7 +108,7 @@
                 color="darken-1"
                 @click="editDialoglogo = true"
                 style="height: 25px;width: 25px;"
-                v-if="userRole != 1"
+                v-if="userRoleCall != 1"
               >
                 <v-icon style="font-size:12px">edit</v-icon>
               </v-btn>
@@ -179,7 +179,7 @@
                           dark
                           @click="editDialogdesc = true"
                           style="height: 20px; padding: 0px; width: 20px;"
-                          v-if="userRole != 1"
+                          v-if="userRoleCall != 1"
                         >
                           <v-icon style="font-size:12px">edit</v-icon>
                         </v-btn>
@@ -224,7 +224,7 @@
                         <p
                           class="headline"
                           style="margin-top: 15px;"
-                        >GLAUBE.at empfiehlt folgende Gemeinden:</p>
+                        >WOOBII.at empfiehlt folgende Gemeinden:</p>
                         <v-layout row wrap>
                           <v-flex d-flex xs12 md6 v-for="churche in churchesData.featuredChurch">
                             <v-card flat color="white" class="kFinderWrap">
@@ -439,7 +439,7 @@
                                           </h4>
                                           <h4 class="body-1 my-1 black--text">{{ newsroom.title }}</h4>
                                           <v-btn fab class="editIconBtn" dark color="orange darken-1"
-                                          @click="newsroomdetail(newsroom.newsid); editDialog = true" v-if="userRole != 1">
+                                          @click="newsroomdetail(newsroom.newsid); editDialog = true" v-if="userRoleCall != 1">
                                             <v-icon style="font-size:12px">edit</v-icon>
                                           </v-btn>
                                         </v-flex>
@@ -1271,7 +1271,7 @@
             <v-dialog v-model="sharedialog" max-width="290" dark>
               <v-card>
                 <v-card-title class="mr-2">
-                  <v-icon class="mr-2">share</v-icon>Kirchengemeinde empfehlen
+                  <v-icon class="mr-2">share</v-icon>Kirchengemeinde empfehlen 
                 </v-card-title>
                 <v-card-text class="mt-0">
                   <social-sharing
@@ -1310,7 +1310,7 @@
                 </v-card-text>
               </v-card>
             </v-dialog>
-            <v-btn flat block class="grey lighten-4 ma-0 mb-4 py-2">
+            <!-- <v-btn flat block class="grey lighten-4 ma-0 mb-4 py-2">
               <v-rating
                 v-model="rating"
                 readonly
@@ -1319,7 +1319,7 @@
                 background-color="grey darken-4"
                 color="grey darken-4"
               ></v-rating>Kirchengemeinde bewerten
-            </v-btn>
+            </v-btn> -->
             <p class="headline">Gemeindeprofil</p>
             <p class="body-1">
               <span class="font-weight-bold black--text">Gottesdienste</span>
@@ -1363,7 +1363,7 @@
         <v-dialog v-model="dialogLoader" hide-overlay persistent width="300">
           <v-card color="#FA6E2F" dark>
             <v-card-text>
-              Please stand by
+              Please stand by 
               <v-progress-linear indeterminate color="white" class="mb-0"></v-progress-linear>
             </v-card-text>
           </v-card>
@@ -1378,7 +1378,7 @@ export default {
   name: "KitrchenFinderLocation",
   data() {
     return {
-      userRole: '',
+      userRole: localStorage.getItem('userRole') ? localStorage.getItem('userRole') : 1,
       churcheslogo: "",
       rating: 0,
       // baseUrl: process.env.BASE_URL
@@ -1444,7 +1444,6 @@ export default {
     this.churchdata(this.$route.params.slug);
     this.listofcategory();
     this.listofsubcategory();
-    this.userRole = this.userRoleCall; 
   },
   computed: {
     userRoleCall(){

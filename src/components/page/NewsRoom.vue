@@ -8,7 +8,31 @@
         <v-card flat color="white" class="mobileFilterWarp">
           <v-card-text>
             <v-form>
+              <v-autocomplete
+                :loading="searchLoading"
+                :items="newsroomTitle"
+                item-text="title"
+                item-value="link"
+                :search-input.sync="search"
+                @input="pageRedirect"
+                cache-items
+                flat
+                hide-no-data
+                hide-details
+                label="Search News"
+                append-icon="search"
+                solo
+              ></v-autocomplete>
               <v-text-field placeholder="Placeholder" append-icon="search" class="searchInput"></v-text-field>
+              <v-autocomplete
+                label="Land:"
+                placeholder="Land..."
+                :items="LandList"
+                item-text="name"
+                item-value="id"
+                @input="searchfilter"
+                v-model="sland"
+              ></v-autocomplete>
               <v-autocomplete
                 :items="GemeindetypeList"
                 item-text="type"
@@ -46,15 +70,6 @@
                 @input="searchfilter"
                 v-model="spublisher"
               ></v-autocomplete>
-              <v-autocomplete
-                label="Land:"
-                placeholder="Land..."
-                :items="LandList"
-                item-text="name"
-                item-value="id"
-                @input="searchfilter"
-                v-model="sland"
-              ></v-autocomplete>
             </v-form>
           </v-card-text>
         </v-card>
@@ -79,7 +94,32 @@
             <v-card flat color="white" class="newsRoomFilter">
               <v-card-text>
                 <v-form>
-                  <v-text-field placeholder="Placeholder" append-icon="search" class="searchInput"></v-text-field>
+                  <v-autocomplete
+                    :loading="searchLoading"
+                    :items="newsroomTitle"
+                    item-text="title"
+                    item-value="link"
+                    :search-input.sync="search"
+                    @input="pageRedirect"
+                    cache-items
+                    flat
+                    hide-no-data
+                    hide-details
+                    placeholder="Search News"
+                    append-icon="search"
+                    solo
+                    style="margin-bottom: 16px;"
+                  ></v-autocomplete>
+                  <!-- <v-text-field placeholder="Placeholder" append-icon="search" class="searchInput"></v-text-field> -->
+                  <v-autocomplete
+                    label="Land:"
+                    placeholder="Land..."
+                    :items="LandList"
+                    item-text="name"
+                    @input="searchfilter"
+                    v-model="sland"
+                    item-value="id"
+                  ></v-autocomplete>
                   <v-autocomplete
                     :items="GemeindetypeList"
                     item-text="type"
@@ -118,15 +158,6 @@
                     @input="searchfilter"
                     v-model="spublisher"
                   ></v-autocomplete>
-                  <v-autocomplete
-                    label="Land:"
-                    placeholder="Land..."
-                    :items="LandList"
-                    item-text="name"
-                    @input="searchfilter"
-                    v-model="sland"
-                    item-value="id"
-                  ></v-autocomplete>
                 </v-form>
               </v-card-text>
             </v-card>
@@ -135,7 +166,7 @@
             <v-layout row wrap>
               <v-flex d-flex xs12 md4 v-if="newsroomList" v-for="news in newsroomList">
                 <v-card flat color="grey lighten-4">
-                  <a :href="'/newsroom/'+news.slug" class="caption black--text">
+                  <router-link :to="'/newsroom/'+news.slug" class="caption black--text">
                     <v-img
                       v-if="news.bannerimage"
                       :lazy-src="'http://dev.woobii.com/admin/'+news.bannerimage"
@@ -147,14 +178,17 @@
                       :src="require(`@/assets/woobii-banner.jpg`)"
                       :lazy-src="require(`@/assets/woobii-banner.jpg`)"
                     />
-                  </a>
+                  </router-link>
                   <v-card-title>
                     <h4 class="caption text-uppercase mb-2" style="width: 100%;">
                       <span class="font-weight-black">{{news.category}}</span>
                       | {{news.subcategory}}
                     </h4>
                     <h4 class="caption text-uppercase font-weight-black mb-2" style="width: 100%;">
-                      <a :href="'/newsroom/'+news.slug" class="caption black--text">{{news.title}}</a>
+                      <router-link
+                        :to="'/newsroom/'+news.slug"
+                        class="caption black--text"
+                      >{{news.title}}</router-link>
                     </h4>
                     <h4 class="caption">{{ news.author}} | {{ news.date | moment("DD.MM.YYYY")}}</h4>
                   </v-card-title>
@@ -186,6 +220,9 @@ export default {
       // baseUrl: process.env.BASE_URL
       isMobile: false,
       drawer: null,
+      searchLoading: false,
+      newsroomTitle: [],
+      search: null,
       newsroomList: {},
       GemeindetypeList: [],
       LandList: [],
@@ -211,7 +248,46 @@ export default {
     this.listofpublisher();
   },
   beforeDestroy() {},
+  watch: {
+    search(val) {
+      if (val.length >= 3) {
+        val && val !== this.select && this.querySelections(val);
+      } else {
+        this.churcheTitle = [];
+      }
+    }
+  },
   methods: {
+    pageRedirect: function(event) {
+      this.$router.push("/newsroom/" + event);
+      this.churchdata(this.$route.params.slug);
+    },
+    querySelections(v) {
+      var self = this;
+      this.searchLoading = true;
+      // Simulated ajax query
+      axios
+        .get("/churcheview/newsroombyname?t=" + v)
+        .then(function(response) {
+          if (response.data.status == true) {
+            self.newsroomTitle = response.data.newsroom;
+            self.searchLoading = false;
+          }
+        })
+        .catch(function(error) {
+          if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          } else if (error.request) {
+            console.log(error.request);
+          } else {
+            console.log("Error", error.message);
+          }
+        });
+    },
     categorySelected: function(event) {
       this.listofsubcategory(event);
     },

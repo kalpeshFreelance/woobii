@@ -245,10 +245,17 @@ a.router-link-exact-active.router-link-active .v-tooltip span button {
 .newsRoomSection .newsRoomFilter .v-input__slot {
     font-size: 13px;
     border: 1px solid #CCC;
+    padding: 0px;
 }
 .newsRoomSection .newsRoomFilter .v-select__selection--comma {
     margin: 0px auto;
     padding: 0  8px;
+}
+.newsRoomSection .newsRoomFilter .v-input__control {
+    min-height: 26px !important;
+}
+.newsRoomSection .newsRoomFilter .v-input__control .material-icons {
+    font-size: 20px;
 }
 .newsRoomSection .newsRoomFilter .v-input input {
     max-height: 26px;
@@ -275,8 +282,13 @@ a.router-link-exact-active.router-link-active .v-tooltip span button {
 /* ----- News Room News ----- */
 .newsRoomSection .newsImage {
     width: 100%;
-    max-height: 110px;
+    height: 160px;
 }
+
+.kFinderWrap .v-image{
+    height: 160px;
+}
+
 .newsRoomSection .newsRoomWrap .v-card__title {
     line-height: 22px;
 }
@@ -542,7 +554,7 @@ a.router-link-exact-active.router-link-active .v-tooltip span button {
 }
 .kitchenFinderSection .kFinderWrap .kitchenImage {
     width: 100%;
-    max-height: 110px;
+    height: 110px;
 }
 .kitchenFinderSection .kFinderWrap .v-rating--dense{
     display: -webkit-inline-box;

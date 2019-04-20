@@ -386,7 +386,7 @@
             <v-layout row wrap v-if="churchesList">
               <v-flex d-flex xs12 md4 v-for="churche in churchesList">
                 <v-card flat color="white" class="kFinderWrap">
-                  <a :href="'/Kirchenfinder/'+churche.slug" class="caption black--text">
+                  <router-link :to="'/Kirchenfinder/'+churche.slug" class="caption black--text">
                     <v-img
                       v-if="churche.bannerimage"
                       :lazy-src="'http://dev.woobii.com/admin/'+churche.bannerimage"
@@ -398,11 +398,11 @@
                       :src="require(`@/assets/woobii-banner.jpg`)"
                       :lazy-src="require(`@/assets/woobii-banner.jpg`)"
                     />
-                  </a>
+                  </router-link>
                   <v-card-text class="pa-0">
-                    <a :href="'/Kirchenfinder/'+churche.slug" class="caption black--text">
+                    <router-link :to="'/Kirchenfinder/'+churche.slug" class="caption black--text">
                       <h4 class="body-1 my-2">{{ churche.title }}</h4>
-                    </a>
+                    </router-link>
                     <div>
                       <v-chip
                         small
