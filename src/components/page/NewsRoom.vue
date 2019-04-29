@@ -30,6 +30,7 @@
                 :items="LandList"
                 item-text="name"
                 item-value="id"
+                @change="listofmuncipalty"
                 @input="searchfilter"
                 v-model="sland"
               ></v-autocomplete>
@@ -126,6 +127,7 @@
                     item-value="id"
                     label="Gemeindetyp:"
                     placeholder="Bitte auswählen"
+                    @change="listofmuncipalty"
                     @input="searchfilter"
                     v-model="gemeindetyp"
                   ></v-autocomplete>
@@ -307,11 +309,18 @@ export default {
     },
     searchfilter: function(pageNum = 1) {
       this.newsroomlist(0, true);
+      if (this.sland) {
+        this.listofmuncipalty(this.sland);
+      }
     },
-    listofmuncipalty: function() {
+    listofmuncipalty: function(land) {
       var e = this;
+      let url = "/adminglobal/getallmuncipalitytype";
+      if (land) {
+        url = url + "/?l=" + land;
+      }
       axios
-        .get("/adminglobal/getallmuncipalitytype")
+        .get(url)
         .then(function(response) {
           if (response.data.status == true) {
             e.GemeindetypeList = response.data.allmuncipalitytype;

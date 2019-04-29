@@ -61,7 +61,7 @@
                 v-model="sprache"
                 @input="mapCenterloation"
               ></v-select>
-              <v-combobox
+              <!-- <v-combobox
                 :items="rateing"
                 label="Bewertung"
                 v-model="bewertung"
@@ -88,7 +88,7 @@
                     color="grey darken-4"
                   ></v-rating>
                 </template>
-              </v-combobox>
+              </v-combobox> -->
               <!-- <v-select
                     :items="GemeindetypeList"
                     item-text="type"
@@ -236,7 +236,7 @@
                     @input="mapCenterloation"
                     placeholder="Bitte auswählen"
                   ></v-select>-->
-                  <v-combobox
+                  <!-- <v-combobox
                     :items="rateing"
                     label="Bewertung"
                     v-model="bewertung"
@@ -263,7 +263,7 @@
                         color="grey darken-4"
                       ></v-rating>
                     </template>
-                  </v-combobox>
+                  </v-combobox> -->
                   <!-- <v-select
                     :items="GemeindetypeList"
                     item-text="type"
@@ -412,7 +412,7 @@
                         v-for="tag in splitTag(churche.tags)"
                       >{{tag}}</v-chip>
                     </div>
-                    <div class="my-2">
+                    <!-- <div class="my-2">
                       <v-rating
                         v-model="churche.rating"
                         readonly
@@ -420,14 +420,14 @@
                         small
                         background-color="grey darken-4"
                         color="grey darken-4"
-                      ></v-rating>
+                      ></v-rating> -->
                       <!-- <v-icon small class="black--text">star</v-icon>
                       <v-icon small class="black--text">star</v-icon>
                       <v-icon small class="black--text">star</v-icon>
                       <v-icon small class="black--text">star_half</v-icon>
                       <v-icon small class="black--text">star_border</v-icon>-->
-                      <span class="body-1 font-weight-bold ml-2">{{churche.rating}}</span>
-                    </div>
+                      <!-- <span class="body-1 font-weight-bold ml-2">{{churche.rating}}</span>
+                    </div> -->
                     <a :href="'/Kirchenfinder/'+churche.slug" class="caption black--text">
                       <v-icon small class="black--text">chevron_right</v-icon>Zur Gemeinde
                     </a>
@@ -595,10 +595,14 @@ export default {
           }
         });
     },
-    listofmuncipalty: function() {
+    listofmuncipalty: function(land = 0, ort = 0) {
       var e = this;
+      let url = "/adminglobal/getallmuncipalitytype";
+      if (land > 0 || ort > 0) {
+        url = url + "/?l=" + land + "&o=" + ort;
+      }
       axios
-        .get("/adminglobal/getallmuncipalitytype")
+        .get(url)
         .then(function(response) {
           if (response.data.status == true) {
             e.GemeindetypeList = response.data.allmuncipalitytype;
@@ -624,6 +628,7 @@ export default {
     },
     listofcity: function(id) {
       var e = this;
+      this.listofmuncipalty(this.land);
       if (e.land == "") {
         var city = "AT";
       } else {

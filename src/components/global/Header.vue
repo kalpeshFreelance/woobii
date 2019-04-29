@@ -149,7 +149,6 @@
                               placeholder="Ort"
                               solo
                               v-model="form5.ort"
-                              @change="muncipaltyType"
                               :items="OrtList"
                               v-validate="'required'"
                               :error-messages="errors.collect('form5.ort')"
@@ -733,6 +732,7 @@ export default {
             e.$store.state.userRole = response.data.userRole;
             e.logout = true;
             e.dialoglog = false;
+            e.$router.push('/kirchenfinder');
             e.$toasted.success("Successfully login", {
               position: "top-center",
               duration: 2000
@@ -821,6 +821,7 @@ export default {
             e.$store.state.token = response.data.token;
             e.logout = true;
             e.dialogreg = false;
+            e.$router.push('/kirchenfinder');
             e.$toasted.success("Successfully registered", {
               position: "top-center",
               duration: 2000
@@ -875,12 +876,12 @@ export default {
     },
     muncipaltyType: function() {
       this.dialogLoader = true;
-      this.listofmuncipalty(this.form1.land, this.form1.ort);
+      this.listofmuncipalty(this.form5.land);
     },
     listofmuncipalty: function(land = 0, ort = 0) {
       var e = this;
       let url = "/adminglobal/getallmuncipalitytype";
-      if (land > 0 && ort > 0) {
+      if (land > 0 || ort > 0) {
         url = url + "/?l=" + land + "&o=" + ort;
       }
       axios
@@ -911,7 +912,8 @@ export default {
     },
     listofcity: function(id) {
       var e = this;
-      if (e.form1.land == "") {
+      this.listofmuncipalty(this.form5.land);
+      if (e.form5.land == "") {
         var city = "DE";
       } else {
         var cityData = e.LandList.filter(col => {

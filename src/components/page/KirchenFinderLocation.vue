@@ -401,7 +401,12 @@
                                   <v-btn depressed outline round color="indigo" class="heightStyle">
                                     <v-icon class="mr-1">videocam</v-icon>Video
                                   </v-btn>
-                                  <v-btn depressed dark color="orange darken-1" class="heightStyle">Veroffentlichen</v-btn>
+                                  <v-btn
+                                    depressed
+                                    dark
+                                    color="orange darken-1"
+                                    class="heightStyle"
+                                  >Veroffentlichen</v-btn>
                                 </v-card-text>
                               </v-card>
                             </v-flex>
@@ -421,25 +426,42 @@
                         </div>
                         <v-container grid-list-md class="pa-0 tab3rd-edit-panel">
                           <v-layout row wrap>
-                            <v-flex v-for="(newsroom, index) in churchesData.newsroom" v-bind:class="[ index == 0 ? 'md12' : 'md6']">
-                              <v-img v-if="newsroom.bannerimage"
-                              :lazy-src="'http://dev.woobii.com/admin/'+newsroom.bannerimage+'?v='+ Math.random()"
-                              :src="'http://dev.woobii.com/admin/'+newsroom.bannerimage+'?v='+ Math.random()"
-                              gradient="to top right, rgba(0,0,0,0), rgba(0,0,0,.55)">
+                            <v-flex
+                              v-for="(newsroom, index) in churchesData.newsroom"
+                              v-bind:class="[ index == 0 ? 'md12' : 'md6']"
+                            >
+                              <v-img
+                                v-if="newsroom.bannerimage"
+                                :lazy-src="'http://dev.woobii.com/admin/'+newsroom.bannerimage+'?v='+ Math.random()"
+                                :src="'http://dev.woobii.com/admin/'+newsroom.bannerimage+'?v='+ Math.random()"
+                                gradient="to top right, rgba(0,0,0,0), rgba(0,0,0,.55)"
+                              >
                                 <v-container fill-height fluid>
                                   <v-layout px-2 column fill-height class="lightbox white--text">
                                     <v-spacer></v-spacer>
                                     <v-flex shrink>
                                       <v-layout row wrap>
-                                        <v-flex xs12 sm6 md6 class="pa-3" style="background-color: rgba(255,255,255,.75);">
+                                        <v-flex
+                                          xs12
+                                          sm6
+                                          md6
+                                          class="pa-3"
+                                          style="background-color: rgba(255,255,255,.75);"
+                                        >
                                           <h4 class="body-1 my-1 black--text">
                                             <span class="font-weight-bold">{{ newsroom.category }}</span>
                                             <span class="ml-2" style="color:#fa6e2f;">|</span>
                                             {{ newsroom.subcategory }}
                                           </h4>
                                           <h4 class="body-1 my-1 black--text">{{ newsroom.title }}</h4>
-                                          <v-btn fab class="editIconBtn" dark color="orange darken-1"
-                                          @click="newsroomdetail(newsroom.newsid); editDialog = true" v-if="userRoleCall != 1">
+                                          <v-btn
+                                            fab
+                                            class="editIconBtn"
+                                            dark
+                                            color="orange darken-1"
+                                            @click="newsroomdetail(newsroom.newsid); editDialog = true"
+                                            v-if="userRoleCall != 1"
+                                          >
                                             <v-icon style="font-size:12px">edit</v-icon>
                                           </v-btn>
                                         </v-flex>
@@ -494,7 +516,7 @@
                                     </v-flex>
                                   </v-layout>
                                 </v-container>
-                              </v-img> -->
+                              </v-img>-->
                               <!-- <v-card-text v-if="index != 0">
                                 <h4 class="body-1 my-2">
                                   <span class="font-weight-bold">{{ newsroom.category }}</span>
@@ -502,7 +524,7 @@
                                   {{ newsroom.subcategory }}
                                 </h4>
                                 <h4 class="body-1 my-2">{{ newsroom.title }}</h4>
-                              </v-card-text> -->
+                              </v-card-text>-->
                             </v-card>
                           </v-flex>
                           <v-dialog light v-model="editDialog" max-width="800px">
@@ -1271,7 +1293,7 @@
             <v-dialog v-model="sharedialog" max-width="290" dark>
               <v-card>
                 <v-card-title class="mr-2">
-                  <v-icon class="mr-2">share</v-icon>Kirchengemeinde empfehlen 
+                  <v-icon class="mr-2">share</v-icon>Kirchengemeinde empfehlen
                 </v-card-title>
                 <v-card-text class="mt-0">
                   <social-sharing
@@ -1319,7 +1341,7 @@
                 background-color="grey darken-4"
                 color="grey darken-4"
               ></v-rating>Kirchengemeinde bewerten
-            </v-btn> -->
+            </v-btn>-->
             <p class="headline">Gemeindeprofil</p>
             <p class="body-1">
               <span class="font-weight-bold black--text">Gottesdienste</span>
@@ -1363,7 +1385,7 @@
         <v-dialog v-model="dialogLoader" hide-overlay persistent width="300">
           <v-card color="#FA6E2F" dark>
             <v-card-text>
-              Please stand by 
+              Please stand by
               <v-progress-linear indeterminate color="white" class="mb-0"></v-progress-linear>
             </v-card-text>
           </v-card>
@@ -1378,7 +1400,9 @@ export default {
   name: "KitrchenFinderLocation",
   data() {
     return {
-      userRole: localStorage.getItem('userRole') ? localStorage.getItem('userRole') : 1,
+      userRole: localStorage.getItem("userRole")
+        ? localStorage.getItem("userRole")
+        : 1,
       churcheslogo: "",
       rating: 0,
       // baseUrl: process.env.BASE_URL
@@ -1427,7 +1451,7 @@ export default {
         beschreibung: "",
         bildrechte: "",
         lizenz: "",
-        bannerimage: "",
+        bannerimage: ""
       }
     };
   },
@@ -1446,7 +1470,7 @@ export default {
     this.listofsubcategory();
   },
   computed: {
-    userRoleCall(){
+    userRoleCall() {
       return this.$store.state.userRole;
     }
   },
@@ -1689,8 +1713,7 @@ export default {
           if (response.data.status == true) {
             e.churchesData = response.data.churche;
             e.churcheid = e.churchesData[0].id;
-            e.churcheslogo =
-              e.churchesData[0].logo + "?v=" + Math.random();
+            e.churcheslogo = e.churchesData[0].logo + "?v=" + Math.random();
             e.aboutus = e.churchesData[0].about_us;
             e.rating = e.churchesData[0].rating;
           }
