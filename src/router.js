@@ -9,6 +9,7 @@ import Solution from './components/page/Solution'
 import KitrchenFinder from './components/page/KirchenFinder'
 import KitrchenFinderLocation from './components/page/KirchenFinderLocation'
 import PageNotFound from './components/page/404'
+import Profile from './components/page/Profile'
 
 Vue.use(Router)
 
@@ -73,10 +74,16 @@ export default new Router({
       ] */
     },
     {
+      path: '/profile',
+      name: 'profile',
+      component: Profile
+    },
+    {
       path: '*',
       name: '404',
       component: PageNotFound
     }
+
     /*{
       path: '/about',
       name: 'about',

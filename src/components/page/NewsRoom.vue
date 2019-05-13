@@ -13,17 +13,18 @@
                 :items="newsroomTitle"
                 item-text="title"
                 item-value="link"
-                :search-input.sync="search"
+                :search-input.sync="mnewssearch"
                 @input="pageRedirect"
                 cache-items
                 flat
                 hide-no-data
                 hide-details
-                label="Search News"
+                placeholder="Search News"
                 append-icon="search"
                 solo
+                style="margin-bottom: 16px;"
               ></v-autocomplete>
-              <v-text-field placeholder="Placeholder" append-icon="search" class="searchInput"></v-text-field>
+              <!-- <v-text-field placeholder="Placeholder" append-icon="search" class="searchInput"></v-text-field> -->
               <v-autocomplete
                 label="Land:"
                 placeholder="Land..."
@@ -100,7 +101,7 @@
                     :items="newsroomTitle"
                     item-text="title"
                     item-value="link"
-                    :search-input.sync="search"
+                    :search-input.sync="newssearch"
                     @input="pageRedirect"
                     cache-items
                     flat
@@ -174,36 +175,46 @@
                       :lazy-src="'http://dev.woobii.com/admin/'+news.bannerimage"
                       :src="'http://dev.woobii.com/admin/'+news.bannerimage"
                       class="newsImage"
-                    />
+                    >
+                      <v-layout pa-2 column fill-height class="lightbox white--text">
+                        <v-flex shrink>
+                          <span>
+                            <i class="far fa-copyright"></i>
+                          </span>
+                        </v-flex>
+                      </v-layout>
+                    </v-img>
                     <v-img
                       v-else
                       :src="require(`@/assets/woobii-banner.jpg`)"
                       :lazy-src="require(`@/assets/woobii-banner.jpg`)"
-                    />
+                    ></v-img>
                   </router-link>
-                  <v-card-title>
+                  <v-card-title class="pb-0">
                     <h4 class="caption text-uppercase mb-2" style="width: 100%;">
                       <span class="font-weight-black">{{news.category}}</span>
                       | {{news.subcategory}}
                     </h4>
-                    <h4 class="caption text-uppercase font-weight-black mb-2" style="width: 100%;">
+                    <h4 class="caption text-uppercase mb-2" style="width: 100%;">
                       <router-link
                         :to="'/newsroom/'+news.slug"
-                        class="caption black--text"
+                        class="caption black--text font-weight-black"
                       >{{news.title}}</router-link>
                     </h4>
-                    <h4 class="caption">{{ news.author}} | {{ news.date | moment("DD.MM.YYYY")}}</h4>
                   </v-card-title>
+                  <v-card-actions class="py-2 px-3">
+                    <h4 class="caption">{{ news.author}} | {{ news.date | moment("DD.MM.YYYY")}}</h4>
+                  </v-card-actions>
                 </v-card>
               </v-flex>
             </v-layout>
             <div class="text-xs-center">
-              <v-pagination
+              <!-- <v-pagination
                 v-model="page"
                 :length="totalcount"
                 :total-visible="5"
                 @input="onPageChange"
-              ></v-pagination>
+              ></v-pagination>-->
             </div>
           </v-flex>
         </v-layout>
@@ -224,7 +235,8 @@ export default {
       drawer: null,
       searchLoading: false,
       newsroomTitle: [],
-      search: null,
+      newssearch: "",
+      mnewssearch: "",
       newsroomList: {},
       GemeindetypeList: [],
       LandList: [],
@@ -251,11 +263,24 @@ export default {
   },
   beforeDestroy() {},
   watch: {
-    search(val) {
+    newssearch(val) {
+      if (val == null) {
+        return;
+      }
       if (val.length >= 3) {
         val && val !== this.select && this.querySelections(val);
       } else {
-        this.churcheTitle = [];
+        this.newsroomTitle = [];
+      }
+    },
+    mnewssearch(val) {
+      if (val == null) {
+        return;
+      }
+      if (val.length >= 3) {
+        val && val !== this.select && this.querySelections(val);
+      } else {
+        this.newsroomTitle = [];
       }
     }
   },

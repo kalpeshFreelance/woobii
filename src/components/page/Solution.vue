@@ -8,7 +8,7 @@
 
 <script>
 export default {
-  name: "App",
+  name: "Solution",
   data() {
     return {
       // baseUrl: process.env.BASE_URL

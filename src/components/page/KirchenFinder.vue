@@ -88,7 +88,7 @@
                     color="grey darken-4"
                   ></v-rating>
                 </template>
-              </v-combobox> -->
+              </v-combobox>-->
               <!-- <v-select
                     :items="GemeindetypeList"
                     item-text="type"
@@ -263,7 +263,7 @@
                         color="grey darken-4"
                       ></v-rating>
                     </template>
-                  </v-combobox> -->
+                  </v-combobox>-->
                   <!-- <v-select
                     :items="GemeindetypeList"
                     item-text="type"
@@ -323,7 +323,7 @@
                           Anzahl an Gemeinden
                           <br>mit lhrer Vorauswahl
                         </p>
-                        <span class="display-1 font-weight-bold my-0">32</span>
+                        <span class="display-1 font-weight-bold my-0">{{radiusCircle}}</span>
                       </v-flex>
                       <v-flex d-flex xs12 md4>
                         <p class="caption mb-0">
@@ -340,20 +340,23 @@
                     map-type-id="roadmap"
                     style="width: 100%; height: 450px"
                   >
-                    <GmapMarker
-                      :key="index"
-                      v-for="(m, index) in markers"
-                      :position="m"
-                      :clickable="true"
-                      :draggable="false"
-                      @click="center=m"
-                    />
-                    <GmapCircle
-                      :bounds="circleBounds"
-                      :center="center"
-                      :radius="radius"
-                      :options="{editable: false}"
-                    ></GmapCircle>
+                    <GmapCluster>
+                      <GmapMarker
+                        :key="index"
+                        v-for="(m, index) in markers"
+                        :position="m"
+                        :clickable="true"
+                        :draggable="false"
+                        @click="center=m"
+                      />
+                      <GmapCircle
+                        v-if="radiusflag"
+                        :bounds="circleBounds"
+                        :center="center"
+                        :radius="radius"
+                        :options="{editable: false}"
+                      ></GmapCircle>
+                    </GmapCluster>
                   </GmapMap>
                   <!--<googlemaps-map
                     :center.sync="center"
@@ -420,14 +423,14 @@
                         small
                         background-color="grey darken-4"
                         color="grey darken-4"
-                      ></v-rating> -->
-                      <!-- <v-icon small class="black--text">star</v-icon>
+                    ></v-rating>-->
+                    <!-- <v-icon small class="black--text">star</v-icon>
                       <v-icon small class="black--text">star</v-icon>
                       <v-icon small class="black--text">star</v-icon>
                       <v-icon small class="black--text">star_half</v-icon>
-                      <v-icon small class="black--text">star_border</v-icon>-->
-                      <!-- <span class="body-1 font-weight-bold ml-2">{{churche.rating}}</span>
-                    </div> -->
+                    <v-icon small class="black--text">star_border</v-icon>-->
+                    <!-- <span class="body-1 font-weight-bold ml-2">{{churche.rating}}</span>
+                    </div>-->
                     <a :href="'/Kirchenfinder/'+churche.slug" class="caption black--text">
                       <v-icon small class="black--text">chevron_right</v-icon>Zur Gemeinde
                     </a>
@@ -462,13 +465,17 @@ export default {
       isMobile: false,
       drawer: null,
       center: {
-        lat: 52.52,
-        lng: 13.4
+        lat: 49.9456,
+        lng: 11.5713
+        // lat: 52.52,
+        // lng: 13.4
       },
+      radiusCircle: 0,
       page: 1,
       totalcount: 0,
       userPosition: null,
-      zoom: 10,
+      zoom: 5,
+      radiusflag: false,
       radius: 10000,
       rateing: [1, 2, 3, 4, 5],
       selectCity: 0,
@@ -685,7 +692,7 @@ export default {
           return col.id.match(event);
         });
       } else {
-        if (event.isArray) {
+        if (typeof event == "object") {
           if (event.target.name == "offer[]") {
             var index = e.offerData.indexOf(event.target.value);
             if (index > -1) {
@@ -701,6 +708,8 @@ export default {
       if (cityData.length == 1) {
         e.center.lat = parseFloat(cityData[0].lat);
         e.center.lng = parseFloat(cityData[0].lng);
+        e.zoom = 10;
+        e.radiusflag = true;
         e.selectCity = cityData[0].id;
         e.page = 1;
         e.churchlist(0, e.selectCity, e.land, false);
@@ -837,20 +846,22 @@ export default {
       this.churchlist(pageNum - 1, this.selectCity, this.land, all);
     },
     markerCount: function(lat, lng, marker) {
-      console.log("In side marker count");
-      var loc1 = lat + "," + lng; //Marker Radius Co-ords
-      var loc2 = new google.maps.LatLng(marker[0].lat, marker[0].lng); //Marker Co-ords
-
-      var diff = google.maps.geometry.spherical.computeDistanceBetween(
-        loc1,
-        loc2
-      );
-
-      if (diff < circle.getRadius()) {
-        alert(loc2 + " Inside Radius");
-      } else {
-        alert(loc2 + " Outside Radius");
-      }
+      let count = 0;
+      marker.forEach(element => {
+        var loc1 = lat + "," + lng; //Marker Radius Co-ords
+        var loc2 = element.lat + "," + element.lng; //Marker Co-ords
+        var nyc = new google.maps.LatLng(lat, lng);
+        var london = new google.maps.LatLng(element.lat, element.lng);
+        var distance = google.maps.geometry.spherical.computeDistanceBetween(
+          nyc,
+          london,
+          this.radius
+        );
+        if (distance < 15) {
+          count++;
+        }
+      });
+      this.radiusCircle = count;
     }
   }
 };

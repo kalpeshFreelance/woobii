@@ -6,6 +6,7 @@ import router from './router'
 import store from './store'
 import VeeValidate from 'vee-validate'
 import * as VueGoogleMaps from 'vue2-google-maps'
+import GmapCluster from 'vue2-google-maps/dist/components/cluster'
 //import 'vue-googlemaps/dist/vue-googlemaps.css'
 //import VueGoogleMaps from 'vue-googlemaps'
 import axios from 'axios'
@@ -75,6 +76,7 @@ Vue.use(VueGoogleMaps, {
   // installComponents: true,
 })
 
+Vue.component('GmapCluster', GmapCluster)
 axios.defaults.baseURL = 'http://dev.woobii.com/admin/';
 
 // Add a request interceptor

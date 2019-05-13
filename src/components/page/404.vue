@@ -10,7 +10,7 @@
 
 <script>
 export default {
-  name: "App",
+  name: "Notfound",
   data() {
     return {
       // baseUrl: process.env.BASE_URL
