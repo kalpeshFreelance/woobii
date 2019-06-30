@@ -24,6 +24,7 @@
           <v-btn slot="activator" flat class="hover-orange">Einloggen</v-btn>
           <span>Einloggen</span>
         </v-tooltip>-->
+        <v-btn v-show="isToken" v-on:click="navigate()" flat class="hover-orange">Profile</v-btn>
         <v-btn v-show="isToken" @click="logoutSession" flat class="hover-orange">Logout</v-btn>
         <v-dialog v-model="dialogreg" max-width="600px">
           <v-btn slot="activator" v-show="!isToken" flat class="hover-orange">KOSTENLOS ANMELDEN</v-btn>
@@ -682,6 +683,9 @@ export default {
     }
   },
   methods: {
+    navigate(){
+       this.$router.push('/profile');
+    },
     facebookLogin(login) {
       if(login == 'login'){
         this.loginflag = true;

@@ -1315,9 +1315,9 @@
                       <network network="twitter">
                         <v-icon class>fab fa-twitter-square</v-icon>Twitter
                       </network>
-                      <network network="googleplus">
+                      <!-- <network network="googleplus">
                         <v-icon class>fab fa-google-plus-square</v-icon>Google +
-                      </network>
+                      </network> -->
                       <network network="linkedin">
                         <v-icon class>fab fa-linkedin</v-icon>LinkedIn
                       </network>

@@ -887,6 +887,17 @@ a.router-link-exact-active.router-link-active .v-tooltip span button {
     border-style: solid;
     border-color: #bdbdbd!important;
 }
+.editDialog .cartBorder .range-slider .v-input__slot {
+    border-width: 0px;
+    border-style: none;
+    border-color: transparent!important;
+}
+.editDialog .cartBorder .v-input--slider {
+    margin-top: 0;
+}
+.editDialog .cartBorder .v-text-field.v-text-field--solo .v-input__prepend-outer {
+    margin-top: 6px;
+}
 .editDialog .cartBorder .v-textarea.v-text-field--enclosed .v-text-field__slot textarea {
     margin-top: 2px;
 }

@@ -203,7 +203,10 @@
                     </h4>
                   </v-card-title>
                   <v-card-actions class="py-2 px-3">
-                    <h4 class="caption">{{ news.author}} | {{ news.date | moment("DD.MM.YYYY")}}</h4>
+                    <h4 class="caption">
+                      <router-link :to="'/Kirchenfinder/'+news.comm_slug" class="caption black--text">{{news.comm_name}}</router-link>
+                      | {{ news.date | moment("DD.MM.YYYY")}}
+                    </h4>
                   </v-card-actions>
                 </v-card>
               </v-flex>
