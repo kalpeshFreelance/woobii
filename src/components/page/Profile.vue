@@ -86,6 +86,24 @@
               </template>
             </v-data-table>
           </v-flex>
+          <v-flex xs12 md6>
+            <v-toolbar flat color="white">
+              <v-toolbar-title class="subheading">My Church</v-toolbar-title>
+              <v-spacer></v-spacer>
+              <v-btn
+                small
+                outline
+                color="green"
+               @click="addChurch = true"
+              >Add Church</v-btn>
+            </v-toolbar>
+            <v-btn
+              small
+              outline
+              color="green"
+              @click="editChurch = true"
+            >Edit</v-btn>
+          </v-flex>
           <v-dialog v-model="password" max-width="600px">
             <v-card dark class="transparentDialog">
               <v-card-text>
@@ -677,6 +695,724 @@
               </v-card-actions>
             </v-card>
           </v-dialog>
+          <v-dialog light v-model="addChurch" max-width="800px">
+            <v-card class="editDialog pa-3">
+              <v-card-title
+                class="subheading"
+              >Bitte Fullen Sie zur Verffentlichung lher News folgende Felder aus:</v-card-title>
+              <v-card-text class="py-0">
+                <v-container grid-list-md class="pa-0">
+                  <v-layout row wrap>
+                    <v-flex xs12>
+                      <v-card light color="grey lighten-4" tile flat class="cartBorder">
+                        <v-toolbar color="grey lighten-2" light flat height="45px">
+                          <v-toolbar-title>Title</v-toolbar-title>
+                          <v-spacer></v-spacer>
+                          <v-btn icon>
+                            <v-icon>expand_more</v-icon>
+                          </v-btn>
+                        </v-toolbar>
+                        <v-card-text>
+                          <v-layout row wrap>
+                            <v-flex xs12 sm3 md3 class="feildLabel">Church Title</v-flex>
+                            <v-flex xs12 sm9 md9>
+                              <v-text-field
+                                solo
+                              ></v-text-field>
+                            </v-flex>
+                            <v-flex xs12 sm3 md3 class="feildLabel">Content</v-flex>
+                            <v-flex xs12 sm9 md9>
+                              <wysiwyg  label="About" required/>
+                            </v-flex>
+                          </v-layout>
+                        </v-card-text>
+                      </v-card>
+                    </v-flex>
+                    <v-flex xs12>
+                      <v-card light color="grey lighten-4" tile flat class="cartBorder">
+                        <v-toolbar color="grey lighten-2" light flat height="45px">
+                          <v-toolbar-title>Title</v-toolbar-title>
+                          <v-spacer></v-spacer>
+                          <v-btn icon>
+                            <v-icon>expand_more</v-icon>
+                          </v-btn>
+                        </v-toolbar>
+                        <v-card-text>
+                          <v-layout row wrap>
+                            <v-flex xs12 sm2 md3 class="feildLabel">Address</v-flex>
+                            <v-flex xs12 sm2 md3>
+                              <v-text-field
+                                solo
+                              ></v-text-field>
+                            </v-flex>
+                            <v-flex xs12 sm3 md3 class="pl-3 feildLabel">Select Country</v-flex>
+                            <v-flex xs12 sm3 md3>
+                              <v-select
+                                solo
+                              ></v-select>
+                            </v-flex>
+                            <v-flex xs12 sm3 md3 class="feildLabel">Select City</v-flex>
+                            <v-flex xs12 sm3 md3>
+                              <v-select
+                                solo
+                              ></v-select>
+                            </v-flex>
+                            <v-flex xs12 sm3 md3 class="pl-3 feildLabel">Email</v-flex>
+                            <v-flex xs12 sm3 md3>
+                              <v-text-field
+                                solo
+                              ></v-text-field>
+                            </v-flex>
+                            <v-flex xs12 sm3 md3 class="feildLabel">Contact Person</v-flex>
+                            <v-flex xs12 sm3 md3>
+                              <v-text-field
+                                solo
+                              ></v-text-field>
+                            </v-flex>
+                            <v-flex xs12 sm3 md3 class="pl-3 feildLabel">Contact No</v-flex>
+                            <v-flex xs12 sm3 md3>
+                              <v-text-field
+                                solo
+                              ></v-text-field>
+                            </v-flex>
+                            <v-flex xs12 sm3 md3 class="feildLabel">Head Office No</v-flex>
+                            <v-flex xs12 sm3 md3>
+                              <v-text-field
+                                solo
+                              ></v-text-field>
+                            </v-flex>
+                            <v-flex xs12 sm3 md3 class="pl-3 feildLabel">Website Address</v-flex>
+                            <v-flex xs12 sm3 md3>
+                              <v-text-field
+                                solo
+                              ></v-text-field>
+                            </v-flex>
+                          </v-layout>
+                        </v-card-text>
+                      </v-card>
+                    </v-flex>
+                    <v-flex d-flex xs12 sm6 md6>
+                      <v-layout row wrap>
+                        <v-flex d-flex xs12>
+                          <v-card light color="grey lighten-4" tile flat class="cartBorder">
+                            <v-toolbar color="grey lighten-2" light flat height="45px">
+                              <v-toolbar-title>Title</v-toolbar-title>
+                              <v-spacer></v-spacer>
+                              <v-btn icon>
+                                <v-icon>expand_more</v-icon>
+                              </v-btn>
+                            </v-toolbar>
+                            <v-card-text>
+                              <v-layout row wrap>
+                                <v-flex xs12 sm4 md4 class="feildLabel">Latitude</v-flex>
+                                <v-flex xs12 sm8 md8>
+                                  <v-text-field
+                                    solo
+                                  ></v-text-field>
+                                </v-flex>
+                                <v-flex xs12 sm4 md4 class="feildLabel">Longutude</v-flex>
+                                <v-flex xs12 sm8 md8>
+                                  <v-text-field
+                                    solo
+                                  ></v-text-field>
+                                </v-flex>
+                                <v-flex xs3>
+                                  <v-text-field
+                                    class="mt-0"
+                                    label="Visitor Min"
+                                    hide-details
+                                    single-line
+                                    solo
+                                  ></v-text-field>
+                                </v-flex>
+                                <v-flex xs6 class="noBorder">
+                                  <v-range-slider v-model="price" :max="1000" :min="1" :step="10"></v-range-slider>
+                                </v-flex>
+                                <v-flex xs3>
+                                  <v-text-field
+                                    label="Visitor Max"
+                                    class="mt-0"
+                                    hide-details
+                                    single-line
+                                    solo
+                                  ></v-text-field>
+                                </v-flex>
+                                <v-flex xs12 sm4 md4 class="feildLabel">Strat Time</v-flex>
+                                <v-flex xs12 sm8 md8>
+                                  <!-- <v-dialog
+                                    ref="strattime"
+                                    v-model="modal2"
+                                    :return-value.sync="form2.starttime"
+                                    persistent
+                                    lazy
+                                    full-width
+                                    width="290px"
+                                  >
+                                    <v-text-field
+                                      slot="activator"
+                                      v-model="form2.starttime"
+                                      label="Start Time"
+                                      prepend-icon="access_time"
+                                      readonly
+                                    ></v-text-field>
+                                    <v-time-picker v-if="modal2" v-model="form2.starttime" full-width>
+                                      <v-spacer></v-spacer>
+                                      <v-btn flat color="primary" @click="modal2 = false">Cancel</v-btn>
+                                      <v-btn flat color="primary" @click="$refs.strattime.save(form2.starttime)">OK</v-btn>
+                                    </v-time-picker>
+                                  </v-dialog> -->
+                                </v-flex>
+                                <v-flex xs12 sm4 md4 class="feildLabel">Close Time</v-flex>
+                                <v-flex xs12 sm8 md8>
+                                  <!-- <v-dialog
+                                    ref="closetime"
+                                    v-model="modal3"
+                                    :return-value.sync="form2.closetime"
+                                    persistent
+                                    lazy
+                                    full-width
+                                    width="290px"
+                                  >
+                                    <v-text-field
+                                      slot="activator"
+                                      v-model="form2.closetime"
+                                      label="Closing Time"
+                                      prepend-icon="access_time"
+                                      readonly
+                                    ></v-text-field>
+                                    <v-time-picker v-if="modal3" v-model="form2.closetime" full-width>
+                                      <v-spacer></v-spacer>
+                                      <v-btn flat color="primary" @click="modal3 = false">Cancel</v-btn>
+                                      <v-btn flat color="primary" @click="$refs.closetime.save(form2.closetime)">OK</v-btn>
+                                    </v-time-picker>
+                                  </v-dialog> -->
+                                </v-flex>
+                              </v-layout>
+                            </v-card-text>
+                          </v-card>
+                        </v-flex>
+                      </v-layout>
+                    </v-flex>
+                    <v-flex d-flex xs12 sm6 md6>
+                      <v-layout row wrap>
+                        <v-flex d-flex xs12>
+                          <v-card light color="grey lighten-4" tile flat class="cartBorder">
+                            <v-toolbar color="grey lighten-2" light flat height="45px">
+                              <v-toolbar-title>Title</v-toolbar-title>
+                              <v-spacer></v-spacer>
+                              <v-btn icon>
+                                <v-icon>expand_more</v-icon>
+                              </v-btn>
+                            </v-toolbar>
+                            <v-card-text>
+                              <v-layout row wrap>
+                                <v-flex xs12 sm4 md4 class="feildLabel">Facebook Link</v-flex>
+                                <v-flex xs12 sm8 md8>
+                                  <v-text-field
+                                    solo
+                                  ></v-text-field>
+                                </v-flex>
+                                <v-flex xs12 sm4 md4 class="feildLabel">Twitter Link</v-flex>
+                                <v-flex xs12 sm8 md8>
+                                  <v-text-field
+                                    solo
+                                  ></v-text-field>
+                                </v-flex>
+                                <v-flex xs12 sm4 md4 class="feildLabel">Youtube Link</v-flex>
+                                <v-flex xs12 sm8 md8>
+                                  <v-text-field
+                                    solo
+                                  ></v-text-field>
+                                </v-flex>
+                                <v-flex xs12 sm4 md4 class="feildLabel">Instgram Link</v-flex>
+                                <v-flex xs12 sm8 md8>
+                                  <v-text-field
+                                    solo
+                                  ></v-text-field>
+                                </v-flex>
+                                <v-flex xs12 sm4 md4 class="feildLabel">Pintrest Link</v-flex>
+                                <v-flex xs12 sm8 md8>
+                                  <v-text-field
+                                    solo
+                                  ></v-text-field>
+                                </v-flex>
+                              </v-layout>
+                            </v-card-text>
+                          </v-card>
+                        </v-flex>
+                      </v-layout>
+                    </v-flex>
+                    <v-flex xs12>
+                      <v-card light color="grey lighten-4" tile flat class="cartBorder">
+                        <v-toolbar color="grey lighten-2" light flat height="45px">
+                          <v-toolbar-title>Title</v-toolbar-title>
+                          <v-spacer></v-spacer>
+                          <v-btn icon>
+                            <v-icon>expand_more</v-icon>
+                          </v-btn>
+                        </v-toolbar>
+                        <v-card-text>
+                          <v-layout row wrap>
+                            <v-flex xs12 sm3 md3 class="feildLabel">Tags</v-flex>
+                            <v-flex xs12 sm3 md3>
+                              <v-select
+                                solo
+                              ></v-select>
+                            </v-flex>
+                            <v-flex xs12 sm3 md3 class="pl-3 feildLabel">Langauages</v-flex>
+                            <v-flex xs12 sm3 md3>
+                              <v-select
+                                solo
+                              ></v-select>
+                            </v-flex>
+                            <v-flex xs12 sm3 md3 class="feildLabel">Denomination</v-flex>
+                            <v-flex xs12 sm3 md3>
+                              <v-select
+                                solo
+                              ></v-select>
+                            </v-flex>
+                            <v-flex xs12 sm3 md3 class="pl-3 feildLabel">Offers</v-flex>
+                            <v-flex xs12 sm3 md3>
+                              <v-select
+                                solo
+                              ></v-select>
+                            </v-flex>
+                          </v-layout>
+                        </v-card-text>
+                      </v-card>
+                    </v-flex>
+                    <v-flex xs12>
+                      <v-card light color="grey lighten-4" tile flat class="cartBorder">
+                        <v-toolbar color="grey lighten-2" light flat height="45px">
+                          <v-toolbar-title>Title</v-toolbar-title>
+                          <v-spacer></v-spacer>
+                          <v-btn icon>
+                            <v-icon>expand_more</v-icon>
+                          </v-btn>
+                        </v-toolbar>
+                        <v-card-text>
+                          <v-layout row wrap>
+                            <v-flex xs6 class="pr-3 noBorder">
+                              <v-text-field
+                                label="Upload Banner"
+                                prepend-icon="attach_file"
+                              ></v-text-field>
+                              <input
+                                type="file"
+                                style="display: none"
+                                ref="imageb"
+                                accept="image/*"
+                              >
+                            </v-flex>
+                            <v-flex xs6 class="pl-3 noBorder">
+                              <v-text-field
+                                label="Upload Logo"
+                                prepend-icon="attach_file"
+                              ></v-text-field>
+                              <input
+                                type="file"
+                                style="display: none"
+                                ref="image"
+                                accept="image/*"
+                              >
+                            </v-flex>
+                          </v-layout>
+                        </v-card-text>
+                      </v-card>
+                    </v-flex>
+                  </v-layout>
+                </v-container>
+              </v-card-text>
+              <v-card-actions class="pt-4">
+                <v-container grid-list-md class="pa-0">
+                  <v-layout row wrap>
+                    <v-flex xs12 sm6 md6>
+                      <v-checkbox
+                        v-model="formnews.checkbox"
+                        label="Hauptnews auf GLAUBE.at (kostenpflichtig)"
+                        required
+                      ></v-checkbox>
+                    </v-flex>
+                    <v-flex xs12 sm6 md6>
+                      <v-btn
+                        @click="editDialog = false"
+                        depressed
+                        small
+                        class="grey lighten-2"
+                      >LOSCHEN</v-btn>
+                      <v-btn @click="saveNewsroom" depressed small class="grey lighten-2">SPEICHERN</v-btn>
+                      <v-btn
+                        depressed
+                        small
+                        dark
+                        @click="saveNewsroom"
+                        color="orange darken-1"
+                      >VEROFFENTLICHUN</v-btn>
+                    </v-flex>
+                  </v-layout>
+                </v-container>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+          <v-dialog light v-model="editChurch" max-width="800px">
+            <v-card class="editDialog pa-3">
+              <v-card-title
+                class="subheading"
+              >Bitte Fullen Sie zur Verffentlichung lher News folgende Felder aus:</v-card-title>
+              <v-card-text class="py-0">
+                <v-container grid-list-md class="pa-0">
+                  <v-layout row wrap>
+                    <v-flex xs12>
+                      <v-card light color="grey lighten-4" tile flat class="cartBorder">
+                        <v-toolbar color="grey lighten-2" light flat height="45px">
+                          <v-toolbar-title>Title</v-toolbar-title>
+                          <v-spacer></v-spacer>
+                          <v-btn icon>
+                            <v-icon>expand_more</v-icon>
+                          </v-btn>
+                        </v-toolbar>
+                        <v-card-text>
+                          <v-layout row wrap>
+                            <v-flex xs12 sm3 md3 class="feildLabel">Church Title</v-flex>
+                            <v-flex xs12 sm9 md9>
+                              <v-text-field
+                                solo
+                              ></v-text-field>
+                            </v-flex>
+                            <v-flex xs12 sm3 md3 class="feildLabel">Content</v-flex>
+                            <v-flex xs12 sm9 md9>
+                              <wysiwyg  label="About" required/>
+                            </v-flex>
+                          </v-layout>
+                        </v-card-text>
+                      </v-card>
+                    </v-flex>
+                    <v-flex xs12>
+                      <v-card light color="grey lighten-4" tile flat class="cartBorder">
+                        <v-toolbar color="grey lighten-2" light flat height="45px">
+                          <v-toolbar-title>Title</v-toolbar-title>
+                          <v-spacer></v-spacer>
+                          <v-btn icon>
+                            <v-icon>expand_more</v-icon>
+                          </v-btn>
+                        </v-toolbar>
+                        <v-card-text>
+                          <v-layout row wrap>
+                            <v-flex xs12 sm2 md3 class="feildLabel">Address</v-flex>
+                            <v-flex xs12 sm2 md3>
+                              <v-text-field
+                                solo
+                              ></v-text-field>
+                            </v-flex>
+                            <v-flex xs12 sm3 md3 class="pl-3 feildLabel">Select Country</v-flex>
+                            <v-flex xs12 sm3 md3>
+                              <v-select
+                                solo
+                              ></v-select>
+                            </v-flex>
+                            <v-flex xs12 sm3 md3 class="feildLabel">Select City</v-flex>
+                            <v-flex xs12 sm3 md3>
+                              <v-select
+                                solo
+                              ></v-select>
+                            </v-flex>
+                            <v-flex xs12 sm3 md3 class="pl-3 feildLabel">Email</v-flex>
+                            <v-flex xs12 sm3 md3>
+                              <v-text-field
+                                solo
+                              ></v-text-field>
+                            </v-flex>
+                            <v-flex xs12 sm3 md3 class="feildLabel">Contact Person</v-flex>
+                            <v-flex xs12 sm3 md3>
+                              <v-text-field
+                                solo
+                              ></v-text-field>
+                            </v-flex>
+                            <v-flex xs12 sm3 md3 class="pl-3 feildLabel">Contact No</v-flex>
+                            <v-flex xs12 sm3 md3>
+                              <v-text-field
+                                solo
+                              ></v-text-field>
+                            </v-flex>
+                            <v-flex xs12 sm3 md3 class="feildLabel">Head Office No</v-flex>
+                            <v-flex xs12 sm3 md3>
+                              <v-text-field
+                                solo
+                              ></v-text-field>
+                            </v-flex>
+                            <v-flex xs12 sm3 md3 class="pl-3 feildLabel">Website Address</v-flex>
+                            <v-flex xs12 sm3 md3>
+                              <v-text-field
+                                solo
+                              ></v-text-field>
+                            </v-flex>
+                          </v-layout>
+                        </v-card-text>
+                      </v-card>
+                    </v-flex>
+                    <v-flex d-flex xs12 sm6 md6>
+                      <v-layout row wrap>
+                        <v-flex d-flex xs12>
+                          <v-card light color="grey lighten-4" tile flat class="cartBorder">
+                            <v-toolbar color="grey lighten-2" light flat height="45px">
+                              <v-toolbar-title>Title</v-toolbar-title>
+                              <v-spacer></v-spacer>
+                              <v-btn icon>
+                                <v-icon>expand_more</v-icon>
+                              </v-btn>
+                            </v-toolbar>
+                            <v-card-text>
+                              <v-layout row wrap>
+                                <v-flex xs12 sm4 md4 class="feildLabel">Latitude</v-flex>
+                                <v-flex xs12 sm8 md8>
+                                  <v-text-field
+                                    solo
+                                  ></v-text-field>
+                                </v-flex>
+                                <v-flex xs12 sm4 md4 class="feildLabel">Longutude</v-flex>
+                                <v-flex xs12 sm8 md8>
+                                  <v-text-field
+                                    solo
+                                  ></v-text-field>
+                                </v-flex>
+                                <v-flex xs3>
+                                  <v-text-field
+                                    class="mt-0"
+                                    label="Visitor Min"
+                                    hide-details
+                                    single-line
+                                    solo
+                                  ></v-text-field>
+                                </v-flex>
+                                <v-flex xs6 class="noBorder">
+                                  <v-range-slider v-model="price" :max="1000" :min="1" :step="10"></v-range-slider>
+                                </v-flex>
+                                <v-flex xs3>
+                                  <v-text-field
+                                    label="Visitor Max"
+                                    class="mt-0"
+                                    hide-details
+                                    single-line
+                                    solo
+                                  ></v-text-field>
+                                </v-flex>
+                                <v-flex xs12 sm4 md4 class="feildLabel">Strat Time</v-flex>
+                                <v-flex xs12 sm8 md8>
+                                  <!-- <v-dialog
+                                    ref="strattime"
+                                    v-model="modal2"
+                                    :return-value.sync="form2.starttime"
+                                    persistent
+                                    lazy
+                                    full-width
+                                    width="290px"
+                                  >
+                                    <v-text-field
+                                      slot="activator"
+                                      v-model="form2.starttime"
+                                      label="Start Time"
+                                      prepend-icon="access_time"
+                                      readonly
+                                    ></v-text-field>
+                                    <v-time-picker v-if="modal2" v-model="form2.starttime" full-width>
+                                      <v-spacer></v-spacer>
+                                      <v-btn flat color="primary" @click="modal2 = false">Cancel</v-btn>
+                                      <v-btn flat color="primary" @click="$refs.strattime.save(form2.starttime)">OK</v-btn>
+                                    </v-time-picker>
+                                  </v-dialog> -->
+                                </v-flex>
+                                <v-flex xs12 sm4 md4 class="feildLabel">Close Time</v-flex>
+                                <v-flex xs12 sm8 md8>
+                                  <!-- <v-dialog
+                                    ref="closetime"
+                                    v-model="modal3"
+                                    :return-value.sync="form2.closetime"
+                                    persistent
+                                    lazy
+                                    full-width
+                                    width="290px"
+                                  >
+                                    <v-text-field
+                                      slot="activator"
+                                      v-model="form2.closetime"
+                                      label="Closing Time"
+                                      prepend-icon="access_time"
+                                      readonly
+                                    ></v-text-field>
+                                    <v-time-picker v-if="modal3" v-model="form2.closetime" full-width>
+                                      <v-spacer></v-spacer>
+                                      <v-btn flat color="primary" @click="modal3 = false">Cancel</v-btn>
+                                      <v-btn flat color="primary" @click="$refs.closetime.save(form2.closetime)">OK</v-btn>
+                                    </v-time-picker>
+                                  </v-dialog> -->
+                                </v-flex>
+                              </v-layout>
+                            </v-card-text>
+                          </v-card>
+                        </v-flex>
+                      </v-layout>
+                    </v-flex>
+                    <v-flex d-flex xs12 sm6 md6>
+                      <v-layout row wrap>
+                        <v-flex d-flex xs12>
+                          <v-card light color="grey lighten-4" tile flat class="cartBorder">
+                            <v-toolbar color="grey lighten-2" light flat height="45px">
+                              <v-toolbar-title>Title</v-toolbar-title>
+                              <v-spacer></v-spacer>
+                              <v-btn icon>
+                                <v-icon>expand_more</v-icon>
+                              </v-btn>
+                            </v-toolbar>
+                            <v-card-text>
+                              <v-layout row wrap>
+                                <v-flex xs12 sm4 md4 class="feildLabel">Facebook Link</v-flex>
+                                <v-flex xs12 sm8 md8>
+                                  <v-text-field
+                                    solo
+                                  ></v-text-field>
+                                </v-flex>
+                                <v-flex xs12 sm4 md4 class="feildLabel">Twitter Link</v-flex>
+                                <v-flex xs12 sm8 md8>
+                                  <v-text-field
+                                    solo
+                                  ></v-text-field>
+                                </v-flex>
+                                <v-flex xs12 sm4 md4 class="feildLabel">Youtube Link</v-flex>
+                                <v-flex xs12 sm8 md8>
+                                  <v-text-field
+                                    solo
+                                  ></v-text-field>
+                                </v-flex>
+                                <v-flex xs12 sm4 md4 class="feildLabel">Instgram Link</v-flex>
+                                <v-flex xs12 sm8 md8>
+                                  <v-text-field
+                                    solo
+                                  ></v-text-field>
+                                </v-flex>
+                                <v-flex xs12 sm4 md4 class="feildLabel">Pintrest Link</v-flex>
+                                <v-flex xs12 sm8 md8>
+                                  <v-text-field
+                                    solo
+                                  ></v-text-field>
+                                </v-flex>
+                              </v-layout>
+                            </v-card-text>
+                          </v-card>
+                        </v-flex>
+                      </v-layout>
+                    </v-flex>
+                    <v-flex xs12>
+                      <v-card light color="grey lighten-4" tile flat class="cartBorder">
+                        <v-toolbar color="grey lighten-2" light flat height="45px">
+                          <v-toolbar-title>Title</v-toolbar-title>
+                          <v-spacer></v-spacer>
+                          <v-btn icon>
+                            <v-icon>expand_more</v-icon>
+                          </v-btn>
+                        </v-toolbar>
+                        <v-card-text>
+                          <v-layout row wrap>
+                            <v-flex xs12 sm3 md3 class="feildLabel">Tags</v-flex>
+                            <v-flex xs12 sm3 md3>
+                              <v-select
+                                solo
+                              ></v-select>
+                            </v-flex>
+                            <v-flex xs12 sm3 md3 class="pl-3 feildLabel">Langauages</v-flex>
+                            <v-flex xs12 sm3 md3>
+                              <v-select
+                                solo
+                              ></v-select>
+                            </v-flex>
+                            <v-flex xs12 sm3 md3 class="feildLabel">Denomination</v-flex>
+                            <v-flex xs12 sm3 md3>
+                              <v-select
+                                solo
+                              ></v-select>
+                            </v-flex>
+                            <v-flex xs12 sm3 md3 class="pl-3 feildLabel">Offers</v-flex>
+                            <v-flex xs12 sm3 md3>
+                              <v-select
+                                solo
+                              ></v-select>
+                            </v-flex>
+                          </v-layout>
+                        </v-card-text>
+                      </v-card>
+                    </v-flex>
+                    <v-flex xs12>
+                      <v-card light color="grey lighten-4" tile flat class="cartBorder">
+                        <v-toolbar color="grey lighten-2" light flat height="45px">
+                          <v-toolbar-title>Title</v-toolbar-title>
+                          <v-spacer></v-spacer>
+                          <v-btn icon>
+                            <v-icon>expand_more</v-icon>
+                          </v-btn>
+                        </v-toolbar>
+                        <v-card-text>
+                          <v-layout row wrap>
+                            <v-flex xs6 class="pr-3 noBorder">
+                              <v-text-field
+                                label="Upload Banner"
+                                prepend-icon="attach_file"
+                              ></v-text-field>
+                              <input
+                                type="file"
+                                style="display: none"
+                                ref="imageb"
+                                accept="image/*"
+                              >
+                            </v-flex>
+                            <v-flex xs6 class="pl-3 noBorder">
+                              <v-text-field
+                                label="Upload Logo"
+                                prepend-icon="attach_file"
+                              ></v-text-field>
+                              <input
+                                type="file"
+                                style="display: none"
+                                ref="image"
+                                accept="image/*"
+                              >
+                            </v-flex>
+                          </v-layout>
+                        </v-card-text>
+                      </v-card>
+                    </v-flex>
+                  </v-layout>
+                </v-container>
+              </v-card-text>
+              <v-card-actions class="pt-4">
+                <v-container grid-list-md class="pa-0">
+                  <v-layout row wrap>
+                    <v-flex xs12 sm6 md6>
+                      <v-checkbox
+                        v-model="formnews.checkbox"
+                        label="Hauptnews auf GLAUBE.at (kostenpflichtig)"
+                        required
+                      ></v-checkbox>
+                    </v-flex>
+                    <v-flex xs12 sm6 md6>
+                      <v-btn
+                        @click="editDialog = false"
+                        depressed
+                        small
+                        class="grey lighten-2"
+                      >LOSCHEN</v-btn>
+                      <v-btn @click="saveNewsroom" depressed small class="grey lighten-2">SPEICHERN</v-btn>
+                      <v-btn
+                        depressed
+                        small
+                        dark
+                        @click="saveNewsroom"
+                        color="orange darken-1"
+                      >VEROFFENTLICHUN</v-btn>
+                    </v-flex>
+                  </v-layout>
+                </v-container>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
         </v-layout>
       </v-container>
     </section>
@@ -689,6 +1425,8 @@ export default {
   name: "Profile",
   data() {
     return {
+      addChurch: false,
+      editChurch: false,
       headers: [
         {
           text: "Church",

@@ -887,6 +887,11 @@ a.router-link-exact-active.router-link-active .v-tooltip span button {
     border-style: solid;
     border-color: #bdbdbd!important;
 }
+.editDialog .cartBorder .noBorder .v-input__slot {
+    border-width: 0px;
+    border-style: solid;
+    border-color: #bdbdbd!important;
+}
 .editDialog .cartBorder .range-slider .v-input__slot {
     border-width: 0px;
     border-style: none;
