@@ -10,7 +10,7 @@
   "dependencies": {
     "@babel/polyfill": "^7.0.0-rc.1",
     "@fortawesome/fontawesome-free": "^5.4.2",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "firebase": "^5.7.0",
     "jszip": "^3.2.0",
     "jszip-utils": "0.0.2",
